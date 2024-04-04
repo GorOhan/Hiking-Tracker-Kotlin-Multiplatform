@@ -2,7 +2,6 @@ plugins {
     kotlin("kapt")
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
 }
 
@@ -48,9 +47,11 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.process)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     debugImplementation(libs.compose.ui.tooling)
 
- //   implementation(libs.google.location)
+    //   implementation(libs.google.location)
 
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
@@ -59,10 +60,6 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-
-    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.retrofit2.retrofit)
     implementation(libs.converter.gson)
@@ -75,6 +72,8 @@ dependencies {
     implementation(libs.firebase.messaging)
 
     implementation(libs.coil.compose)
+    implementation("io.insert-koin:koin-android:3.2.0")
+
 }
 
 kapt {

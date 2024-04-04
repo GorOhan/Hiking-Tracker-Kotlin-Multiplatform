@@ -1,6 +1,9 @@
 package com.example.xhike
 
-class Greeting {
+import org.koin.core.component.KoinComponent
+
+
+class Greeting: KoinComponent {
     private val platform: Platform = getPlatform()
 
     fun greet(): String {
