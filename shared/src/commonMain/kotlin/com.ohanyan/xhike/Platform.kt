@@ -1,4 +1,4 @@
-package com.example.xhike
+package com.ohanyan.xhike
 
 interface Platform {
     val name: String
