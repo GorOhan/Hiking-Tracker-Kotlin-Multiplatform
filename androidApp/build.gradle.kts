@@ -6,10 +6,10 @@ plugins {
 }
 
 android {
-    namespace = "com.example.xhike.android"
+    namespace = "com.ohanyan.xhike.android"
     compileSdk = 34
     defaultConfig {
-        applicationId = "com.example.xhike.android"
+        applicationId = "com.ohanyan.xhike.android"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -73,6 +73,8 @@ dependencies {
 
     implementation(libs.coil.compose)
     implementation("io.insert-koin:koin-android:3.2.0")
+    implementation ("io.insert-koin:koin-androidx-compose:3.2.0")
+
 
 }
 

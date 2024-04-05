@@ -1,5 +1,6 @@
 package com.example.xhike
 
+import com.ohanyan.xhike.Platform
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {

@@ -1,4 +1,4 @@
-package com.example.xhike.android
+package com.ohanyan.xhike.android
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape

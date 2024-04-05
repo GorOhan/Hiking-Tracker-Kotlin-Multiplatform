@@ -1,4 +1,4 @@
-package com.example.xhike
+package com.ohanyan.xhike
 
 import org.koin.core.component.KoinComponent
 

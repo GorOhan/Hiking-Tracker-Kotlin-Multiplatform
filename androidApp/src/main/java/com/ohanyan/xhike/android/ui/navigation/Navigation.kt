@@ -1,10 +1,10 @@
-package com.example.xhike.android.ui.navigation
+package com.ohanyan.xhike.android.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.xhike.android.ui.splash.SplashScreen
+import com.ohanyan.xhike.android.ui.splash.SplashScreen
 
 
 sealed class Screen(val route: String) {
