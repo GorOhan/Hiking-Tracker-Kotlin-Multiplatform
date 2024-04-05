@@ -1,0 +1,15 @@
+
+CREATE TABLE hikeTable (
+    flightNumber INTEGER NOT NULL,
+    missionName TEXT NOT NULL
+);
+
+getAllHikes:
+SELECT * FROM hikeTable;
+
+removeAllLaunches:
+DELETE FROM hikeTable;
+
+insertHike:
+INSERT INTO hikeTable(flightNumber, missionName)
+VALUES(?, ?);
