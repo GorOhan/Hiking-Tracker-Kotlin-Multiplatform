@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.network
+package com.ohanyan.xhike.data.network
 
 
 import io.ktor.client.*

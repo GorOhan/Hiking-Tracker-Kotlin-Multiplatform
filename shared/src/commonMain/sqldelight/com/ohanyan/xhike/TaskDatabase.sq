@@ -7,9 +7,10 @@ CREATE TABLE hikeTable (
 getAllHikes:
 SELECT * FROM hikeTable;
 
-removeAllLaunches:
+removeAllHikes:
 DELETE FROM hikeTable;
 
 insertHike:
 INSERT INTO hikeTable(flightNumber, missionName)
 VALUES(?, ?);
+

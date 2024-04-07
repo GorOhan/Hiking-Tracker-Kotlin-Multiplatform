@@ -18,7 +18,7 @@ fun SplashScreen(
     splashViewModel: SplashViewModel = getViewModel()
 
 ) {
-    val toLoginScreen = splashViewModel.toLoginScreen.collectAsState(initial = false)
+    //val toLoginScreen = splashViewModel.toLoginScreen.collectAsState(initial = false)
     val testString = splashViewModel.testString.collectAsState(initial = "")
 
     Box(
@@ -27,8 +27,7 @@ fun SplashScreen(
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        if (toLoginScreen.value) {
             Text(text = testString.value)
-        }
+
     }
 }

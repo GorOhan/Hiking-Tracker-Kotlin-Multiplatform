@@ -6,9 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ohanyan.xhike.android.ui.splash.SplashScreen
 
-
 sealed class Screen(val route: String) {
-
     object SplashScreen : Screen("splashScreen")
 }
 

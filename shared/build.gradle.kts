@@ -2,8 +2,12 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     kotlin("plugin.serialization").version("1.9.23")
-    id("app.cash.sqldelight") version "2.0.1"
+    id("com.squareup.sqldelight").version("1.5.5")
+}
 
+repositories {
+    google()
+    mavenCentral()
 }
 
 kotlin {
@@ -25,7 +29,6 @@ kotlin {
             isStatic = true
         }
     }
-
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koin.core)
@@ -36,12 +39,17 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.logback.classic)
 
+            implementation("com.squareup.sqldelight:runtime:1.5.5")
 
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
-
+            implementation("com.squareup.sqldelight:android-driver:1.5.5")
         }
+        iosMain.dependencies {
+            implementation("com.squareup.sqldelight:native-driver:1.5.5")
+        }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
@@ -61,9 +69,7 @@ android {
 }
 
 sqldelight {
-    databases {
-        create("HikeDatabase") {
-            packageName.set("com.ohanyan.xhike.sqldelight.database")
-        }
+    database("TaskDatabase") {
+        packageName = "com.ohanyan.xhike"
     }
 }

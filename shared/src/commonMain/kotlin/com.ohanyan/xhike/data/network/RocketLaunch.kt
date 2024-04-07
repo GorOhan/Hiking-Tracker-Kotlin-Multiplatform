@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.network
+package com.ohanyan.xhike.data.network
 
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
