@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation("io.insert-koin:koin-android:3.2.0")
     implementation ("io.insert-koin:koin-androidx-compose:3.2.0")
+    implementation("org.osmdroid:osmdroid-android:6.1.14")
 
 
 }
