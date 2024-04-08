@@ -19,6 +19,7 @@ class SplashViewModel(
     private val _testString: MutableSharedFlow<String> = MutableSharedFlow()
     val testString = _testString.asSharedFlow()
 
+
     init {
         viewModelScope.launch {
             delay(2000)
