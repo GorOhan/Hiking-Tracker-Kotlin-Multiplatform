@@ -27,21 +27,21 @@ fun MyApplicationTheme(
             primary = Color(0xFFBB86FC),
             secondary = Color(0xFF03DAC5),
             tertiary = Color(0xFF3700B3),
-            background = Color(0xFF054558)
+            background = Color(0xDC185C7C)
         )
     } else {
         lightColorScheme(
             primary = Color(0xFF6200EE),
             secondary = Color(0xFF03DAC5),
             tertiary = Color(0xFF3700B3),
-            background = Color(0xFF054558)
+            background = Color(0xDC185C7C)
         )
     }
 
     val appFontFamily = FontFamily(
         fonts = listOf(
             Font(
-                resId = R.font.austie,
+                resId = R.font.josefin,
                 weight = FontWeight.W400,
                 style = FontStyle.Normal
             )
@@ -52,7 +52,7 @@ fun MyApplicationTheme(
         titleLarge = TextStyle(
             fontFamily = appFontFamily,
             fontWeight = FontWeight.Bold,
-            fontSize = 54.sp
+            fontSize = 64.sp
         ),
         bodyMedium = TextStyle(
             fontFamily = FontFamily.Default,

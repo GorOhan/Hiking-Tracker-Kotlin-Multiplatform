@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ohanyan.xhike.android.ui.home.HomeScreen
 import com.ohanyan.xhike.android.ui.splash.SplashScreen
 
 sealed class Screen(val route: String) {
-    object SplashScreen : Screen("splashScreen")
+    data object SplashScreen : Screen("splashScreen")
+    data object HomeScreen : Screen("homeScreen")
 }
 
 @Composable
@@ -18,6 +20,12 @@ internal fun NavMain() {
 
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(
+                navController = navController,
+            )
+        }
+
+        composable(route = Screen.HomeScreen.route) {
+            HomeScreen(
                 navController = navController,
             )
         }
