@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ohanyan.xhike.android.ui.home.HomeScreen
+import com.ohanyan.xhike.android.ui.bottomnav.BottomNavigationBar
 import com.ohanyan.xhike.android.ui.map.MapScreen
 import com.ohanyan.xhike.android.ui.splash.SplashScreen
 
@@ -27,9 +27,7 @@ internal fun NavMain() {
         }
 
         composable(route = Screen.HomeScreen.route) {
-            HomeScreen(
-                navController = navController,
-            )
+            BottomNavigationBar()
         }
 
         composable(route = Screen.MapScreen.route) {

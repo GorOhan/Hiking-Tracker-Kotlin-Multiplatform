@@ -12,18 +12,15 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ohanyan.xhike.android.ui.home.HomeViewModel
@@ -41,7 +38,7 @@ fun MapScreen(
             .fillMaxSize(),
     ) {
         Box(modifier = Modifier.height(250.dp)){
-            Map(modifier = Modifier.fillMaxSize())
+            Map()
         }
         Row(
             modifier = Modifier.fillMaxHeight(0.2f),
@@ -58,9 +55,11 @@ fun MapScreen(
 
 @SuppressLint("UseCompatLoadingForDrawables")
 @Composable
-fun Map(modifier:Modifier = Modifier) {
+fun Map() {
     AndroidView(
-        modifier = modifier.fillMaxWidth(),
+        modifier = Modifier
+            .height(250.dp)
+            .fillMaxWidth(),
         factory = { context ->
 //            val markerIcon =
 //                context.resources.getDrawable(R.drawable.ic_point) // Replace with your custom marker icon resource

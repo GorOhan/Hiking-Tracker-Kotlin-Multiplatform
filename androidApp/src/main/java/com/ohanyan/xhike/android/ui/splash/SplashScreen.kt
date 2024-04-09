@@ -58,7 +58,7 @@ fun SplashScreen(
     ) {
         Text(
             text = "Hiking",
-            color = MaterialTheme.colorScheme.onSecondary,
+            color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.titleLarge
         )
         animatedFootValues.forEachIndexed { index, animatable ->
