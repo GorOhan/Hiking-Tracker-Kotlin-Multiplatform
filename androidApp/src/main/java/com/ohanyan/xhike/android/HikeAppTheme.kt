@@ -24,18 +24,19 @@ fun MyApplicationTheme(
 ) {
     val colors = if (darkTheme) {
         darkColorScheme(
-            primary = Color(0xFF006b59),
+            primary = Color(0xFF175366),
             secondary = Color(0xFFFFC107),
-            tertiary = Color(0xFF3700B3),
-            background = Color(0xD7D5E6DF),
+            tertiary = Color(0xFFFFFFFF),
+            background = Color(0xD7D6F1F7),
+
 
         )
     } else {
         lightColorScheme(
-            primary = Color(0xFF003733),
+            primary = Color(0xFF175366),
             secondary = Color(0xFFFFC107),
-            tertiary = Color(0xFF3700B3),
-            background = Color(0xD7D5E6DF)
+            tertiary = Color(0xFFFFFFFF),
+            background = Color(0xD7D6F1F7)
         )
     }
 
@@ -54,6 +55,11 @@ fun MyApplicationTheme(
             fontFamily = appFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 64.sp
+        ),
+        titleSmall = TextStyle(
+            fontFamily = appFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 12.sp
         ),
         bodyMedium = TextStyle(
             fontFamily = FontFamily.Default,

@@ -52,13 +52,13 @@ fun SplashScreen(
 
     Box(
         modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
+            .background(color = MaterialTheme.colorScheme.primary)
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = "Hiking",
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.background,
             style = MaterialTheme.typography.titleLarge
         )
         animatedFootValues.forEachIndexed { index, animatable ->

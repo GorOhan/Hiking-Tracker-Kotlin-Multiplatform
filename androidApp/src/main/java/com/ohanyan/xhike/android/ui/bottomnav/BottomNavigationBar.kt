@@ -8,6 +8,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -44,19 +46,23 @@ fun BottomNavigationBar() {
             ) {
                 BottomNavigationItem().bottomNavigationItems().forEachIndexed { index, navigationItem ->
                     NavigationBarItem(
+                        colors = NavigationBarItemDefaults.colors(
+                            indicatorColor = MaterialTheme.colorScheme.secondary,
+                            selectedIconColor = MaterialTheme.colorScheme.tertiary,
+                        ),
                         selected = index == navigationSelectedItem,
                         label = {
                             Text(
                                 navigationItem.label,
                                 color = MaterialTheme.colorScheme.background,
-
-                                )
+                                style = MaterialTheme.typography.titleSmall)
                         },
                         icon = {
                             Icon(
-                                navigationItem.icon,
+                                painterResource(id = navigationItem.icon),
                                 contentDescription = navigationItem.label,
-                                tint = MaterialTheme.colorScheme.background
+                                tint = if (index != navigationSelectedItem) MaterialTheme.colorScheme.background
+                                else MaterialTheme.colorScheme.tertiary
 
                             )
                         },

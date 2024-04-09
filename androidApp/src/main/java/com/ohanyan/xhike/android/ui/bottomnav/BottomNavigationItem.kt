@@ -1,31 +1,27 @@
 package com.ohanyan.xhike.android.ui.bottomnav
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.ui.graphics.vector.ImageVector
+import com.ohanyan.xhike.android.R
 
 data class BottomNavigationItem(
     val label : String = "",
-    val icon : ImageVector = Icons.Filled.Home,
+    val icon : Int = R.drawable.ic_route,
     val route : String = ""
 ) {
     fun bottomNavigationItems() : List<BottomNavigationItem> {
         return listOf(
             BottomNavigationItem(
                 label = "Trails",
-                icon = Icons.Filled.Home,
+                icon = R.drawable.ic_route,
                 route = MainScreens.TrailsScreen.route
             ),
             BottomNavigationItem(
                 label = "Start",
-                icon = Icons.Filled.Search,
+                icon = R.drawable.ic_hiking,
                 route = MainScreens.StartHikingScreen.route
             ),
             BottomNavigationItem(
                 label = "About Us",
-                icon = Icons.Filled.AccountCircle,
+                icon = R.drawable.ic_about,
                 route = MainScreens.AboutUsScreen.route
             ),
         )
