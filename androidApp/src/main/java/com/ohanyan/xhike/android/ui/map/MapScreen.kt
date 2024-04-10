@@ -1,17 +1,11 @@
 package com.ohanyan.xhike.android.ui.map
 
 import android.annotation.SuppressLint
-import android.graphics.Color
+import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Polyline
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +17,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.mapbox.maps.MapInitOptions
+import com.mapbox.maps.MapView
+import com.mapbox.maps.Style
 import com.ohanyan.xhike.android.ui.home.HomeViewModel
 import org.koin.androidx.compose.getViewModel
 
@@ -38,7 +35,7 @@ fun MapScreen(
             .fillMaxSize(),
     ) {
         Box(modifier = Modifier.height(250.dp)){
-            Map()
+            MapContainer()
         }
         Row(
             modifier = Modifier.fillMaxHeight(0.2f),
@@ -55,7 +52,7 @@ fun MapScreen(
 
 @SuppressLint("UseCompatLoadingForDrawables")
 @Composable
-fun Map() {
+fun MapContainer() {
     AndroidView(
         modifier = Modifier
             .height(250.dp)
@@ -66,9 +63,6 @@ fun Map() {
 
 
             MapView(context).apply {
-                setMultiTouchControls(true)
-                setTileSource(TileSourceFactory.MAPNIK)
-                controller.setCenter(GeoPoint(40.1772, 44.5035))
 
 //                val yerevanMarker = Marker(this)
 //                yerevanMarker.position = GeoPoint(40.1772, 44.5035)
@@ -76,24 +70,24 @@ fun Map() {
 //                yerevanMarker.icon = markerIcon
 //                overlays.add(yerevanMarker)
 //
-                val startPoint = GeoPoint(40.1772, 44.5035)
-                val secondPoint = GeoPoint(40.1772, 44.5040)
-                val endPoint = GeoPoint(40.1862, 44.5152)
+//                val startPoint = GeoPoint(40.1772, 44.5035)
+//                val secondPoint = GeoPoint(40.1772, 44.5040)
+//                val endPoint = GeoPoint(40.1862, 44.5152)
 //               // addMarker(mapView, startPoint, "Start")
 //              //  addMarker(mapView, endPoint, "End")
 //
 //                // Add polyline to represent the route
-                val routePoints = mutableListOf(startPoint, secondPoint, endPoint)
-                val routePolyline = Polyline()
-                routePolyline.setPoints(routePoints)
-                routePolyline.color = Color.RED // Set the color of the route line
-                overlays.add(routePolyline)
-
-                val locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), this)
-                locationOverlay.enableMyLocation()
-                controller.setCenter(locationOverlay.myLocation)
-                controller.setZoom(20.0)
-                overlays.add(locationOverlay)
+//                val routePoints = mutableListOf(startPoint, secondPoint, endPoint)
+//                val routePolyline = Polyline()
+//                routePolyline.setPoints(routePoints)
+//                routePolyline.color = Color.RED // Set the color of the route line
+//                overlays.add(routePolyline)
+//
+//                val locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), this)
+//                locationOverlay.enableMyLocation()
+//                controller.setCenter(locationOverlay.myLocation)
+//                controller.setZoom(20.0)
+//                overlays.add(locationOverlay)
 
             }
 
@@ -101,6 +95,35 @@ fun Map() {
         },
         update = { mapView ->
 
+        }
+    )
+}
+
+@SuppressLint("MissingPermission")
+@Composable
+fun MapboxMapCon(
+    context: Context,
+    modifier: Modifier = Modifier,
+    onMapViewCreated: (MapView) -> Unit = {}
+) {
+    // Initialization options for setting the access token and other configurations
+    val initOptions = MapInitOptions(
+        context = context,
+    )
+
+    AndroidView(
+        modifier = modifier,
+        factory = { context ->
+            MapView(context, initOptions).apply {
+                getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+                    // Map is ready to use
+                }
+            }
+
+        },
+        update = { mapView ->
+            mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+            onMapViewCreated(mapView)
         }
     )
 }
