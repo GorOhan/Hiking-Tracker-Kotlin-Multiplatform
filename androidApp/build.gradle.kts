@@ -75,7 +75,10 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.2.0")
     implementation ("io.insert-koin:koin-androidx-compose:3.2.0")
     implementation("com.mapbox.maps:android:11.2.2")
+    implementation("org.osmdroid:osmdroid-android:6.1.14")
     //implementation("com.mapbox.extension:maps-compose:11.0.0")
+ //   implementation ("com.mapbox.mapboxsdk:mapbox-android-sdk:10.0.0")
+   // implementation ("com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.11.0")
 
 
 }
