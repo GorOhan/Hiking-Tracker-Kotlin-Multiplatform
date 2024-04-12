@@ -8,10 +8,14 @@ import com.ohanyan.xhike.data.repository.DBRepositoryImpl
 import com.ohanyan.xhike.data.repository.NetworkRepositoryImpl
 import com.ohanyan.xhike.domain.repository.DBRepository
 import com.ohanyan.xhike.domain.repository.NetworkRepository
+import com.ohanyan.xhike.domain.usecases.GetHikesUseCase
+import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
-    single { TestUseCase(get(),get()) }
+    factory { TestUseCase(get(),get()) }
+    factory { InsertHikeInDbUseCase(get()) }
+    factory { GetHikesUseCase(get()) }
     single { Database(get()) }
     single { DatabaseDriverFactory(get()) }
     single<DBRepository> { DBRepositoryImpl(get()) }

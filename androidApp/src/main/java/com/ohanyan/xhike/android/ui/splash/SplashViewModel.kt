@@ -28,7 +28,7 @@ class SplashViewModel(
                 _testString.emit(Pair("", "dfdf"))
             }
 
-            testUseCase.insertToDB(HikeEntity(1L, "dffdf"))
+          //  testUseCase.insertToDB(HikeEntity(1L, "dffdf"))
         }
     }
 }

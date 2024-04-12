@@ -10,4 +10,8 @@ class DBRepositoryImpl(
     override fun insertData(hikeEntity: HikeEntity) {
         database.insertHike(hikeEntity)
     }
+
+    override fun getAllHikes(): List<HikeEntity> {
+        return database.getAllHikes()
+    }
 }

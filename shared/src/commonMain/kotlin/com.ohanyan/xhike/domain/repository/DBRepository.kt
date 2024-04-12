@@ -4,4 +4,6 @@ import com.ohanyan.xhike.data.db.HikeEntity
 
 interface DBRepository {
     fun insertData(hikeEntity: HikeEntity): Unit
+
+    fun getAllHikes(): List<HikeEntity>
 }

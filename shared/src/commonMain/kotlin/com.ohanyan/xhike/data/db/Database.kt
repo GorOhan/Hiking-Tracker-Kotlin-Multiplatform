@@ -18,18 +18,42 @@ class Database(databaseDriverFactory: DatabaseDriverFactory) {
 
     internal fun insertHike(hikeEntity: HikeEntity) {
         dbQuery.insertHike(
-            hikeEntity.flightNumber,
-            hikeEntity.missionName
+            hikeEntity.hikeId,
+            hikeEntity.hikeName,
+            hikeEntity.hikeDescription,
+            hikeEntity.hikeLengthInKm,
+            hikeEntity.hikeDifficulty,
+            hikeEntity.hikeRating,
+            hikeEntity.hikeImage,
+            hikeEntity.hikeTime,
+            hikeEntity.hikeLocationLot,
+            hikeEntity.hikeLocationLat
         )
     }
 
     private fun mapDbEntity(
-        flightNumber: Long,
-        missionName: String,
+        hikeId: Long,
+        hikeName: String,
+        hikeDescription: String,
+        hikeLengthInKm: Double,
+        hikeDifficulty: String,
+        hikeRating: Double,
+        hikeImage: String,
+        hikeTime: String,
+        hikeLocationLot: Double,
+        hikeLocationLat: Double
     ): HikeEntity {
         return HikeEntity(
-            flightNumber = flightNumber,
-            missionName = missionName,
+            hikeId,
+            hikeName,
+            hikeDescription,
+            hikeLengthInKm,
+            hikeDifficulty,
+            hikeRating,
+            hikeImage,
+            hikeTime,
+            hikeLocationLot,
+            hikeLocationLat
         )
     }
 

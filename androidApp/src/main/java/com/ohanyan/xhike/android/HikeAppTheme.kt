@@ -28,6 +28,7 @@ fun MyApplicationTheme(
             secondary = Color(0xFFFFC107),
             tertiary = Color(0xFFFFFFFF),
             background = Color(0xD7D6F1F7),
+            onSecondary = Color(0xFF8BC34A)
 
 
         )
@@ -36,7 +37,8 @@ fun MyApplicationTheme(
             primary = Color(0xFF175366),
             secondary = Color(0xFFFFC107),
             tertiary = Color(0xFFFFFFFF),
-            background = Color(0xD7D6F1F7)
+            background = Color(0xD7D6F1F7),
+            onSecondary = Color(0xFF8BC34A)
         )
     }
 
@@ -51,6 +53,11 @@ fun MyApplicationTheme(
     )
 
     val typography = Typography(
+        titleMedium = TextStyle(
+            fontFamily = appFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 34.sp
+        ),
         titleLarge = TextStyle(
             fontFamily = appFontFamily,
             fontWeight = FontWeight.Bold,
@@ -59,12 +66,18 @@ fun MyApplicationTheme(
         titleSmall = TextStyle(
             fontFamily = appFontFamily,
             fontWeight = FontWeight.Bold,
-            fontSize = 12.sp
+            fontSize = 14.sp
         ),
         bodyMedium = TextStyle(
-            fontFamily = FontFamily.Default,
+            fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Normal,
-            fontSize = 16.sp
+            fontSize = 12.sp
+        ),
+        bodySmall = TextStyle(
+            fontFamily = appFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = 8.sp,
+            color = MaterialTheme.colorScheme.tertiary
         ),
     )
 

@@ -30,7 +30,7 @@ fun AboutUsScreen(
                 navController.navigate(Screen.MapScreen.route)
             },
             text = "About Us",
-            color = MaterialTheme.colorScheme.onSecondary,
+            color = MaterialTheme.colorScheme.tertiary,
             style = MaterialTheme.typography.titleLarge
         )
     }

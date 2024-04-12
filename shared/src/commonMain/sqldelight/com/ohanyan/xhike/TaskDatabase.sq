@@ -1,8 +1,15 @@
-
 CREATE TABLE hikeTable (
-    flightNumber INTEGER NOT NULL,
-    missionName TEXT NOT NULL
-);
+    hikeId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    hikeName TEXT NOT NULL,
+    hikeDescription TEXT NOT NULL,
+    hikeLengthInKm REAL NOT NULL,
+    hikeDifficulty TEXT NOT NULL,
+    hikeRating REAL NOT NULL,
+    hikeImage TEXT NOT NULL,
+    hikeTime TEXT NOT NULL,
+    hikeLocationLot REAL NOT NULL,
+    hikeLocationLat REAL NOT NULL
+    );
 
 getAllHikes:
 SELECT * FROM hikeTable;
@@ -11,6 +18,6 @@ removeAllHikes:
 DELETE FROM hikeTable;
 
 insertHike:
-INSERT INTO hikeTable(flightNumber, missionName)
-VALUES(?, ?);
+INSERT INTO hikeTable(hikeId, hikeName,hikeDescription,hikeLengthInKm,hikeDifficulty,hikeRating,hikeImage,hikeTime,hikeLocationLot,hikeLocationLat)
+VALUES( ?,?,?,?,?,?,?,?,?,?);
 
