@@ -56,7 +56,7 @@ fun TrailsScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(12.dp),
             ) {
                 items(hikes.size) { index ->
                     HikeItem()

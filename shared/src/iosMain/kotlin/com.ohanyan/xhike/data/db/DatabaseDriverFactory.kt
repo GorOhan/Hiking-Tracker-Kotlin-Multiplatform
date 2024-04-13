@@ -1,4 +1,4 @@
-package com.example.xhike
+package com.ohanyan.xhike.data.db
 
 import com.ohanyan.xhike.TaskDatabase
 import com.squareup.sqldelight.db.SqlDriver

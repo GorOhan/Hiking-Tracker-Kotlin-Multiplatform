@@ -39,8 +39,8 @@ fun HikeItem() {
     Box(
         modifier = Modifier
             .height(200.dp)
-            .padding(8.dp)
             .fillMaxWidth()
+            .padding(vertical = 4.dp)
             .clip(RoundedCornerShape(8.dp))
             .clickable { },
     ) {

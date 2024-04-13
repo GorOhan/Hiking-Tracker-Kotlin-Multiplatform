@@ -3,6 +3,7 @@ package com.ohanyan.xhike.data.db
 import com.ohanyan.xhike.TaskDatabase
 
 class Database(databaseDriverFactory: DatabaseDriverFactory) {
+
     private val database = TaskDatabase(databaseDriverFactory.createDriver())
     private val dbQuery = database.taskDatabaseQueries
 
