@@ -7,13 +7,8 @@ import com.ohanyan.xhike.domain.repository.NetworkRepository
 
 class TestUseCase(
     val networkRepository: NetworkRepository,
-    val dbRepository: DBRepository,
 ) {
     suspend fun invoke(): List<RocketLaunch> {
          return networkRepository.getAllData()
-    }
-
-    fun insertToDB(hikeEntity: HikeEntity)  {
-        dbRepository.insertData(hikeEntity)
     }
 }

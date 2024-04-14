@@ -13,7 +13,7 @@ import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
-    factory { TestUseCase(get(), get()) }
+    factory { TestUseCase(get()) }
     factory { InsertHikeInDbUseCase(get()) }
     factory { GetHikesUseCase(get()) }
     single { Database(get()) }
