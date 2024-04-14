@@ -1,6 +1,7 @@
 package com.ohanyan.xhike
 
 
+import com.ohanyan.xhike.data.db.Database
 import com.ohanyan.xhike.domain.TestUseCase
 import com.ohanyan.xhike.data.network.KtorExampleApi
 import com.ohanyan.xhike.data.repository.DBRepositoryImpl
@@ -12,11 +13,11 @@ import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
-    factory { TestUseCase(get(),get()) }
+    factory { TestUseCase(get(), get()) }
     factory { InsertHikeInDbUseCase(get()) }
     factory { GetHikesUseCase(get()) }
-   // single { Database(get()) }
- //   single { DatabaseDriverFactory(get()) }
+    single { Database(get()) }
+    //   single { DatabaseDriverFactory(get()) }
     single<DBRepository> { DBRepositoryImpl(get()) }
 }
 

@@ -66,6 +66,7 @@ fun TrailsScreen(
 
         FloatingActionButton(
             modifier = Modifier
+                .padding(8.dp)
                 .align(Alignment.BottomEnd),
             onClick = {
                 showAddHikeDialog = true
