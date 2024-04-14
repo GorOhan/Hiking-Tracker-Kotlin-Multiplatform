@@ -17,5 +17,5 @@ val appModule = module {
     viewModel { StartHikingViewModel() }
     viewModel { AboutUsViewModel() }
     // single { Database(get()) }
-     single { DatabaseDriverFactory(get()) }
+  //   single { DatabaseDriverFactory(get()) }
 }

@@ -1,10 +1,11 @@
 package com.ohanyan.xhike.data.db
 
 import com.ohanyan.xhike.TaskDatabase
+import com.squareup.sqldelight.db.SqlDriver
 
-class Database(databaseDriverFactory: DatabaseDriverFactory) {
+class Database(sqlDriver: SqlDriver) {
 
-    private val database = TaskDatabase(databaseDriverFactory.createDriver())
+    private val database = TaskDatabase(sqlDriver)
     private val dbQuery = database.taskDatabaseQueries
 
     internal fun clearDatabase() {

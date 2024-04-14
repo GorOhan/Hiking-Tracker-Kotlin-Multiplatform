@@ -7,8 +7,7 @@ struct ContentView: View {
 
 
     init() {
-            self._viewModel = StateObject(wrappedValue: TestViewModel())
-        viewModel.test()
+           self._viewModel = StateObject(wrappedValue: TestViewModel())
         }
 
 
@@ -46,3 +45,4 @@ extension Color {
         )
     }
 }
+

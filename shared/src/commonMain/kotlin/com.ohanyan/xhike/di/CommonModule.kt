@@ -1,4 +1,4 @@
-package com.ohanyan.xhike
+package com.ohanyan.xhike.di
 
 
 import com.ohanyan.xhike.data.db.Database
@@ -10,14 +10,15 @@ import com.ohanyan.xhike.domain.repository.DBRepository
 import com.ohanyan.xhike.domain.repository.NetworkRepository
 import com.ohanyan.xhike.domain.usecases.GetHikesUseCase
 import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase
+import org.koin.core.context.startKoin
+import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
 val domainModule = module {
-    factory { TestUseCase(get()) }
-    factory { InsertHikeInDbUseCase(get()) }
-    factory { GetHikesUseCase(get()) }
+    factory { TestUseCase() }
+    factory { InsertHikeInDbUseCase() }
+    factory { GetHikesUseCase() }
     single { Database(get()) }
-    //   single { DatabaseDriverFactory(get()) }
     single<DBRepository> { DBRepositoryImpl(get()) }
 }
 
@@ -25,3 +26,16 @@ val networkModule = module {
     single<NetworkRepository> { NetworkRepositoryImpl(get()) }
     single { KtorExampleApi() }
 }
+
+
+
+fun initKoin(appDeclaration: KoinAppDeclaration) = startKoin {
+    appDeclaration()
+    modules(
+        domainModule,
+        networkModule,
+        platformModule
+    )
+}
+
+fun initKoin() = initKoin {}
