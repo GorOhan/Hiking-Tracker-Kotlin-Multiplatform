@@ -2,9 +2,9 @@ package com.ohanyan.xhike.android
 
 import android.app.Application
 import com.mapbox.common.MapboxOptions
-import com.ohanyan.xhike.di.domainModule
-import com.ohanyan.xhike.di.networkModule
 import com.ohanyan.xhike.di.platformModule
+import com.ohanyan.xhike.di.repositoryModule
+import com.ohanyan.xhike.di.useCasesModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.osmdroid.config.Configuration
@@ -22,7 +22,7 @@ class HikingApp : Application() {
 
         startKoin {
             androidContext(this@HikingApp)
-            modules(appModule, domainModule, networkModule, platformModule)
+            modules(appModule, useCasesModule, repositoryModule, platformModule)
         }
     }
 }

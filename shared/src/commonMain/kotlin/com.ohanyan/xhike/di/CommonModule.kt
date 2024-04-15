@@ -1,6 +1,5 @@
 package com.ohanyan.xhike.di
 
-
 import com.ohanyan.xhike.data.db.Database
 import com.ohanyan.xhike.domain.TestUseCase
 import com.ohanyan.xhike.data.network.KtorExampleApi
@@ -14,26 +13,25 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
-val domainModule = module {
+val useCasesModule = module {
     factory { TestUseCase() }
     factory { InsertHikeInDbUseCase() }
     factory { GetHikesUseCase() }
-    single { Database(get()) }
-    single<DBRepository> { DBRepositoryImpl(get()) }
 }
 
-val networkModule = module {
+val repositoryModule = module {
     single<NetworkRepository> { NetworkRepositoryImpl(get()) }
     single { KtorExampleApi() }
+
+    single<DBRepository> { DBRepositoryImpl(get()) }
+    single { Database(get()) }
 }
-
-
 
 fun initKoin(appDeclaration: KoinAppDeclaration) = startKoin {
     appDeclaration()
     modules(
-        domainModule,
-        networkModule,
+        useCasesModule,
+        repositoryModule,
         platformModule
     )
 }
