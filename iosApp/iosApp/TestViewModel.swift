@@ -12,14 +12,6 @@ import shared
 
 class TestViewModel: ObservableObject {
     
-//    let data = DatabaseModule()
-  //  let ktor = KtorExampleApi()
-
- //   private var db: Database
-    
- //   private var dbRepository: DBRepositoryImpl
- //   private var network: NetworkRepositoryImpl
-    
     private var insertHikeInDbUseCase: InsertHikeInDbUseCase
     private var getHikesUseCase: GetHikesUseCase
     private var testUseCase: TestUseCase
@@ -29,7 +21,6 @@ class TestViewModel: ObservableObject {
         self.getHikesUseCase = GetHikesUseCase()
         self.insertHikeInDbUseCase = InsertHikeInDbUseCase()
         self.testUseCase = TestUseCase()
-
     }
     
 
@@ -40,7 +31,7 @@ class TestViewModel: ObservableObject {
             hikeName: "iosHike",
             hikeDescription: "des",
             hikeLengthInKm: 2.0,
-            hikeDifficulty: "easy",
+            hikeDifficulty: .medium,
             hikeRating: 4.0,
             hikeImage: "",
             hikeTime: "",

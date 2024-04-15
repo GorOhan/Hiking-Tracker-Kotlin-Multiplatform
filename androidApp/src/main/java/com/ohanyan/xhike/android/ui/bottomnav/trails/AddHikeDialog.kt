@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -31,18 +32,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.ohanyan.xhike.data.db.HikeEntity
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AddHikeDialog(
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
+    onConfirmation: (HikeEntity) -> Unit,
     painter: Painter,
     imageDescription: String,
 ) {
-    var hikeTitle by remember { mutableStateOf("") }
-    var hikeDescription by remember { mutableStateOf("") }
+    var currentHike by remember { mutableStateOf(HikeEntity()) }
+
     val scope = rememberCoroutineScope()
 
     val pagerState = rememberPagerState(
@@ -62,29 +64,54 @@ fun AddHikeDialog(
                     .fillMaxWidth(),
                 state = pagerState
             ) {
+                Box(
+                    modifier = Modifier
+                        .height(400.dp)
+                ) {
+                    when (it) {
+                        0 -> {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Text(
+                                    text = "Name your hike",
+                                    style = MaterialTheme.typography.titleSmall
+                                )
 
-                when (it) {
-                    0 -> {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(
-                                text = "Name your hike",
-                                style = MaterialTheme.typography.titleSmall
-                            )
+                                OutlinedTextField(
+                                    value = currentHike.hikeName,
+                                    onValueChange = {
+                                        currentHike = currentHike.copy(hikeName = it)
+                                      //  hikeTitle = it
+                                                    },
+                                    label = { Text("Title") }
+                                )
 
-                            OutlinedTextField(
-                                value = hikeTitle,
-                                onValueChange = { hikeTitle = it },
-                                label = { Text("Title") }
-                            )
+                                Text(
+                                    text = "Describe your hike",
+                                    style = MaterialTheme.typography.titleSmall
+                                )
+
+                                OutlinedTextField(
+                                    value = currentHike.hikeDescription,
+                                    onValueChange = {
+                                        currentHike = currentHike.copy(hikeDescription = it)
+                                                    },
+                                    label = { Text("Description") },
+                                    minLines = 4,
+                                    maxLines = 4,
+                                )
+
+                            }
+
                             Box(
                                 modifier = Modifier
                                     .padding(top = 12.dp)
-                                    .fillMaxWidth(),
+                                    .fillMaxWidth()
+                                    .align(Alignment.BottomCenter),
                             ) {
                                 IconButton(
                                     modifier = Modifier.align(Alignment.BottomEnd),
@@ -102,35 +129,51 @@ fun AddHikeDialog(
                                     Icon(
                                         imageVector = Icons.Filled.ArrowForward,
                                         contentDescription = " ",
-                                        tint = if (hikeTitle.isNotEmpty()) MaterialTheme.colorScheme.secondary
+                                        tint = if (currentHike.hikeName.isNotEmpty()) MaterialTheme.colorScheme.secondary
                                         else MaterialTheme.colorScheme.primary
                                     )
                                 }
                             }
+
                         }
 
-                    }
+                        1 -> {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Text(
+                                    text = "How long it was?",
+                                    style = MaterialTheme.typography.titleSmall
+                                )
 
-                    1 -> {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(
-                                text = "Describe your hike",
-                                style = MaterialTheme.typography.titleSmall
-                            )
+                                OutlinedTextField(
+                                    value = currentHike.hikeLengthInKm.toString(),
+                                    onValueChange = {
+                                        currentHike = currentHike.copy(hikeLengthInKm = it.toDouble())
+                                                    },
+                                    label = { Text("in km") }
+                                )
 
-                            OutlinedTextField(
-                                value = hikeDescription,
-                                onValueChange = { hikeDescription = it },
-                                label = { Text("Description") }
-                            )
+                                Text(
+                                    text = "How difficult it was?",
+                                    style = MaterialTheme.typography.titleSmall
+                                )
+
+                                OutlinedTextField(
+                                    value = currentHike.hikeDifficulty.value,
+                                    onValueChange = {
+                                      //  currentHike = currentHike.copy(hikeDifficulty = it)
+                                                    },
+                                    label = { Text("easy, hard...") }
+                                )
+                            }
                             Row(
                                 modifier = Modifier
                                     .padding(top = 12.dp)
+                                    .align(Alignment.BottomCenter)
                                     .fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                             ) {
@@ -155,55 +198,32 @@ fun AddHikeDialog(
                                 IconButton(
                                     onClick = {
                                         scope.launch {
-                                            pagerState.animateScrollToPage(
-                                                2,
-                                                animationSpec = tween(
-                                                    durationMillis = 700,
-                                                    delayMillis = 20
-                                                ),
-                                            )
+                                            onConfirmation(currentHike)
+//                                            pagerState.animateScrollToPage(
+//                                                2,
+//                                                animationSpec = tween(
+//                                                    durationMillis = 700,
+//                                                    delayMillis = 20
+//                                                ),
+//                                            )
                                         }
                                     }) {
                                     Icon(
                                         imageVector = Icons.Filled.ArrowForward,
                                         contentDescription = " ",
-                                        tint = if (hikeDescription.isNotEmpty()) MaterialTheme.colorScheme.secondary
+                                        tint = if (currentHike.hikeDifficulty.value.isNotEmpty()) MaterialTheme.colorScheme.secondary
                                         else MaterialTheme.colorScheme.primary
                                     )
                                 }
                             }
                         }
-                    }
 
-                    2 -> {
-                        Text(text = "Third Image")
-                    }
+                        2 -> {
+                            Text(text = "Third Image")
+                        }
 
+                    }
                 }
-//                Column(
-//                    modifier = Modifier,
-//                    verticalArrangement = Arrangement.Center,
-//                    horizontalAlignment = Alignment.CenterHorizontally,
-//                ) {
-//                    Row(
-//                        modifier = Modifier
-//                            .fillMaxWidth(),
-//                        horizontalArrangement = Arrangement.Center,
-//                    ) {
-//                        TextButton(
-//                            onClick = { onDismissRequest() },
-//                            modifier = Modifier.padding(8.dp),
-//                        ) {
-//                            Text("Dismiss")
-//                        }
-//                        TextButton(
-//                            onClick = { onConfirmation() },
-//                            modifier = Modifier.padding(8.dp),
-//                        ) {
-//                            Text("Confirm")
-//                        }
-//                    }
-//                }
             }
         }
     }

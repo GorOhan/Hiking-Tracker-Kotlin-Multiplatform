@@ -2,7 +2,6 @@ package com.ohanyan.xhike.android.ui.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ohanyan.xhike.data.db.HikeEntity
 import com.ohanyan.xhike.domain.TestUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +18,6 @@ class SplashViewModel(
 
     private val _testString: MutableSharedFlow<Pair<String,String>> = MutableSharedFlow()
     val testString = _testString.asSharedFlow()
-
 
 
     init {

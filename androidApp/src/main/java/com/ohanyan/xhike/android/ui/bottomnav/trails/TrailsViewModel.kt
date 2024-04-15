@@ -29,7 +29,7 @@ class TrailsViewModel(
         return getHikesUseCase.invoke()
     }
 
-    fun addHike(){
-        insertHikeInDbUseCase.invoke(_currentHike.value)
+    fun addHike(hikeEntity: HikeEntity){
+        insertHikeInDbUseCase.invoke(hikeEntity)
     }
 }

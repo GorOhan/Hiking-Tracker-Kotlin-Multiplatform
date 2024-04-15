@@ -13,9 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,16 +21,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.ohanyan.xhike.data.db.HikeEntity
 
 
 @Composable
-fun HikeItem() {
+fun HikeItem(
+     hikeEntity: HikeEntity
+) {
     val painter =
         rememberAsyncImagePainter(model = "https://images.unsplash.com/photo-1628373383885-4be0bc0172fa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1301&q=80")
 
@@ -63,7 +62,7 @@ fun HikeItem() {
                     .clip(RoundedCornerShape(8.dp))
                     .background(color = MaterialTheme.colorScheme.onSecondary)
                     .padding(horizontal = 8.dp),
-                text = "easy",
+                text = hikeEntity.hikeDifficulty.value,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.tertiary,
                 textAlign = TextAlign.Center
@@ -84,13 +83,13 @@ fun HikeItem() {
         ) {
             Text(
                 modifier = Modifier.padding(start = 4.dp),
-                text = "Armenian loop",
+                text = hikeEntity.hikeName,
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.tertiary,
             )
             Text(
                 modifier = Modifier.padding(start = 4.dp),
-                text = "Description of the hike",
+                text = hikeEntity.hikeDescription,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.background,
             )

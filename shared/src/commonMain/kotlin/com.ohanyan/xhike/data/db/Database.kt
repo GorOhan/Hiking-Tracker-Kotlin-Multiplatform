@@ -1,6 +1,7 @@
 package com.ohanyan.xhike.data.db
 
 import com.ohanyan.xhike.TaskDatabase
+import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.db.SqlDriver
 
 class Database(sqlDriver: SqlDriver) {
@@ -24,7 +25,7 @@ class Database(sqlDriver: SqlDriver) {
             hikeEntity.hikeName,
             hikeEntity.hikeDescription,
             hikeEntity.hikeLengthInKm,
-            hikeEntity.hikeDifficulty,
+            hikeDiffAdapter.encode(hikeEntity.hikeDifficulty),
             hikeEntity.hikeRating,
             hikeEntity.hikeImage,
             hikeEntity.hikeTime,
@@ -50,7 +51,7 @@ class Database(sqlDriver: SqlDriver) {
             hikeName,
             hikeDescription,
             hikeLengthInKm,
-            hikeDifficulty,
+            hikeDiffAdapter.decode(hikeDifficulty),
             hikeRating,
             hikeImage,
             hikeTime,
@@ -59,4 +60,9 @@ class Database(sqlDriver: SqlDriver) {
         )
     }
 
+}
+
+val hikeDiffAdapter = object : ColumnAdapter<HikeDifficulty, String> {
+    override fun decode(databaseValue: String): HikeDifficulty = HikeDifficulty.valueOf(databaseValue)
+    override fun encode(value: HikeDifficulty): String = value.name
 }

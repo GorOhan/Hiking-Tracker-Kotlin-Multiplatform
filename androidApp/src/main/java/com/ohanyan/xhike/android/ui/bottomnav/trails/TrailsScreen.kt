@@ -59,7 +59,7 @@ fun TrailsScreen(
                     .padding(12.dp),
             ) {
                 items(hikes.size) { index ->
-                    HikeItem()
+                    HikeItem(hikes[index])
                 }
             }
         }
@@ -70,11 +70,10 @@ fun TrailsScreen(
                 .align(Alignment.BottomEnd),
             onClick = {
                 showAddHikeDialog = true
-                trailsViewModel.addHike()
             },
             shape = CircleShape,
             containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.background
+            contentColor = MaterialTheme.colorScheme.background,
         ) {
             Icon(Icons.Filled.Add, "Floating action button.")
         }
@@ -86,9 +85,10 @@ fun TrailsScreen(
                 },
                 onConfirmation = {
                     showAddHikeDialog = false
+                    trailsViewModel.addHike(it)
                 },
                 painter = painterResource(id = R.drawable.ic_hiking),
-                imageDescription = "Image description"
+                imageDescription = "Image description",
             )
         }
     }
