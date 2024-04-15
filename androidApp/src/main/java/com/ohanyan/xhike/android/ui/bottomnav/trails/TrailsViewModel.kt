@@ -31,5 +31,6 @@ class TrailsViewModel(
 
     fun addHike(hikeEntity: HikeEntity){
         insertHikeInDbUseCase.invoke(hikeEntity)
+        _hikes.value = getHikes()
     }
 }

@@ -25,15 +25,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.ohanyan.xhike.data.db.HikeDifficulty
 import com.ohanyan.xhike.data.db.HikeEntity
 
 
 @Composable
 fun HikeItem(
-     hikeEntity: HikeEntity
+    hikeEntity: HikeEntity
 ) {
     val painter =
-        rememberAsyncImagePainter(model = "https://images.unsplash.com/photo-1628373383885-4be0bc0172fa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1301&q=80")
+        rememberAsyncImagePainter(model = "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528")
 
     Box(
         modifier = Modifier
@@ -60,7 +61,14 @@ fun HikeItem(
             Text(
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
-                    .background(color = MaterialTheme.colorScheme.onSecondary)
+                    .background(
+                        color =
+                        when (hikeEntity.hikeDifficulty) {
+                            HikeDifficulty.EASY -> MaterialTheme.colorScheme.onSecondary
+                            HikeDifficulty.MEDIUM -> MaterialTheme.colorScheme.secondary
+                            HikeDifficulty.HARD -> MaterialTheme.colorScheme.error
+                        }
+                    )
                     .padding(horizontal = 8.dp),
                 text = hikeEntity.hikeDifficulty.value,
                 style = MaterialTheme.typography.bodyMedium,

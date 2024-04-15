@@ -20,9 +20,13 @@ struct ContentView: View {
                          .foregroundColor(.white)
                          .font(.system(size: 48)) 
                          .onTapGesture {
+                            
                              viewModel.test()
                              print("test Gor")
+                         }.onAppear{
+                             viewModel.apiCallExample()
                          }
+                         
             
         }
     }

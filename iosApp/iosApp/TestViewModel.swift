@@ -25,7 +25,7 @@ class TestViewModel: ObservableObject {
     
 
     
-    func test(){
+    func test() {
         let hike = HikeEntity(
             hikeId: nil,
             hikeName: "iosHike",
@@ -41,8 +41,14 @@ class TestViewModel: ObservableObject {
         insertHikeInDbUseCase.invoke(hikeEntity: hike)
         getHikesUseCase.invoke()
         print(getHikesUseCase.invoke())
-      //  testUseCase.invoke()
 
-    }    // Empty view model
+    }
+    
+    func apiCallExample()  {
+        //testUseCase.invoke()
+    }
+    
+    
+    // Empty view model
     // You can add properties and methods here as needed
 }

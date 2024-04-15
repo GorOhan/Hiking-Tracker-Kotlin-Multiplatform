@@ -2,6 +2,7 @@ package com.ohanyan.xhike.android.ui.bottomnav.trails
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,10 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,8 +33,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.ohanyan.xhike.data.db.HikeDifficulty
 import com.ohanyan.xhike.data.db.HikeEntity
 import kotlinx.coroutines.launch
 
@@ -44,6 +49,8 @@ fun AddHikeDialog(
     imageDescription: String,
 ) {
     var currentHike by remember { mutableStateOf(HikeEntity()) }
+    var showDiffPicker by remember { mutableStateOf(false) }
+    var hikeLength by remember { mutableStateOf("") }
 
     val scope = rememberCoroutineScope()
 
@@ -85,8 +92,8 @@ fun AddHikeDialog(
                                     value = currentHike.hikeName,
                                     onValueChange = {
                                         currentHike = currentHike.copy(hikeName = it)
-                                      //  hikeTitle = it
-                                                    },
+                                        //  hikeTitle = it
+                                    },
                                     label = { Text("Title") }
                                 )
 
@@ -99,7 +106,7 @@ fun AddHikeDialog(
                                     value = currentHike.hikeDescription,
                                     onValueChange = {
                                         currentHike = currentHike.copy(hikeDescription = it)
-                                                    },
+                                    },
                                     label = { Text("Description") },
                                     minLines = 4,
                                     maxLines = 4,
@@ -150,25 +157,63 @@ fun AddHikeDialog(
                                 )
 
                                 OutlinedTextField(
-                                    value = currentHike.hikeLengthInKm.toString(),
+                                    value =  hikeLength,
                                     onValueChange = {
-                                        currentHike = currentHike.copy(hikeLengthInKm = it.toDouble())
-                                                    },
+                                        currentHike =
+                                            currentHike.copy(hikeLengthInKm = it.toDouble())
+                                        hikeLength = it
+                                    },
+                                    keyboardOptions = KeyboardOptions.Default.copy(
+                                        keyboardType = KeyboardType.Decimal
+                                    ),
                                     label = { Text("in km") }
                                 )
 
                                 Text(
+                                    modifier = Modifier.clickable {
+                                        showDiffPicker = true
+                                    },
                                     text = "How difficult it was?",
                                     style = MaterialTheme.typography.titleSmall
                                 )
 
-                                OutlinedTextField(
-                                    value = currentHike.hikeDifficulty.value,
-                                    onValueChange = {
-                                      //  currentHike = currentHike.copy(hikeDifficulty = it)
-                                                    },
-                                    label = { Text("easy, hard...") }
-                                )
+                                Box(
+                                    modifier = Modifier.clickable {
+                                        showDiffPicker = true
+                                    },
+                                ) {
+                                    OutlinedTextField(
+                                        readOnly = true,
+                                        value = currentHike.hikeDifficulty.value,
+                                        onValueChange = {
+                                            currentHike = currentHike.copy(
+                                                hikeDifficulty = HikeDifficulty.valueOf(it)
+                                            )
+                                        },
+                                        label = { Text("easy, hard...") }
+                                    )
+                                }
+
+                                DropdownMenu(
+                                    expanded = showDiffPicker,
+                                    onDismissRequest = { showDiffPicker = false },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+
+                                ) {
+                                    HikeDifficulty.entries.forEach {
+                                        Text(
+                                            text = it.name,
+                                            modifier = Modifier
+                                                .padding(16.dp)
+                                                .clickable {
+                                                    currentHike =
+                                                        currentHike.copy(hikeDifficulty = it)
+                                                    showDiffPicker = false
+                                                }
+                                        )
+                                    }
+                                }
                             }
                             Row(
                                 modifier = Modifier
