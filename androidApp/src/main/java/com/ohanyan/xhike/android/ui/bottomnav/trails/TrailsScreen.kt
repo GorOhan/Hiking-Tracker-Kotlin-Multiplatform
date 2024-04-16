@@ -58,8 +58,11 @@ fun TrailsScreen(
                     .fillMaxSize()
                     .padding(12.dp),
             ) {
-                items(hikes.size) { index ->
-                    HikeItem(hikes[index])
+                items(count = hikes.size) { index ->
+                        HikeItem(hikes[index]) {
+                            trailsViewModel.onFavouriteClick(hikes[index])
+                        }
+
                 }
             }
         }

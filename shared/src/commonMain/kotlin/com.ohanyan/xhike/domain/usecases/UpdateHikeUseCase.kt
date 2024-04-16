@@ -5,13 +5,12 @@ import com.ohanyan.xhike.domain.repository.DBRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class GetHikesUseCase(
-):KoinComponent {
-
+class UpdateHikeUseCase : KoinComponent {
     private val dbRepository: DBRepository by inject()
 
     fun invoke(
-    ): List<HikeEntity> {
-       return dbRepository.getAllHikes().sortedBy { !it.hikeIsFavourite }
+        hikeEntity: HikeEntity
+    ) {
+        dbRepository.updateHike(hikeEntity)
     }
 }

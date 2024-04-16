@@ -9,6 +9,7 @@ import com.ohanyan.xhike.domain.repository.DBRepository
 import com.ohanyan.xhike.domain.repository.NetworkRepository
 import com.ohanyan.xhike.domain.usecases.GetHikesUseCase
 import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase
+import com.ohanyan.xhike.domain.usecases.UpdateHikeUseCase
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
@@ -17,6 +18,7 @@ val useCasesModule = module {
     factory { TestUseCase() }
     factory { InsertHikeInDbUseCase() }
     factory { GetHikesUseCase() }
+    factory { UpdateHikeUseCase() }
 }
 
 val repositoryModule = module {

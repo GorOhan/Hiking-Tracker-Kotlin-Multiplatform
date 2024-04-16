@@ -9,10 +9,26 @@ class Database(sqlDriver: SqlDriver) {
     private val database = TaskDatabase(sqlDriver)
     private val dbQuery = database.taskDatabaseQueries
 
-    internal fun clearDatabase() {
-        dbQuery.transaction {
-            dbQuery.removeAllHikes()
-        }
+//    internal fun clearDatabase() {
+//        dbQuery.transaction {
+//            dbQuery.removeAllHikes()
+//        }
+//    }
+
+    internal fun updateHikeById(hikeEntity: HikeEntity) {
+        dbQuery.updateHikeById(
+            hikeEntity.hikeName,
+            hikeEntity.hikeDescription,
+            hikeEntity.hikeLengthInKm,
+            hikeDiffAdapter.encode(hikeEntity.hikeDifficulty),
+            hikeEntity.hikeRating,
+            hikeEntity.hikeImage,
+            hikeEntity.hikeTime,
+            hikeEntity.hikeLocationLot,
+            hikeEntity.hikeLocationLat,
+            hikeEntity.hikeIsFavourite,
+            hikeEntity.hikeId ?: 0
+        )
     }
 
     internal fun getAllHikes(): List<HikeEntity> {
@@ -30,7 +46,9 @@ class Database(sqlDriver: SqlDriver) {
             hikeEntity.hikeImage,
             hikeEntity.hikeTime,
             hikeEntity.hikeLocationLot,
-            hikeEntity.hikeLocationLat
+            hikeEntity.hikeLocationLat,
+            hikeEntity.hikeIsFavourite
+
         )
     }
 
@@ -44,7 +62,8 @@ class Database(sqlDriver: SqlDriver) {
         hikeImage: String,
         hikeTime: String,
         hikeLocationLot: Double,
-        hikeLocationLat: Double
+        hikeLocationLat: Double,
+        hikeIsFavourite: Boolean
     ): HikeEntity {
         return HikeEntity(
             hikeId,
@@ -56,13 +75,16 @@ class Database(sqlDriver: SqlDriver) {
             hikeImage,
             hikeTime,
             hikeLocationLot,
-            hikeLocationLat
+            hikeLocationLat,
+            hikeIsFavourite
         )
     }
 
 }
 
 val hikeDiffAdapter = object : ColumnAdapter<HikeDifficulty, String> {
-    override fun decode(databaseValue: String): HikeDifficulty = HikeDifficulty.valueOf(databaseValue)
+    override fun decode(databaseValue: String): HikeDifficulty =
+        HikeDifficulty.valueOf(databaseValue)
+
     override fun encode(value: HikeDifficulty): String = value.name
 }

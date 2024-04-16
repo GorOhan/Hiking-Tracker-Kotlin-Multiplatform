@@ -1,3 +1,5 @@
+import kotlin.Boolean;
+
 CREATE TABLE hikeTable (
     hikeId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     hikeName TEXT NOT NULL,
@@ -8,7 +10,8 @@ CREATE TABLE hikeTable (
     hikeImage TEXT NOT NULL,
     hikeTime TEXT NOT NULL,
     hikeLocationLot REAL NOT NULL,
-    hikeLocationLat REAL NOT NULL
+    hikeLocationLat REAL NOT NULL,
+    hikeIsFavourite INTEGER AS Boolean NOT NULL DEFAULT 0
     );
 
 getAllHikes:
@@ -18,6 +21,8 @@ removeAllHikes:
 DELETE FROM hikeTable;
 
 insertHike:
-INSERT INTO hikeTable(hikeId, hikeName,hikeDescription,hikeLengthInKm,hikeDifficulty,hikeRating,hikeImage,hikeTime,hikeLocationLot,hikeLocationLat)
-VALUES( ?,?,?,?,?,?,?,?,?,?);
+INSERT INTO hikeTable(hikeId, hikeName,hikeDescription,hikeLengthInKm,hikeDifficulty,hikeRating,hikeImage,hikeTime,hikeLocationLot,hikeLocationLat,hikeIsFavourite)
+VALUES( ?,?,?,?,?,?,?,?,?,?,?);
 
+updateHikeById:
+UPDATE hikeTable SET hikeName = ?, hikeDescription = ?, hikeLengthInKm = ?, hikeDifficulty = ?, hikeRating = ?, hikeImage = ?, hikeTime = ?, hikeLocationLot = ?, hikeLocationLat = ?, hikeIsFavourite = ? WHERE hikeId = ?;

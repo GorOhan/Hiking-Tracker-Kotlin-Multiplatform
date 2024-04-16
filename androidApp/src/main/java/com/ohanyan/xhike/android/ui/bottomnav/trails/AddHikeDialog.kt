@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.ohanyan.xhike.data.db.HikeDifficulty
 import com.ohanyan.xhike.data.db.HikeEntity
+import com.ohanyan.xhike.data.db.HikeRate
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -51,6 +52,7 @@ fun AddHikeDialog(
     var currentHike by remember { mutableStateOf(HikeEntity()) }
     var showDiffPicker by remember { mutableStateOf(false) }
     var hikeLength by remember { mutableStateOf("") }
+    var showRatePicker by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
 
@@ -212,6 +214,37 @@ fun AddHikeDialog(
                                                     showDiffPicker = false
                                                 }
                                         )
+                                    }
+                                }
+
+                                Box {
+                                    Text(
+                                        modifier = Modifier.clickable {
+                                            showRatePicker = true
+                                        },
+                                        text = "Rate your hike ${currentHike.hikeRating}",
+                                        style = MaterialTheme.typography.titleSmall
+                                    )
+
+                                    DropdownMenu(
+                                        expanded = showRatePicker,
+                                        onDismissRequest = { showRatePicker = false },
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+
+                                    ) {
+                                        HikeRate.entries.forEach {
+                                            Text(
+                                                text = it.name,
+                                                modifier = Modifier
+                                                    .padding(16.dp)
+                                                    .clickable {
+                                                        currentHike =
+                                                            currentHike.copy(hikeRating = it.value)
+                                                        showRatePicker = false
+                                                    }
+                                            )
+                                        }
                                     }
                                 }
                             }

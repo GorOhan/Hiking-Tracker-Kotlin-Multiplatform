@@ -14,4 +14,8 @@ class DBRepositoryImpl(
     override fun getAllHikes(): List<HikeEntity> {
         return database.getAllHikes()
     }
+
+    override fun updateHike(hikeEntity: HikeEntity) {
+        database.updateHikeById(hikeEntity)
+    }
 }
