@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -23,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -112,24 +115,35 @@ fun HikeItem(
                     color = MaterialTheme.colorScheme.background,
                 )
             }
-            Column(
+            Row(
                 modifier = Modifier
-                    .padding(4.dp)
-                    .align(Alignment.TopEnd)
+                    .align(Alignment.Center)
             ) {
-                Row {
-                    repeat(hikeEntity.hikeRating.toInt()) {
-                        Image(
-                            modifier = Modifier
-                                .size(16.dp),
-                            painter = painterResource(id = R.drawable.ic_star),
-                            contentDescription = " ",
-                        )
-                    }
-                }
-
                 Row(
-                    modifier = Modifier.padding(top = 4.dp)
+                    modifier = Modifier
+                        .padding(4.dp),
+
+                ) {
+                    Text(
+                        text = "5.5 h",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.tertiary,
+                    )
+                    Image(
+                        modifier = Modifier
+                            .size(16.dp),
+                        painter = painterResource(id = R.drawable.ic_timer),
+                        contentDescription = " ",
+                    )
+                }
+                Image(
+                    modifier = Modifier,
+                    painter = painterResource(id = R.drawable.ic_slash),
+                    contentDescription = " ",
+
+                )
+                Row(
+                    modifier = Modifier,
                 ) {
                     Text(
                         text = "2.4 km",
@@ -138,8 +152,23 @@ fun HikeItem(
                     )
                     Image(
                         modifier = Modifier
-                            .size(20.dp),
+                            .size(16.dp),
                         painter = painterResource(id = R.drawable.ic_walk),
+                        contentDescription = " ",
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .align(Alignment.TopEnd)
+            ) {
+
+                repeat(hikeEntity.hikeRating.toInt()) {
+                    Image(
+                        modifier = Modifier
+                            .size(16.dp),
+                        painter = painterResource(id = R.drawable.ic_star),
                         contentDescription = " ",
                     )
                 }

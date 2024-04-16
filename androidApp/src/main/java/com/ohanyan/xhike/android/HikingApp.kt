@@ -11,6 +11,7 @@ import org.osmdroid.config.Configuration
 
 
 class HikingApp : Application() {
+
     override fun onCreate() {
         super.onCreate()
 
