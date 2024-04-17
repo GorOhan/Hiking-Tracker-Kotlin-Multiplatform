@@ -13,8 +13,11 @@ package com.ohanyan.xhike.android.ui.map
 //import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 //import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Location
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,11 +29,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationListener
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.mapbox.maps.extension.style.expressions.dsl.generated.within
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.ui.home.HomeViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,8 +73,8 @@ fun MapScreen(
             .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize(),
     ) {
-        Box(modifier = Modifier.height(250.dp)){
-          //  MapContainer()
+        Box(modifier = Modifier.height(250.dp)) {
+            //  MapContainer()
         }
         Row(
             modifier = Modifier.fillMaxHeight(0.2f),
@@ -77,162 +92,153 @@ fun MapScreen(
 @SuppressLint("UseCompatLoadingForDrawables")
 @Composable
 fun MapContainer(
-     routePoints: List<GeoPoint>
 ) {
     val context = LocalContext.current
-    AndroidView(
-        modifier = Modifier ,
-        factory = { context ->
-            val markerIcon =
-                context.resources.getDrawable(R.drawable.ic_hiking) // Replace with your custom marker icon resource
+    var fusedLocationClient: FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(context)
 
+    var routePoints = mutableListOf<GeoPoint>()
+
+    AndroidView(
+        modifier = Modifier,
+        factory = { context ->
 
             MapView(context).apply {
-           //     this.setTileSource(TileSourceFactory.HIKEBIKEMAP)
 
-                val yerevanMarker = Marker(this)
-                yerevanMarker.position = GeoPoint(40.1772, 44.5035)
-                yerevanMarker.title = "Yerevan"
-                yerevanMarker.icon = markerIcon
-                overlays.add(yerevanMarker)
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED && true
+            ) {
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener { location: Location? ->
+
+                        controller.setCenter(GeoPoint(location?.latitude?:0.0, location?.longitude?:0.0))
+
+                        val markerIcon =
+                            context.resources.getDrawable(R.drawable.ic_hiking)
+                        val yerevanMarker = Marker(this)
+                        yerevanMarker.position = GeoPoint(location?.latitude?:0.0, location?.longitude?:0.0)
+                        yerevanMarker.title = "Yerevan"
+                        yerevanMarker.icon = markerIcon
+                        overlays.add(yerevanMarker)
+                    }
+                val locationRequest = LocationRequest.create().apply {
+                    interval = 10000 // Update interval in milliseconds
+                    fastestInterval = 5000 // Fastest update interval in milliseconds
+                    priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                }
+
+
+                val locationCallback = object : LocationCallback(
+                ) {
+                    override fun onLocationResult(locationResult: LocationResult) {
+                        routePoints.addAll(locationResult.locations.map {
+                            GeoPoint(it.latitude, it.longitude)
+                        })
+
+
+                        val routePolyline = Polyline()
+                        routePolyline.setPoints(routePoints)
+                        println("FROM SCREEN$routePoints")
+
+                        routePolyline.color = Color.argb(240, 16, 8, 0)
+                        overlays.add(routePolyline)
+                        invalidate()
+                    }
+                }
+
+                fusedLocationClient.requestLocationUpdates(
+                    locationRequest,
+                    locationCallback,
+                    null /* Looper */)
+
+            }
+
+//                val markerIcon =
+//                    context.resources.getDrawable(R.drawable.ic_hiking) // Replace with your custom marker icon resource
+//
+//
+//
+//
+//
+//                    //     this.setTileSource(TileSourceFactory.HIKEBIKEMAP)
+//
+//                    val yerevanMarker = Marker(this)
+//                    yerevanMarker.position = GeoPoint(40.1772, 44.5035)
+//                    yerevanMarker.title = "Yerevan"
+//                    yerevanMarker.icon = markerIcon
+//                    overlays.add(yerevanMarker)
 
 //                val startPoint = GeoPoint(40.1772, 44.5035)
 //                val secondPoint = GeoPoint(40.1772, 44.5040)
 //                val endPoint = GeoPoint(40.1862, 44.5152)
-               // addMarker(mapView, startPoint, "Start")
-              //  addMarker(mapView, endPoint, "End")
+                    // addMarker(mapView, startPoint, "Start")
+                    //  addMarker(mapView, endPoint, "End")
 
-                // Add polyline to represent the route
-               // val routePoints = mutableListOf(startPoint, secondPoint, endPoint)
-             //   val routePolyline = Polyline()
-             //   routePolyline.setPoints(routePoints)
-             //   routePolyline.color = Color.BLUE // Set the color of the route line
-             //   overlays.add(routePolyline)
+                    // Add polyline to represent the route
+                    // val routePoints = mutableListOf(startPoint, secondPoint, endPoint)
+                    //   val routePolyline = Polyline()
+                    //   routePolyline.setPoints(routePoints)
+                    //   routePolyline.color = Color.BLUE // Set the color of the route line
+                    //   overlays.add(routePolyline)
 
 //                val locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), this)
 //                locationOverlay.enableMyLocation()
-               controller.setCenter(GeoPoint(40.1772, 44.5035))
-               controller.setZoom(17.0)
- //                overlays.add(locationOverlay)
+//                    controller.setCenter(GeoPoint(40.1772, 44.5035))
+                    controller.setZoom(17.0)
+                    //                overlays.add(locationOverlay)
 
+
+                }
+
+
+            },
+            update = { mapView ->
+
+                val locationRequest = LocationRequest.create().apply {
+                    interval = 1000 // Update interval in milliseconds
+                    fastestInterval = 500 // Fastest update interval in milliseconds
+                    priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                }
+
+                val locationCallback = object : LocationCallback(
+                ) {
+                    override fun onLocationResult(locationResult: LocationResult) {
+//                        routePointslocationResult.locations.map {
+//                            GeoPoint(it.latitude, it.longitude)
+//                        }
+                        mapView.controller.setCenter(
+                            GeoPoint(
+                                locationResult.lastLocation?.latitude?:0.0,
+                                locationResult.lastLocation?.longitude?:0.0
+                            )
+                        )
+
+
+                        val routePolyline = Polyline()
+                        routePolyline.setPoints(routePoints)
+
+                        routePolyline.color = Color.parseColor("#175366")
+                        mapView.overlays.add(routePolyline)
+
+                        mapView.invalidate()
+                    }
+                }
+
+                fusedLocationClient.requestLocationUpdates(
+                    locationRequest,
+                    locationCallback,
+                    null /* Looper */)
 
             }
-
-
-        },
-        update = { mapView ->
-
-            val routePolyline = Polyline()
-            routePolyline.setPoints(routePoints)
-
-            routePolyline.color = Color.BLUE
-            mapView.overlays.add(routePolyline)
-            mapView.invalidate()
-
+            )
         }
-    )
-}
 
-//@SuppressLint("MissingPermission")
-//@Composable
-//fun MapboxMapCon(
-//    context: Context,
-//    modifier: Modifier = Modifier,
-//    onMapViewCreated: (MapView) -> Unit = {}
-//) {
-//    // Initialization options for setting the access token and other configurations
-//    val initOptions = MapInitOptions(
-//        context = context,
-//    )
-//    val cameraOptions = CameraOptions.Builder()
-//        .center(Point.fromLngLat(44.4991, 40.1792))
-//        .zoom(11.0).build()
-//
-//    AndroidView(
-//        modifier = modifier,
-//        factory = { context ->
-//
-//            MapView(context, initOptions).apply {
-//                getMapboxMap().setCamera(cameraOptions)
-//
-//                getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
-//                    // Map is ready to use
-//                }
-//            }
-//
-//        },
-//        update = { mapView ->
-//
-//            onMapViewCreated(mapView)
-//        }
-//    )
-//}
-
-//@Composable
-//fun MapBoxMap(
-//    modifier: Modifier = Modifier,
-//    point: Point?,
-//) {
-//    val context = LocalContext.current
-//    val marker = remember(context) {
-//        context.getDrawable(R.drawable.ic_hiking)!!.toBitmap()
-//    }
-//    var pointAnnotationManager: PointAnnotationManager? by remember {
-//        mutableStateOf(null)
-//    }
-//
-//
-//    AndroidView(
-//        factory = {
-//            MapView(it).also { mapView ->
-//                mapView.getMapboxMap().loadStyleUri(Style.TRAFFIC_DAY)
-//                val annotationApi = mapView.annotations
-//                pointAnnotationManager = annotationApi.createPointAnnotationManager()
-//            }
-//        },
-//        update = { mapView ->
-//            mapView.mapboxMap.setCamera(
-//                CameraOptions.Builder().center(
-//                    point
-//                ).zoom(4.0).build()
-//            )
-//
-//
-//            mapView.mapboxMap.loadStyle(
-//                (
-//                        style(style = Style.STANDARD) {
-//                            +geoJsonSource(GEOJSON_SOURCE_ID) {
-//                                url("asset://from_crema_to_council_crest.geojson")
-//                            }
-//                            +lineLayer("linelayer", GEOJSON_SOURCE_ID) {
-//                                lineCap(LineCap.ROUND)
-//                                lineJoin(LineJoin.ROUND)
-//                                lineOpacity(0.7)
-//                                lineWidth(8.0)
-//                                lineColor("#888")
-//                            }
-//                        }
-//                        )
-//                    )
-//
-//            if (point != null) {
-////                pointAnnotationManager?.let {
-////                    it.deleteAll()
-////                    val pointAnnotationOptions = PointAnnotationOptions()
-////                        .withPoint(point)
-////                        .withIconImage(marker)
-////
-////                    it.create(pointAnnotationOptions)
-////                    mapView.getMapboxMap()
-////                        .flyTo(CameraOptions.Builder().zoom(16.0).center(point).build())
-////                }
-//            }
-//            NoOpUpdate
-//        },
-//        modifier = modifier
-//    )
-//}
-    private const val GEOJSON_SOURCE_ID = "line"
+                private const val GEOJSON_SOURCE_ID = "line"
     private const val LATITUDE = -122.486052
     private const val LONGITUDE = 37.830348
     private const val ZOOM = 14.0

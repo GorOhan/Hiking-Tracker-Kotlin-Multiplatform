@@ -82,7 +82,7 @@ fun StartHikingScreen(
         contentAlignment = Alignment.Center,
     ) {
        // MapBoxMap(point = Point.fromLngLat(44.4991, 40.1792))
-        MapContainer(points)
+        MapContainer()
         Row(
             modifier = Modifier
                 .padding(vertical = 24.dp,horizontal = 8.dp)
