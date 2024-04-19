@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mapbox.geojson.Point
 import com.ohanyan.xhike.android.R
-import com.ohanyan.xhike.android.ui.map.MapContainer
+import com.ohanyan.xhike.android.ui.bottomnav.starthiking.map.MapContainer
 import com.ohanyan.xhike.android.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel
 import org.osmdroid.util.GeoPoint
@@ -81,8 +81,9 @@ fun StartHikingScreen(
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-       // MapBoxMap(point = Point.fromLngLat(44.4991, 40.1792))
-        MapContainer()
+        MapContainer(
+            startHikingViewModel = startHikingViewModel,
+        )
         Row(
             modifier = Modifier
                 .padding(vertical = 24.dp,horizontal = 8.dp)

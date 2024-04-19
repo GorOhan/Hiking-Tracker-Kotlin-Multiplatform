@@ -36,7 +36,8 @@ class TestViewModel: ObservableObject {
             hikeImage: "",
             hikeTime: "",
             hikeLocationLot: 2.2,
-            hikeLocationLat: 2.2
+            hikeLocationLat: 2.2,
+            hikeIsFavourite: false
         )
         insertHikeInDbUseCase.invoke(hikeEntity: hike)
         getHikesUseCase.invoke()

@@ -10,15 +10,13 @@ struct ContentView: View {
            self._viewModel = StateObject(wrappedValue: TestViewModel())
         }
 
-
-    
     var body: some View {
-        ZStack{
+        ZStack {
             Color(hex: 0x175366) // Custom color with hex code
                         .edgesIgnoringSafeArea(.all) 
             Text("Hiking")
                          .foregroundColor(.white)
-                         .font(.system(size: 48)) 
+                         .font(.system(size: 64)) 
                          .onTapGesture {
                             
                              viewModel.test()
@@ -26,8 +24,6 @@ struct ContentView: View {
                          }.onAppear{
                              viewModel.apiCallExample()
                          }
-                         
-            
         }
     }
 }
