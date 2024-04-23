@@ -11,6 +11,7 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
+		D629219A2BD7EAA500CB3BA6 /* BottomNavScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62921992BD7EAA500CB3BA6 /* BottomNavScreen.swift */; };
 		D6E569752BCAA2B3001B15E3 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E569732BCAA28F001B15E3 /* libsqlite3.0.tbd */; };
 		D6E569762BCAA2BA001B15E3 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E569742BCAA295001B15E3 /* libsqlite3.tbd */; };
 		D6E569782BCBFC43001B15E3 /* TestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E569772BCBFC43001B15E3 /* TestViewModel.swift */; };
@@ -36,6 +37,7 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D62921992BD7EAA500CB3BA6 /* BottomNavScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavScreen.swift; sourceTree = "<group>"; };
 		D6E569732BCAA28F001B15E3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		D6E569742BCAA295001B15E3 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		D6E569772BCBFC43001B15E3 /* TestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewModel.swift; sourceTree = "<group>"; };
@@ -82,8 +84,9 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				D62921982BD7EA2700CB3BA6 /* bottomnav */,
+				D62921962BD7EA0700CB3BA6 /* splash */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
@@ -99,6 +102,46 @@
 				D6E569732BCAA28F001B15E3 /* libsqlite3.0.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D62921962BD7EA0700CB3BA6 /* splash */ = {
+			isa = PBXGroup;
+			children = (
+				7555FF82242A565900829871 /* ContentView.swift */,
+			);
+			path = splash;
+			sourceTree = "<group>";
+		};
+		D62921982BD7EA2700CB3BA6 /* bottomnav */ = {
+			isa = PBXGroup;
+			children = (
+				D629219D2BD7F20800CB3BA6 /* starthiking */,
+				D629219C2BD7F1FA00CB3BA6 /* aboutus */,
+				D629219B2BD7F1ED00CB3BA6 /* trails */,
+				D62921992BD7EAA500CB3BA6 /* BottomNavScreen.swift */,
+			);
+			path = bottomnav;
+			sourceTree = "<group>";
+		};
+		D629219B2BD7F1ED00CB3BA6 /* trails */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = trails;
+			sourceTree = "<group>";
+		};
+		D629219C2BD7F1FA00CB3BA6 /* aboutus */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = aboutus;
+			sourceTree = "<group>";
+		};
+		D629219D2BD7F20800CB3BA6 /* starthiking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = starthiking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +256,7 @@
 			files = (
 				D6E569782BCBFC43001B15E3 /* TestViewModel.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				D629219A2BD7EAA500CB3BA6 /* BottomNavScreen.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

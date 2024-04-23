@@ -128,12 +128,12 @@ fun MapContainer(
                                      )
                                  )
 
-                            invalidate()
                             val routePolyline = Polyline()
                             routePolyline.setPoints(routePoints)
                             println("FROM SCREEN$routePoints")
 
                             routePolyline.color = Color.argb(240, 16, 8, 0)
+                            overlays.clear()
                             overlays.add(routePolyline)
                             invalidate()
                         }
@@ -163,12 +163,12 @@ fun MapContainer(
             val locationCallback = object : LocationCallback(
             ) {
                 override fun onLocationResult(locationResult: LocationResult) {
-                    mapView.controller.setCenter(
-                        GeoPoint(
-                            locationResult.lastLocation?.latitude ?: 0.0,
-                            locationResult.lastLocation?.longitude ?: 0.0
-                        )
-                    )
+//                    mapView.controller.setCenter(
+//                        GeoPoint(
+//                            locationResult.lastLocation?.latitude ?: 0.0,
+//                            locationResult.lastLocation?.longitude ?: 0.0
+//                        )
+//                    )
 
 
 //                    val routePolyline = Polyline()
