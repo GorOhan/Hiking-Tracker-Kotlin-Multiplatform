@@ -7,7 +7,6 @@ import com.ohanyan.xhike.di.repositoryModule
 import com.ohanyan.xhike.di.useCasesModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import org.osmdroid.config.Configuration
 
 
 class HikingApp : Application() {
@@ -16,10 +15,10 @@ class HikingApp : Application() {
         super.onCreate()
 
         MapboxOptions.accessToken = "pk.eyJ1IjoiZ3JvYW4iLCJhIjoiY2x1dGdoa2ljMGx5ZDJyb2lheHptb243YyJ9.VFWaDAoyH7IgpIq0w1_12Q"
-        Configuration.getInstance().load(applicationContext, getSharedPreferences("osmdroid", 0))
+     //   Configuration.getInstance().load(applicationContext, getSharedPreferences("osmdroid", 0))
     //  Configuration.getInstance().setUserAgentValue("R661W5Z8ssl908BRAnmCSImEn2ZZ7ugfqhO1BEzHQWU")
 
-        Configuration.getInstance().setUserAgentValue("8yqxkMfyLqYKZ7KAdgGwWkZgd6vhOjSj4mOWrF_5Po")
+     //   Configuration.getInstance().setUserAgentValue("8yqxkMfyLqYKZ7KAdgGwWkZgd6vhOjSj4mOWrF_5Po")
 
         startKoin {
             androidContext(this@HikingApp)

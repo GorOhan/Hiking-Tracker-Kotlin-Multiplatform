@@ -1,5 +1,6 @@
 package com.ohanyan.xhike.android.ui.bottomnav.starthiking
 
+import android.graphics.Color
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -41,23 +42,55 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import com.mapbox.common.location.Location
+import com.mapbox.geojson.Feature
+import com.mapbox.geojson.FeatureCollection
+import com.mapbox.geojson.LineString
+
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ImageHolder
+import com.mapbox.maps.MapView
+import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.layers.addLayer
+import com.mapbox.maps.extension.style.layers.generated.LineLayer
+import com.mapbox.maps.extension.style.layers.generated.lineLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
+import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
+import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
+import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.navigation.core.lifecycle.MapboxNavigationApp
+import com.mapbox.navigation.core.lifecycle.forwardMapboxNavigation
+import com.mapbox.navigation.core.trip.session.LocationMatcherResult
+import com.mapbox.navigation.core.trip.session.LocationObserver
+import com.mapbox.navigation.ui.maps.location.NavigationLocationProvider
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.ui.bottomnav.starthiking.map.MapContainer
 import com.ohanyan.xhike.android.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel
-import org.osmdroid.util.GeoPoint
 
 @Composable
 fun StartHikingScreen(
     navController: NavController,
     startHikingViewModel: StartHikingViewModel = getViewModel()
 ) {
+    val navigationLocationProvider = NavigationLocationProvider()
+
     val alpha = remember { Animatable(1f) }
     val infiniteTransition = rememberInfiniteTransition()
 
-    val points by startHikingViewModel.points.collectAsState()
+    //  val points by startHikingViewModel.points.collectAsState()
+    val points = listOf(
+        Point.fromLngLat(44.503490, 40.177200),
+        Point.fromLngLat(-124.726981, 49.384358)
+
+    )
 
     val xOffset by rememberInfiniteTransition(label = "").animateFloat(
         initialValue = 0f,
@@ -84,16 +117,27 @@ fun StartHikingScreen(
         MapContainer(
             startHikingViewModel = startHikingViewModel,
         )
+        Image(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .alpha(1f)
+                .height(50.dp)
+                .clickable {
+                    startHikingViewModel.startHiking()
+                },
+            painter = painterResource(id = R.drawable.ic_compass),
+            contentDescription = ""
+        )
         Row(
             modifier = Modifier
-                .padding(vertical = 24.dp,horizontal = 8.dp)
+                .padding(vertical = 24.dp, horizontal = 8.dp)
                 .align(Alignment.BottomEnd),
         ) {
             Image(
                 modifier = Modifier
                     .alpha(1f)
-                   // .alpha(if (xOffset <= 1) 0.2f else 1f)
-                    .offset(y = if  (xOffset>=1 ) 30.dp * (xOffset-1) else 30.dp)
+                    // .alpha(if (xOffset <= 1) 0.2f else 1f)
+                    .offset(y = if (xOffset >= 1) 30.dp * (xOffset - 1) else 30.dp)
                     .height(50.dp),
                 painter = painterResource(id = R.drawable.left_foot),
                 contentDescription = ""
@@ -101,12 +145,28 @@ fun StartHikingScreen(
             Image(
                 modifier = Modifier
                     .alpha(1f)
-                  //  .alpha(if (xOffset <= 1) 1f else 0.2f)
-                    .offset(y = if  (xOffset<=1) 30.dp * (xOffset) else 30.dp)
+                    //  .alpha(if (xOffset <= 1) 1f else 0.2f)
+                    .offset(y = if (xOffset <= 1) 30.dp * (xOffset) else 30.dp)
                     .height(50.dp),
                 painter = painterResource(id = R.drawable.right_foot),
                 contentDescription = ""
             )
         }
     }
+    val locationObserver = object : LocationObserver {
+
+        override fun onNewRawLocation(rawLocation: Location) {
+
+        }
+
+        override fun onNewLocationMatcherResult(locationMatcherResult: LocationMatcherResult) {
+            navigationLocationProvider.changePosition(
+                location = locationMatcherResult.enhancedLocation,
+                keyPoints = locationMatcherResult.keyPoints,
+            )
+        }
+    }
 }
+
+
+private const val GEOJSON_SOURCE_ID = "line"
