@@ -1,33 +1,36 @@
 package com.ohanyan.xhike.data.db
 
+import com.ohanyan.xhike.HikeTable
 import com.ohanyan.xhike.TaskDatabase
 import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.db.SqlDriver
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
 
 class Database(sqlDriver: SqlDriver) {
 
-    private val database = TaskDatabase(sqlDriver)
+    private val database = TaskDatabase(
+        sqlDriver, hikeTableAdapter = HikeTable.Adapter(
+            hikePointsAdapter = pointsAdapter,
+            hikeDifficultyAdapter = hikeDiffAdapter
+        )
+    )
     private val dbQuery = database.taskDatabaseQueries
 
-//    internal fun clearDatabase() {
-//        dbQuery.transaction {
-//            dbQuery.removeAllHikes()
-//        }
-//    }
 
     internal fun updateHikeById(hikeEntity: HikeEntity) {
         dbQuery.updateHikeById(
             hikeEntity.hikeName,
             hikeEntity.hikeDescription,
             hikeEntity.hikeLengthInKm,
-            hikeDiffAdapter.encode(hikeEntity.hikeDifficulty),
+            hikeEntity.hikeDifficulty,
             hikeEntity.hikeRating,
             hikeEntity.hikeImage,
             hikeEntity.hikeTime,
             hikeEntity.hikeLocationLot,
             hikeEntity.hikeLocationLat,
             hikeEntity.hikeIsFavourite,
-            hikeEntity.hikeId ?: 0
+            hikeEntity.hikeId ?: 0,
         )
     }
 
@@ -36,19 +39,20 @@ class Database(sqlDriver: SqlDriver) {
     }
 
     internal fun insertHike(hikeEntity: HikeEntity) {
+
         dbQuery.insertHike(
             hikeEntity.hikeId,
             hikeEntity.hikeName,
             hikeEntity.hikeDescription,
             hikeEntity.hikeLengthInKm,
-            hikeDiffAdapter.encode(hikeEntity.hikeDifficulty),
+            hikeEntity.hikeDifficulty,
             hikeEntity.hikeRating,
             hikeEntity.hikeImage,
             hikeEntity.hikeTime,
             hikeEntity.hikeLocationLot,
             hikeEntity.hikeLocationLat,
-            hikeEntity.hikeIsFavourite
-
+            hikeEntity.hikeIsFavourite,
+            hikeEntity.hikePoints
         )
     }
 
@@ -57,26 +61,28 @@ class Database(sqlDriver: SqlDriver) {
         hikeName: String,
         hikeDescription: String,
         hikeLengthInKm: Double,
-        hikeDifficulty: String,
+        hikeDifficulty: HikeDifficulty,
         hikeRating: Double,
         hikeImage: String,
         hikeTime: String,
         hikeLocationLot: Double,
         hikeLocationLat: Double,
-        hikeIsFavourite: Boolean
+        hikeIsFavourite: Boolean,
+        hikePoints: List<PointEntity>,
     ): HikeEntity {
         return HikeEntity(
             hikeId,
             hikeName,
             hikeDescription,
             hikeLengthInKm,
-            hikeDiffAdapter.decode(hikeDifficulty),
+            hikeDifficulty,
             hikeRating,
             hikeImage,
             hikeTime,
             hikeLocationLot,
             hikeLocationLat,
-            hikeIsFavourite
+            hikeIsFavourite,
+            hikePoints
         )
     }
 
@@ -87,4 +93,12 @@ val hikeDiffAdapter = object : ColumnAdapter<HikeDifficulty, String> {
         HikeDifficulty.valueOf(databaseValue)
 
     override fun encode(value: HikeDifficulty): String = value.name
+}
+
+val pointsAdapter = object : ColumnAdapter<List<PointEntity>, String> {
+    override fun decode(databaseValue: String): List<PointEntity> =
+        Json.decodeFromString<List<PointEntity>>(databaseValue)
+
+    override fun encode(value: List<PointEntity>): String =
+        Json.encodeToString(ListSerializer(PointEntity.serializer()), value)
 }

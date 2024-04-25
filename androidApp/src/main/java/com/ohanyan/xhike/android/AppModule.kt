@@ -12,6 +12,6 @@ val appModule = module {
     viewModel { SplashViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { TrailsViewModel(get(),get(),get()) }
-    viewModel { StartHikingViewModel() }
+    viewModel { StartHikingViewModel(get()) }
     viewModel { AboutUsViewModel() }
 }

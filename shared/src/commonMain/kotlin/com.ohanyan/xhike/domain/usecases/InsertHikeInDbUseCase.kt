@@ -8,7 +8,7 @@ class InsertHikeInDbUseCase(
 ):KoinComponent {
     private val dbRepository: DBRepository by inject()
 
-    fun invoke(
+    operator fun invoke(
         hikeEntity: HikeEntity
     ) {
         dbRepository.insertData(hikeEntity)

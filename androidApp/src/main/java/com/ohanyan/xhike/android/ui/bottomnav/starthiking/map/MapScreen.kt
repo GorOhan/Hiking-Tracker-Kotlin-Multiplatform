@@ -46,8 +46,8 @@ fun MapContainer(
     val startHiking by startHikingViewModel.startHiking.collectAsState()
 
     val locationRequest = LocationRequest.create().apply {
-        interval = 10000 // Update interval in milliseconds
-        fastestInterval = 5000 // Fastest update interval in milliseconds
+        interval = 3000 // Update interval in milliseconds
+        fastestInterval = 2000 // Fastest update interval in milliseconds
         priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
@@ -112,9 +112,10 @@ fun MapContainer(
                                     locationResult.lastLocation?.latitude ?: 0.0
                                 )
                             mapboxMap.setCamera(
-                                CameraOptions.Builder().center(
-                                    currentPoint
-                                ).build()
+                                CameraOptions.Builder()
+                                    .center(currentPoint)
+                                    .zoom(10.0)
+                                    .build()
                             )
                             startHikingViewModel.addPoint(
                                 Point.fromLngLat(

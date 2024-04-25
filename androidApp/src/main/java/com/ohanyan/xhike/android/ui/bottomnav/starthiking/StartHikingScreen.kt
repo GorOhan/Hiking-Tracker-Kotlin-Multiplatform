@@ -85,12 +85,6 @@ fun StartHikingScreen(
     val alpha = remember { Animatable(1f) }
     val infiniteTransition = rememberInfiniteTransition()
 
-    //  val points by startHikingViewModel.points.collectAsState()
-    val points = listOf(
-        Point.fromLngLat(44.503490, 40.177200),
-        Point.fromLngLat(-124.726981, 49.384358)
-
-    )
 
     val xOffset by rememberInfiniteTransition(label = "").animateFloat(
         initialValue = 0f,
@@ -126,6 +120,18 @@ fun StartHikingScreen(
                     startHikingViewModel.startHiking()
                 },
             painter = painterResource(id = R.drawable.ic_compass),
+            contentDescription = ""
+        )
+
+        Image(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .alpha(1f)
+                .height(50.dp)
+                .clickable {
+                    startHikingViewModel.insertHikeInDb()
+                },
+            painter = painterResource(id = R.drawable.ic_stop),
             contentDescription = ""
         )
         Row(

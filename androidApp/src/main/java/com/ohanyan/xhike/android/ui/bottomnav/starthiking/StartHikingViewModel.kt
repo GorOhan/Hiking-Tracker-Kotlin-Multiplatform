@@ -3,14 +3,16 @@ package com.ohanyan.xhike.android.ui.bottomnav.starthiking
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mapbox.geojson.Point
-import kotlinx.coroutines.delay
+import com.ohanyan.xhike.data.db.HikeEntity
+import com.ohanyan.xhike.data.db.PointEntity
+import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 
-class StartHikingViewModel() : ViewModel() {
+class StartHikingViewModel(
+    private val insertHikeInDbUseCase: InsertHikeInDbUseCase
+) : ViewModel() {
 
     private val _points: MutableStateFlow<List<Point>> = MutableStateFlow(emptyList())
     val points = _points.asStateFlow()
@@ -19,7 +21,9 @@ class StartHikingViewModel() : ViewModel() {
     val startHiking = _startHiking.asStateFlow()
 
     init {
-        viewModelScope.launch {}
+        viewModelScope.launch {
+
+        }
     }
 
     fun addPoint(point: Point) {
@@ -28,6 +32,21 @@ class StartHikingViewModel() : ViewModel() {
 
     fun startHiking() {
         _startHiking.value = true
+    }
+
+    fun insertHikeInDb() {
+        viewModelScope.launch {
+            insertHikeInDbUseCase(
+               hikeEntity = HikeEntity(
+                   hikePoints = points.value.map {
+                          PointEntity(
+                            pointLocationLot = it.longitude(),
+                            pointLocationLat = it.latitude()
+                          )
+                   }
+               )
+            )
+        }
     }
 
 }

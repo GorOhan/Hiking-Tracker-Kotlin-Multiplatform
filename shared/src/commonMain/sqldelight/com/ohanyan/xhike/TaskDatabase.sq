@@ -1,17 +1,21 @@
+import com.ohanyan.xhike.data.db.HikeDifficulty;
+import com.ohanyan.xhike.data.db.PointEntity;
 import kotlin.Boolean;
+import kotlin.collections.List;
 
 CREATE TABLE hikeTable (
     hikeId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     hikeName TEXT NOT NULL,
     hikeDescription TEXT NOT NULL,
     hikeLengthInKm REAL NOT NULL,
-    hikeDifficulty TEXT NOT NULL,
+    hikeDifficulty TEXT AS HikeDifficulty NOT NULL,
     hikeRating REAL NOT NULL,
     hikeImage TEXT NOT NULL,
     hikeTime TEXT NOT NULL,
     hikeLocationLot REAL NOT NULL,
     hikeLocationLat REAL NOT NULL,
-    hikeIsFavourite INTEGER AS Boolean NOT NULL DEFAULT 0
+    hikeIsFavourite INTEGER AS Boolean NOT NULL DEFAULT 0,
+    hikePoints TEXT AS List<PointEntity> NOT NULL
     );
 
 getAllHikes:
@@ -21,8 +25,8 @@ removeAllHikes:
 DELETE FROM hikeTable;
 
 insertHike:
-INSERT INTO hikeTable(hikeId, hikeName,hikeDescription,hikeLengthInKm,hikeDifficulty,hikeRating,hikeImage,hikeTime,hikeLocationLot,hikeLocationLat,hikeIsFavourite)
-VALUES( ?,?,?,?,?,?,?,?,?,?,?);
+INSERT INTO hikeTable(hikeId, hikeName,hikeDescription,hikeLengthInKm,hikeDifficulty,hikeRating,hikeImage,hikeTime,hikeLocationLot,hikeLocationLat,hikeIsFavourite,hikePoints)
+VALUES( ?,?,?,?,?,?,?,?,?,?,?,?);
 
 updateHikeById:
 UPDATE hikeTable SET hikeName = ?, hikeDescription = ?, hikeLengthInKm = ?, hikeDifficulty = ?, hikeRating = ?, hikeImage = ?, hikeTime = ?, hikeLocationLot = ?, hikeLocationLat = ?, hikeIsFavourite = ? WHERE hikeId = ?;

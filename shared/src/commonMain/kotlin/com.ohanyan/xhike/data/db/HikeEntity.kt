@@ -1,5 +1,7 @@
 package com.ohanyan.xhike.data.db
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class HikeEntity(
     val hikeId: Long? = null,
     val hikeName: String = "Hike Name",
@@ -12,6 +14,13 @@ data class HikeEntity(
     val hikeLocationLot: Double = 0.0,
     val hikeLocationLat: Double = 0.0,
     val hikeIsFavourite: Boolean = false,
+    val hikePoints: List<PointEntity> = emptyList()
+)
+
+@Serializable
+data class PointEntity(
+    val pointLocationLot: Double = 0.0,
+    val pointLocationLat: Double = 0.0,
 )
 
 enum class HikeDifficulty(val value: String) {
