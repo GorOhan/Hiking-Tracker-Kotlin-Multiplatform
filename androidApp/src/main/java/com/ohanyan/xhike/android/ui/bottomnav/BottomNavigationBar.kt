@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ohanyan.xhike.android.ui.bottomnav.aboutus.AboutUsScreen
 import com.ohanyan.xhike.android.ui.bottomnav.starthiking.StartHikingScreen
 import com.ohanyan.xhike.android.ui.bottomnav.trails.TrailsScreen
+import com.ohanyan.xhike.android.ui.navigation.TrailsScreenNavMain
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -87,7 +88,8 @@ fun BottomNavigationBar() {
             modifier = Modifier.padding(paddingValues = paddingValues)
         ) {
             composable(MainScreens.TrailsScreen.route) {
-                TrailsScreen(navController =  navController)
+                //TrailsScreen(navController =  navController)
+                TrailsScreenNavMain()
             }
             composable(MainScreens.StartHikingScreen.route) {
                 StartHikingScreen(navController =  navController)

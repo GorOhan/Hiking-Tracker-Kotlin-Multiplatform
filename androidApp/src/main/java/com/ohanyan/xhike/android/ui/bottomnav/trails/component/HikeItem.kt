@@ -87,6 +87,7 @@ fun HikeItem(
             Icon(
                 modifier = Modifier.clickable {
                     onFavouriteClick(hikeEntity)
+
                 },
                 imageVector = if (hikeEntity.hikeIsFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                 contentDescription = " ",

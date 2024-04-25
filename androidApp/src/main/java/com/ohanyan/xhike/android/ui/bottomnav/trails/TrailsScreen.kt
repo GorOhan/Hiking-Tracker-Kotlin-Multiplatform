@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.ui.bottomnav.trails.component.HikeItem
 import com.ohanyan.xhike.android.ui.navigation.Screen
+import com.ohanyan.xhike.android.ui.navigation.TrailsScreenRoute
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -60,6 +61,9 @@ fun TrailsScreen(
             ) {
                 items(count = hikes.size) { index ->
                         HikeItem(hikes[index]) {
+                            navController.navigate("${TrailsScreenRoute.SingleTrailScreen.route}/${
+                                hikes[index].hikeId
+                            }")
                             trailsViewModel.onFavouriteClick(hikes[index])
                         }
 
