@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav.trails
+package com.ohanyan.xhike.android.ui.bottomnav.trails.trails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ohanyan.xhike.android.R
+import com.ohanyan.xhike.android.ui.bottomnav.trails.component.AddHikeDialog
 import com.ohanyan.xhike.android.ui.bottomnav.trails.component.HikeItem
 import com.ohanyan.xhike.android.ui.navigation.Screen
 import com.ohanyan.xhike.android.ui.navigation.TrailsScreenRoute
@@ -60,12 +61,11 @@ fun TrailsScreen(
                     .padding(12.dp),
             ) {
                 items(count = hikes.size) { index ->
-                        HikeItem(hikes[index]) {
-                            navController.navigate("${TrailsScreenRoute.SingleTrailScreen.route}/${
-                                hikes[index].hikeId
-                            }")
+                        HikeItem(hikes[index], onItemClick = {
+                            navController.navigate("${TrailsScreenRoute.SingleTrailScreen.route}/${hikes[index].hikeId}")
+                        }, onFavouriteClick = {
                             trailsViewModel.onFavouriteClick(hikes[index])
-                        }
+                        })
 
                 }
             }

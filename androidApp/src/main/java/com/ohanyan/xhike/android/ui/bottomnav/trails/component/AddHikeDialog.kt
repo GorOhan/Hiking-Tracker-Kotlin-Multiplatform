@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav.trails
+package com.ohanyan.xhike.android.ui.bottomnav.trails.component
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi

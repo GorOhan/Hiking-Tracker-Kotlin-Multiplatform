@@ -74,11 +74,12 @@ dependencies {
     implementation(libs.coil.compose)
     implementation("io.insert-koin:koin-android:3.2.0")
     implementation ("io.insert-koin:koin-androidx-compose:3.2.0")
-    implementation ("com.mapbox.navigationcore:navigation:3.0.1")
-    implementation ("com.mapbox.navigationcore:tripdata:3.0.1")
+
+   // implementation ("com.mapbox.navigationcore:navigation:3.0.1")
+   // implementation ("com.mapbox.navigationcore:tripdata:3.0.1")
     implementation ("com.mapbox.navigationcore:android:3.0.1")
-    implementation ("com.mapbox.navigationcore:ui-maps:3.0.1")
-    implementation ("com.mapbox.navigationcore:ui-components:3.0.1")
+  //  implementation ("com.mapbox.navigationcore:ui-maps:3.0.1")
+   // implementation ("com.mapbox.navigationcore:ui-components:3.0.1")
 }
 
 kapt {

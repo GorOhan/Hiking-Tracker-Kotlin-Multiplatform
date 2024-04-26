@@ -7,6 +7,7 @@ import com.ohanyan.xhike.data.repository.DBRepositoryImpl
 import com.ohanyan.xhike.data.repository.NetworkRepositoryImpl
 import com.ohanyan.xhike.domain.repository.DBRepository
 import com.ohanyan.xhike.domain.repository.NetworkRepository
+import com.ohanyan.xhike.domain.usecases.GetHikeByIdUseCase
 import com.ohanyan.xhike.domain.usecases.GetHikesUseCase
 import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase
 import com.ohanyan.xhike.domain.usecases.UpdateHikeUseCase
@@ -19,6 +20,7 @@ val useCasesModule = module {
     factory { InsertHikeInDbUseCase() }
     factory { GetHikesUseCase() }
     factory { UpdateHikeUseCase() }
+    factory { GetHikeByIdUseCase() }
 }
 
 val repositoryModule = module {

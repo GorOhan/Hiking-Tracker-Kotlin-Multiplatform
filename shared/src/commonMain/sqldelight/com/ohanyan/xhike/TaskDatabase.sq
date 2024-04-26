@@ -30,3 +30,6 @@ VALUES( ?,?,?,?,?,?,?,?,?,?,?,?);
 
 updateHikeById:
 UPDATE hikeTable SET hikeName = ?, hikeDescription = ?, hikeLengthInKm = ?, hikeDifficulty = ?, hikeRating = ?, hikeImage = ?, hikeTime = ?, hikeLocationLot = ?, hikeLocationLat = ?, hikeIsFavourite = ? WHERE hikeId = ?;
+
+getHikeById:
+SELECT * FROM hikeTable WHERE hikeId = ?;

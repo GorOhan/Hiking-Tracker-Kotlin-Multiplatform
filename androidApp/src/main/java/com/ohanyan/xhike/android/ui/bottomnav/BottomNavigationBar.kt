@@ -27,7 +27,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ohanyan.xhike.android.ui.bottomnav.aboutus.AboutUsScreen
 import com.ohanyan.xhike.android.ui.bottomnav.starthiking.StartHikingScreen
-import com.ohanyan.xhike.android.ui.bottomnav.trails.TrailsScreen
 import com.ohanyan.xhike.android.ui.navigation.TrailsScreenNavMain
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

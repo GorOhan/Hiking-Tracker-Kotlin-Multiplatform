@@ -8,4 +8,6 @@ interface DBRepository {
     fun getAllHikes(): List<HikeEntity>
 
     fun updateHike(hikeEntity: HikeEntity)
+
+    fun getHikeById(hikeId: Long): HikeEntity
 }

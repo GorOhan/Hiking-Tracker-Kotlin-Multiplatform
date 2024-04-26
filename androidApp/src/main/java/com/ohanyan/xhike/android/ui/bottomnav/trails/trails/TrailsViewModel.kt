@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav.trails
+package com.ohanyan.xhike.android.ui.bottomnav.trails.trails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

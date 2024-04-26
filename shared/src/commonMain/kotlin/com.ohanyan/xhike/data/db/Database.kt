@@ -56,6 +56,10 @@ class Database(sqlDriver: SqlDriver) {
         )
     }
 
+    internal fun getHikeById(hikeId: Long): HikeEntity {
+        return dbQuery.getHikeById(hikeId, ::mapDbEntity).executeAsOne()
+    }
+
     private fun mapDbEntity(
         hikeId: Long,
         hikeName: String,

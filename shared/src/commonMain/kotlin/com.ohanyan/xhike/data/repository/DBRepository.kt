@@ -18,4 +18,8 @@ class DBRepositoryImpl(
     override fun updateHike(hikeEntity: HikeEntity) {
         database.updateHikeById(hikeEntity)
     }
+
+    override fun getHikeById(hikeId: Long): HikeEntity {
+        return database.getHikeById(hikeId)
+    }
 }
