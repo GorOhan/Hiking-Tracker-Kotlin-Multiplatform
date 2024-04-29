@@ -10,8 +10,7 @@ class GetHikesUseCase(
 
     private val dbRepository: DBRepository by inject()
 
-    fun invoke(
-    ): List<HikeEntity> {
+    fun invoke(): List<HikeEntity> {
        return dbRepository.getAllHikes().sortedBy { !it.hikeIsFavourite }
     }
 }

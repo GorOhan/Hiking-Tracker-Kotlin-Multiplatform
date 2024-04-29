@@ -9,45 +9,47 @@
 import SwiftUI
 
 struct BottomNavScreen: View {
+    
     @State private var selectedTab = 0
 
     var body: some View {
 
-        TabView(selection: $selectedTab) {
-                      Text("Home View")
-                          .tabItem {
-                              Label("Home", systemImage: "house")
-                          }
-                          .tag(0)
-                      
-                      Text("Search View")
-                          .tabItem {
-                              Label("Search", systemImage: "magnifyingglass")
-                          }
-                          .tag(1)
-                      
-                      Text("Profile View")
-                          .tabItem {
-                              Image("ic_about")
-                              Text("About")
-                          }
-                          .tag(2)
-                  }
-        .tint(.pink)
-        .onAppear(perform: {
-            //2
-            UITabBar.appearance().unselectedItemTintColor = .systemBrown
-            //3
-            UITabBarItem.appearance().badgeColor = .systemPink
-            //4
-            UITabBar.appearance().backgroundColor = UIColor(Color(hex: 0x175366))
+            TabView(selection: $selectedTab) {
+                
+                TrailsScreenView()
+                    .tag(0)
+                
+                StartHikingScreen()
+                    .tag(1)
+                
+                AboutScreenView()
+                    .tag(2)
+                
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .navigationBarHidden(true)
             
-        //    UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemPink]
-            //UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance()
-            //Above API will kind of override other behaviour and bring the default UI for TabView
-        })
-        .navigationBarHidden(true)
+            ZStack {
+                
+                HStack{
+                    ForEach((TabbedItems.allCases), id: \.self){ item in
+                        Button{
+                            selectedTab = item.rawValue
+                        } label: {
+                            CustomTabItem(imageName: item.iconName, title: item.title, isActive: (selectedTab == item.rawValue))
+                            if item.rawValue != 2  { Spacer() }
+                        }
+                    }
+                }
+                .padding(6)
+            }
+            .frame(height: 70)
+            .background(Color("Primary"))
+            .cornerRadius(35)
+            .padding(.horizontal, 14)
+        
 
+        
     }
 }
 
@@ -56,3 +58,4 @@ struct BottomNavScreen_Previews: PreviewProvider {
         BottomNavScreen()
     }
 }
+

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,13 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		D629219A2BD7EAA500CB3BA6 /* BottomNavScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62921992BD7EAA500CB3BA6 /* BottomNavScreen.swift */; };
+		D6A3B0AB2BDF7DDB003B728A /* TrailsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A3B0AA2BDF7DDB003B728A /* TrailsScreenView.swift */; };
+		D6A3B0AD2BDF7DF7003B728A /* AboutScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A3B0AC2BDF7DF7003B728A /* AboutScreenView.swift */; };
+		D6A3B0AF2BDF7E07003B728A /* StartHikingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A3B0AE2BDF7E07003B728A /* StartHikingScreen.swift */; };
+		D6A3B0B12BDF7F76003B728A /* TabbedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A3B0B02BDF7F76003B728A /* TabbedItems.swift */; };
+		D6A3B0B32BDF80B4003B728A /* MainTabbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A3B0B22BDF80B4003B728A /* MainTabbedView.swift */; };
+		D6A3B0BC2BDFD39F003B728A /* josefin_sans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6A3B0BB2BDFD39F003B728A /* josefin_sans.ttf */; };
+		D6A3B0BE2BDFD60E003B728A /* JosefinSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6A3B0BD2BDFD60E003B728A /* JosefinSans-SemiBold.ttf */; };
 		D6E569752BCAA2B3001B15E3 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E569732BCAA28F001B15E3 /* libsqlite3.0.tbd */; };
 		D6E569762BCAA2BA001B15E3 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E569742BCAA295001B15E3 /* libsqlite3.tbd */; };
 		D6E569782BCBFC43001B15E3 /* TestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E569772BCBFC43001B15E3 /* TestViewModel.swift */; };
@@ -38,6 +45,13 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D62921992BD7EAA500CB3BA6 /* BottomNavScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavScreen.swift; sourceTree = "<group>"; };
+		D6A3B0AA2BDF7DDB003B728A /* TrailsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailsScreenView.swift; sourceTree = "<group>"; };
+		D6A3B0AC2BDF7DF7003B728A /* AboutScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScreenView.swift; sourceTree = "<group>"; };
+		D6A3B0AE2BDF7E07003B728A /* StartHikingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartHikingScreen.swift; sourceTree = "<group>"; };
+		D6A3B0B02BDF7F76003B728A /* TabbedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedItems.swift; sourceTree = "<group>"; };
+		D6A3B0B22BDF80B4003B728A /* MainTabbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbedView.swift; sourceTree = "<group>"; };
+		D6A3B0BB2BDFD39F003B728A /* josefin_sans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = josefin_sans.ttf; sourceTree = "<group>"; };
+		D6A3B0BD2BDFD60E003B728A /* JosefinSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		D6E569732BCAA28F001B15E3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		D6E569742BCAA295001B15E3 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		D6E569772BCBFC43001B15E3 /* TestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewModel.swift; sourceTree = "<group>"; };
@@ -67,6 +81,7 @@
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
+				D6A3B0BA2BDFD388003B728A /* Font */,
 				7555FF7D242A565900829871 /* iosApp */,
 				7555FF7C242A565900829871 /* Products */,
 				7555FFB0242A642200829871 /* Frameworks */,
@@ -119,6 +134,8 @@
 				D629219C2BD7F1FA00CB3BA6 /* aboutus */,
 				D629219B2BD7F1ED00CB3BA6 /* trails */,
 				D62921992BD7EAA500CB3BA6 /* BottomNavScreen.swift */,
+				D6A3B0B02BDF7F76003B728A /* TabbedItems.swift */,
+				D6A3B0B22BDF80B4003B728A /* MainTabbedView.swift */,
 			);
 			path = bottomnav;
 			sourceTree = "<group>";
@@ -126,6 +143,7 @@
 		D629219B2BD7F1ED00CB3BA6 /* trails */ = {
 			isa = PBXGroup;
 			children = (
+				D6A3B0AA2BDF7DDB003B728A /* TrailsScreenView.swift */,
 			);
 			path = trails;
 			sourceTree = "<group>";
@@ -133,6 +151,7 @@
 		D629219C2BD7F1FA00CB3BA6 /* aboutus */ = {
 			isa = PBXGroup;
 			children = (
+				D6A3B0AC2BDF7DF7003B728A /* AboutScreenView.swift */,
 			);
 			path = aboutus;
 			sourceTree = "<group>";
@@ -140,8 +159,18 @@
 		D629219D2BD7F20800CB3BA6 /* starthiking */ = {
 			isa = PBXGroup;
 			children = (
+				D6A3B0AE2BDF7E07003B728A /* StartHikingScreen.swift */,
 			);
 			path = starthiking;
+			sourceTree = "<group>";
+		};
+		D6A3B0BA2BDFD388003B728A /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				D6A3B0BD2BDFD60E003B728A /* JosefinSans-SemiBold.ttf */,
+				D6A3B0BB2BDFD39F003B728A /* josefin_sans.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +220,9 @@
 				Base,
 			);
 			mainGroup = 7555FF72242A565900829871;
+			packageReferences = (
+				D6A3B0B42BDFB364003B728A /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
+			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -207,6 +239,8 @@
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
+				D6A3B0BC2BDFD39F003B728A /* josefin_sans.ttf in Resources */,
+				D6A3B0BE2BDFD60E003B728A /* JosefinSans-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,10 +288,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6A3B0B12BDF7F76003B728A /* TabbedItems.swift in Sources */,
 				D6E569782BCBFC43001B15E3 /* TestViewModel.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				D6A3B0AD2BDF7DF7003B728A /* AboutScreenView.swift in Sources */,
 				D629219A2BD7EAA500CB3BA6 /* BottomNavScreen.swift in Sources */,
+				D6A3B0AB2BDF7DDB003B728A /* TrailsScreenView.swift in Sources */,
+				D6A3B0AF2BDF7E07003B728A /* StartHikingScreen.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				D6A3B0B32BDF80B4003B728A /* MainTabbedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +499,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D6A3B0B42BDFB364003B728A /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/mapbox-maps-ios.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }
