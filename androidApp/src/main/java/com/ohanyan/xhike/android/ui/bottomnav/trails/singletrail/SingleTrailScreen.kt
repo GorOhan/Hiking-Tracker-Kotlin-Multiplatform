@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import com.mapbox.geojson.Point
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -36,7 +34,6 @@ fun SingleTrailScreen(
     singleTrailViewModel: SingleTrailViewModel = getViewModel()
 ) {
 
- //   val currentHike = singleTrailViewModel.hike.collectAsState()
     val routePoints by  singleTrailViewModel.points.collectAsState()
 
     LaunchedEffect(Unit) {

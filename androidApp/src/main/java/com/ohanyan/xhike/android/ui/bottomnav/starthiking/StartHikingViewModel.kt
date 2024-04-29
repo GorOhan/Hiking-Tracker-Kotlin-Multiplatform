@@ -34,7 +34,8 @@ class StartHikingViewModel(
         _startHiking.value = true
     }
 
-    fun insertHikeInDb() {
+    fun finishHike() {
+        _startHiking.value = false
         viewModelScope.launch {
             insertHikeInDbUseCase(
                hikeEntity = HikeEntity(

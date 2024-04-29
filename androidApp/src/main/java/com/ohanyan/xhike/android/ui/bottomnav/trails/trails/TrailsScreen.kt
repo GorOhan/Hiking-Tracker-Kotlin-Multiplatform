@@ -28,7 +28,6 @@ import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.ui.bottomnav.trails.component.AddHikeDialog
 import com.ohanyan.xhike.android.ui.bottomnav.trails.component.HikeItem
 import com.ohanyan.xhike.android.ui.navigation.Screen
-import com.ohanyan.xhike.android.ui.navigation.TrailsScreenRoute
 import org.koin.androidx.compose.getViewModel
 
 @Composable

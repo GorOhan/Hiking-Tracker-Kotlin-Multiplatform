@@ -1,5 +1,6 @@
 package com.ohanyan.xhike.android.ui.bottomnav
 
+import TrailsScreenNavMain
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,7 +28,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ohanyan.xhike.android.ui.bottomnav.aboutus.AboutUsScreen
 import com.ohanyan.xhike.android.ui.bottomnav.starthiking.StartHikingScreen
-import com.ohanyan.xhike.android.ui.navigation.TrailsScreenNavMain
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -35,6 +35,8 @@ fun BottomNavigationBar() {
     var navigationSelectedItem by remember { mutableIntStateOf(0) }
 
     val navController = rememberNavController()
+
+
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -87,14 +89,16 @@ fun BottomNavigationBar() {
             modifier = Modifier.padding(paddingValues = paddingValues)
         ) {
             composable(MainScreens.TrailsScreen.route) {
-                //TrailsScreen(navController =  navController)
                 TrailsScreenNavMain()
+                navigationSelectedItem = 0
             }
             composable(MainScreens.StartHikingScreen.route) {
                 StartHikingScreen(navController =  navController)
+                navigationSelectedItem = 1
             }
             composable(MainScreens.AboutUsScreen.route) {
                 AboutUsScreen(navController =  navController)
+                navigationSelectedItem = 2
             }
         }
     }

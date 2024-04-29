@@ -1,4 +1,3 @@
-package com.ohanyan.xhike.android.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
@@ -9,6 +8,7 @@ import androidx.navigation.navArgument
 import com.ohanyan.xhike.android.ui.bottomnav.starthiking.StartHikingScreen
 import com.ohanyan.xhike.android.ui.bottomnav.trails.singletrail.SingleTrailScreen
 import com.ohanyan.xhike.android.ui.bottomnav.trails.trails.TrailsScreen
+import com.ohanyan.xhike.android.ui.navigation.Screen
 
 sealed class TrailsScreenRoute(val route: String) {
     data object TrailsScreen : TrailsScreenRoute("trailsScreen")
