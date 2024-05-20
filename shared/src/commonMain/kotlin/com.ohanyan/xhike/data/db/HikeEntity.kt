@@ -6,7 +6,7 @@ data class HikeEntity(
     val hikeId: Long? = null,
     val hikeName: String = "Hike Name",
     val hikeDescription: String = "Hike Description",
-    val hikeLengthInKm: Double = 0.0,
+    val hikeLengthInKm: Double = 2.0,
     val hikeDifficulty: HikeDifficulty = HikeDifficulty.HARD,
     val hikeRating: Double = 0.0,
     val hikeImage: String = "",

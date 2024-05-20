@@ -27,7 +27,7 @@ fun AboutUsScreen(
     ) {
         Text(
             modifier = Modifier.clickable {
-                navController.navigate(Screen.MapScreen.route)
+              //  navController.navigate(Screen.MapScreen.route)
             },
             text = "About Us",
             color = MaterialTheme.colorScheme.tertiary,

@@ -5,13 +5,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ohanyan.xhike.android.ui.bottomnav.BottomNavigationBar
-import com.ohanyan.xhike.android.ui.bottomnav.starthiking.StartHikingScreen
 import com.ohanyan.xhike.android.ui.splash.SplashScreen
 
 sealed class Screen(val route: String) {
     data object SplashScreen : Screen("splashScreen")
     data object HomeScreen : Screen("homeScreen")
-    data object MapScreen : Screen("mapScreen")
 }
 
 @Composable
@@ -28,10 +26,6 @@ internal fun NavMain() {
 
         composable(route = Screen.HomeScreen.route) {
             BottomNavigationBar()
-        }
-
-        composable(route = Screen.MapScreen.route) {
-            StartHikingScreen(navController = navController)
         }
 
 //        composable(

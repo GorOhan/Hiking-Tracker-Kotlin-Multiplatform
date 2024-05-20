@@ -23,11 +23,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.navigation.NavController
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.ui.bottomnav.trails.component.AddHikeDialog
 import com.ohanyan.xhike.android.ui.bottomnav.trails.component.HikeItem
-import com.ohanyan.xhike.android.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -38,6 +38,11 @@ fun TrailsScreen(
     var showAddHikeDialog by remember { mutableStateOf(false) }
     val hikes by trailsViewModel.hikes.collectAsState()
 
+    LifecycleStartEffect(trailsViewModel) {
+        trailsViewModel.getHikes()
+        onStopOrDispose {  }
+    }
+
     Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -47,7 +52,7 @@ fun TrailsScreen(
         if (hikes.isEmpty()) {
             Text(
                 modifier = Modifier.clickable {
-                    navController.navigate(Screen.MapScreen.route)
+                    navController.navigate(TrailsScreenRoute.MapScreen.route)
                 },
                 text = "There is no any trails yet.",
                 color = MaterialTheme.colorScheme.onSecondary,
@@ -60,12 +65,17 @@ fun TrailsScreen(
                     .padding(12.dp),
             ) {
                 items(count = hikes.size) { index ->
-                        HikeItem(hikes[index], onItemClick = {
+                    HikeItem(
+                        hikeEntity = (hikes[index]),
+                        onItemClick = {
                             navController.navigate("${TrailsScreenRoute.SingleTrailScreen.route}/${hikes[index].hikeId}")
                         }, onFavouriteClick = {
                             trailsViewModel.onFavouriteClick(hikes[index])
-                        })
-
+                        },
+                        onSettingsClick = {
+                            navController.navigate("${TrailsScreenRoute.TrailSettingsScreen.route}/${hikes[index].hikeId}")
+                        }
+                    )
                 }
             }
         }

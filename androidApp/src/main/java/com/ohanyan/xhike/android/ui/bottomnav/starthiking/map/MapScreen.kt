@@ -27,8 +27,10 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
+import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
+import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.ui.bottomnav.starthiking.StartHikingViewModel
 
 lateinit var locationCallback: LocationCallback
@@ -158,7 +160,36 @@ fun MapContainer(
 
 
         },
-        update = { mapView -> }
+        update = { mapView ->
+            if (startHiking){
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener { location: Location? ->
+
+
+                val symbol = SymbolLayer("symbol-layer-id", "source-id")
+                symbol.iconImage("ic_route-image-id")
+
+                val feature = Feature.fromGeometry(Point.fromLngLat(location?.longitude!!, location.latitude))
+                val featureCollection = FeatureCollection.fromFeature(feature)
+
+
+                mapView.mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
+                    style.addLayer(symbol)
+                    style.addSource(
+                        GeoJsonSource.Builder("source-id")
+                            .featureCollection(
+                                featureCollection
+                            )
+                            .build()
+                    )
+
+
+                }
+
+            }}
+
+
+        }
     )
 }
 

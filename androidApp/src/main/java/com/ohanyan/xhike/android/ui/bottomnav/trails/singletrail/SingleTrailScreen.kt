@@ -66,8 +66,6 @@ fun SingleTrailScreen(
                         )
 
 
-
-
                         mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
                             style.addSource(
                                 GeoJsonSource.Builder("line-source")
@@ -94,14 +92,11 @@ fun SingleTrailScreen(
                             style.addLayer(lineLayer)
 
                         }
-
                 }
-
 
             },
             update = { mapView ->
                 mapView.apply {
-
 
                     mapboxMap.setCamera(
                         CameraOptions.Builder()
@@ -113,9 +108,6 @@ fun SingleTrailScreen(
                             .bearing(0.0)
                             .build()
                     )
-
-
-
 
                     mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
                         style.addSource(
@@ -139,11 +131,8 @@ fun SingleTrailScreen(
                         val lineLayer = LineLayer("line-layer", "line-source")
                         lineLayer.lineWidth(5.0)
                         lineLayer.lineColor(Color.parseColor("#175366"))
-
                         style.addLayer(lineLayer)
-
                     }
-
                 }
             }
         )

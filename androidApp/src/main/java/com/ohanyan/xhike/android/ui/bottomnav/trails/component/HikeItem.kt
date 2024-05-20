@@ -26,8 +26,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.ohanyan.xhike.android.MyApplicationTheme
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.data.db.HikeDifficulty
 import com.ohanyan.xhike.data.db.HikeEntity
@@ -36,7 +38,8 @@ import com.ohanyan.xhike.data.db.HikeEntity
 fun HikeItem(
     hikeEntity: HikeEntity,
     onItemClick: (HikeEntity) -> Unit,
-    onFavouriteClick: (HikeEntity) -> Unit
+    onFavouriteClick: (HikeEntity) -> Unit,
+    onSettingsClick: (HikeEntity) -> Unit
 ) {
     val painter =
         rememberAsyncImagePainter(model = "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528")
@@ -48,7 +51,8 @@ fun HikeItem(
             .padding(vertical = 4.dp)
             .clip(RoundedCornerShape(8.dp))
             .clickable {
-                 onItemClick(hikeEntity) },
+                onItemClick(hikeEntity)
+            },
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -82,96 +86,120 @@ fun HikeItem(
                 textAlign = TextAlign.Center
             )
 
-            Icon(
-                modifier = Modifier.clickable {
-                    onFavouriteClick(hikeEntity)
-
-                },
-                imageVector = if (hikeEntity.hikeIsFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                contentDescription = " ",
-                tint = MaterialTheme.colorScheme.tertiary,
-            )
-        }
-
-        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
-            Column(
-                modifier = Modifier
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.primary)
-                    .align(Alignment.TopStart)
-            ) {
-                Text(
-                    modifier = Modifier.padding(start = 4.dp),
-                    text = hikeEntity.hikeName,
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.tertiary,
-                )
-                Text(
-                    modifier = Modifier.padding(start = 4.dp),
-                    text = hikeEntity.hikeDescription,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.background,
-                )
-            }
             Row(
-                modifier = Modifier
-                    .align(Alignment.Center)
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Row(
-                    modifier = Modifier
-                        .padding(4.dp),
-
-                ) {
-                    Text(
-                        text = "5.5 h",
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.tertiary,
-                    )
-                    Image(
-                        modifier = Modifier
-                            .size(16.dp),
-                        painter = painterResource(id = R.drawable.ic_timer),
-                        contentDescription = " ",
-                    )
-                }
-                Image(
-                    modifier = Modifier,
-                    painter = painterResource(id = R.drawable.ic_slash),
+                Icon(
+                    modifier = Modifier.clickable {
+                        onSettingsClick(hikeEntity)
+                    },
+                    painter = painterResource(id = R.drawable.ic_settings),
                     contentDescription = " ",
-
+                    tint = MaterialTheme.colorScheme.secondary,
                 )
-                Row(
-                    modifier = Modifier,
+
+                Icon(
+                    modifier = Modifier.clickable {
+                        onFavouriteClick(hikeEntity)
+
+                    },
+                    imageVector = if (hikeEntity.hikeIsFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    contentDescription = " ",
+                    tint = MaterialTheme.colorScheme.tertiary,
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .height(50.dp)
+                .fillMaxWidth()
+                .background(color = MaterialTheme.colorScheme.primary)
+                .align(Alignment.BottomCenter),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp,Alignment.Start)
+        ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(.3f)
                 ) {
                     Text(
-                        text = "2.4 km",
+                        modifier = Modifier.padding(start = 4.dp),
+                        text = hikeEntity.hikeName,
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.tertiary,
                     )
-                    Image(
-                        modifier = Modifier
-                            .size(16.dp),
-                        painter = painterResource(id = R.drawable.ic_walk),
-                        contentDescription = " ",
+                    Text(
+                        modifier = Modifier.padding(start = 4.dp),
+                        text = hikeEntity.hikeDescription,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.background,
                     )
                 }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .align(Alignment.TopEnd)
-            ) {
+                Row(
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .padding(4.dp),
 
-                repeat(hikeEntity.hikeRating.toInt()) {
+                        ) {
+                        Text(
+                            text = "5.5 h",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.tertiary,
+                        )
+                        Image(
+                            modifier = Modifier
+                                .size(16.dp),
+                            painter = painterResource(id = R.drawable.ic_timer),
+                            contentDescription = " ",
+                        )
+                    }
                     Image(
-                        modifier = Modifier
-                            .size(16.dp),
-                        painter = painterResource(id = R.drawable.ic_star),
+                        modifier = Modifier,
+                        painter = painterResource(id = R.drawable.ic_slash),
                         contentDescription = " ",
-                    )
+
+                        )
+                    Row {
+                        Text(
+                            text = "${hikeEntity.hikeLengthInKm} km",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.tertiary,
+                        )
+                        Image(
+                            modifier = Modifier
+                                .size(16.dp),
+                            painter = painterResource(id = R.drawable.ic_walk),
+                            contentDescription = " ",
+                        )
+                    }
                 }
-            }
+                Row(
+                    modifier = Modifier.padding(4.dp)
+                ) {
+
+                    repeat(hikeEntity.hikeRating.toInt()) {
+                        Image(
+                            modifier = Modifier
+                                .size(16.dp),
+                            painter = painterResource(id = R.drawable.ic_star),
+                            contentDescription = " ",
+                        )
+                    }
+                }
         }
+    }
+}
+
+@Preview
+@Composable
+fun HikeItemPreview() {
+    MyApplicationTheme {
+        HikeItem(
+            hikeEntity = HikeEntity(),
+            onItemClick = {},
+            onFavouriteClick = {},
+            onSettingsClick = {}
+        )
     }
 }
