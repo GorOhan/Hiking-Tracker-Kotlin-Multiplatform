@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav.starthiking.map
+package com.ohanyan.xhike.android.ui.main.starthiking.map
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -30,8 +30,7 @@ import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.ohanyan.xhike.android.R
-import com.ohanyan.xhike.android.ui.bottomnav.starthiking.StartHikingViewModel
+import com.ohanyan.xhike.android.ui.main.starthiking.StartHikingViewModel
 
 lateinit var locationCallback: LocationCallback
 
@@ -41,7 +40,7 @@ fun MapContainer(
     startHikingViewModel: StartHikingViewModel,
 ) {
     val context = LocalContext.current
-    var fusedLocationClient: FusedLocationProviderClient =
+    val fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
 
     val routePoints by startHikingViewModel.points.collectAsState()
@@ -62,7 +61,7 @@ fun MapContainer(
                 ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                     context,
                     Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED && true
+                ) == PackageManager.PERMISSION_GRANTED
             ) {
                 fusedLocationClient.requestLocationUpdates(
                     locationRequest,
@@ -95,7 +94,7 @@ fun MapContainer(
                     ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                         context,
                         Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED && true
+                    ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     fusedLocationClient.lastLocation
                         .addOnSuccessListener { location: Location? ->

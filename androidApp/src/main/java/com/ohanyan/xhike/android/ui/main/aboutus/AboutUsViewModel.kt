@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav.aboutus
+package com.ohanyan.xhike.android.ui.main.aboutus
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav
+package com.ohanyan.xhike.android.ui.main
 
 sealed class MainScreens(val route : String) {
     data object TrailsScreen : MainScreens("trails_screen")

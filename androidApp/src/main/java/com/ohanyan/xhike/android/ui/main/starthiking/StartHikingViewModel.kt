@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav.starthiking
+package com.ohanyan.xhike.android.ui.main.starthiking
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

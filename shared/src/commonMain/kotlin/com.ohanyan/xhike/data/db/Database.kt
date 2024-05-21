@@ -60,6 +60,10 @@ class Database(sqlDriver: SqlDriver) {
         return dbQuery.getHikeById(hikeId, ::mapDbEntity).executeAsOne()
     }
 
+    internal fun deleteHike(hikeId: Long) {
+        dbQuery.deleteHike(hikeId)
+    }
+
     private fun mapDbEntity(
         hikeId: Long,
         hikeName: String,

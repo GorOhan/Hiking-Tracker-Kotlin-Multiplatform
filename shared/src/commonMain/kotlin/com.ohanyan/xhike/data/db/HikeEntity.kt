@@ -36,3 +36,11 @@ enum class HikeRate(val value: Double) {
     GREAT(4.0),
     EXCELLENT(5.0)
 }
+
+enum class HikeTime(val value: Double) {
+    SHORT(1.0),
+    BASE(2.0),
+    MEDIUM(3.0),
+    LONG(4.0),
+    VERY_LONG(5.0)
+}

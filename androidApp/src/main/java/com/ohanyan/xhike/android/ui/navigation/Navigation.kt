@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ohanyan.xhike.android.ui.bottomnav.BottomNavigationBar
+import com.ohanyan.xhike.android.ui.main.BottomNavigationBar
 import com.ohanyan.xhike.android.ui.splash.SplashScreen
 
 sealed class Screen(val route: String) {

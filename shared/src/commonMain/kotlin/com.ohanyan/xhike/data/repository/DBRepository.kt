@@ -22,4 +22,8 @@ class DBRepositoryImpl(
     override fun getHikeById(hikeId: Long): HikeEntity {
         return database.getHikeById(hikeId)
     }
+
+    override fun deleteHike(hikeId: Long) {
+        database.deleteHike(hikeId)
+    }
 }

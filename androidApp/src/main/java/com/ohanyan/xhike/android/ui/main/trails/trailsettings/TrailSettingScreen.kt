@@ -1,18 +1,22 @@
-package com.ohanyan.xhike.android.ui.bottomnav.trails.trailsettings
+package com.ohanyan.xhike.android.ui.main.trails.trailsettings
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -25,13 +29,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.ohanyan.xhike.android.MyApplicationTheme
+import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.data.db.HikeDifficulty
 import com.ohanyan.xhike.data.db.HikeRate
+import com.ohanyan.xhike.data.db.HikeTime
 import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun TrailSettingScreen(
@@ -43,7 +54,7 @@ fun TrailSettingScreen(
     val onSaveChanges by trailSettingViewModel.onSaveChanges.collectAsState(initial = false)
     var showDiffPicker by remember { mutableStateOf(false) }
     var showRatePicker by remember { mutableStateOf(false) }
-
+    var showHikeTimePicker by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         trailSettingViewModel.getHikeById(hikeId)
@@ -57,7 +68,6 @@ fun TrailSettingScreen(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 32.dp)
             .verticalScroll(rememberScrollState())
-            .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -96,20 +106,88 @@ fun TrailSettingScreen(
             label = { Text("in km") }
         )
 
-        OutlinedTextField(
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Row(
+                modifier = Modifier
+                    .border(
+                        BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
+                        shape = RoundedCornerShape(3.dp)
+                    )
+                    .padding(8.dp)
+                    .clickable {
+                        showDiffPicker = true
+                    }
+            ) {
 
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    showDiffPicker = true
-                },
-            readOnly = true,
-            value = currentHike.hikeDifficulty.value,
-            onValueChange = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_hard),
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.secondary,
+                )
 
-            },
-            label = { Text("easy, hard...") }
-        )
+                Text(
+                    text = currentHike.hikeDifficulty.value,
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(start = 6.dp)
+                )
+
+            }
+
+            Row(
+                modifier = Modifier
+                    .border(
+                        BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
+                        shape = RoundedCornerShape(3.dp)
+                    )
+                    .padding(8.dp)
+                    .clickable {
+                        showRatePicker = true
+                    }
+            ) {
+
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_rate),
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.secondary,
+                )
+
+                Text(
+                    text = currentHike.hikeRating.toString(),
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(start = 6.dp)
+                )
+
+            }
+
+            Row(
+                modifier = Modifier
+                    .border(
+                        BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
+                        shape = RoundedCornerShape(3.dp)
+                    )
+                    .padding(8.dp)
+                    .clickable {
+                        showHikeTimePicker = true
+                    }
+            ) {
+
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_timer),
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.secondary,
+                )
+
+                Text(
+                    text = "${currentHike.hikeTime} h",
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(start = 6.dp)
+                )
+
+            }
+        }
         DropdownMenu(
             expanded = showDiffPicker,
             onDismissRequest = { showDiffPicker = false },
@@ -129,14 +207,6 @@ fun TrailSettingScreen(
                 )
             }
         }
-
-        Text(
-            modifier = Modifier.clickable {
-                showRatePicker = true
-            },
-            text = "Rate your hike ${currentHike.hikeRating}",
-            style = MaterialTheme.typography.titleSmall
-        )
 
         DropdownMenu(
             expanded = showRatePicker,
@@ -158,6 +228,26 @@ fun TrailSettingScreen(
             }
         }
 
+        DropdownMenu(
+            expanded = showHikeTimePicker,
+            onDismissRequest = { showHikeTimePicker = false },
+            modifier = Modifier
+                .fillMaxWidth()
+
+        ) {
+            HikeTime.entries.forEach {
+                Text(
+                    text = it.name,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .clickable {
+                            trailSettingViewModel.onUpdateHike(currentHike.copy(hikeTime = it.value.toString()))
+                            showHikeTimePicker = false
+                        }
+                )
+            }
+        }
+
         Button(
             modifier = Modifier.padding(16.dp),
             onClick = {
@@ -173,6 +263,32 @@ fun TrailSettingScreen(
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp),
             )
         }
+
+        Button(
+            onClick = {
+                trailSettingViewModel.deleteHike()
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.error,
+                contentColor = MaterialTheme.colorScheme.tertiary
+            )
+        ) {
+            Text(
+                text = "Delete Hike",
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp),
+            )
+        }
     }
 }
 
+@Preview
+@Composable
+fun TrailSettingsScreenPreview() {
+    MyApplicationTheme {
+        TrailSettingScreen(
+            navController = rememberNavController(),
+            hikeId = 1,
+            trailSettingViewModel = koinViewModel()
+        )
+    }
+}

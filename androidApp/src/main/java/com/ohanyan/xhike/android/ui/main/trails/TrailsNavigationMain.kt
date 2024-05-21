@@ -5,11 +5,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.ohanyan.xhike.android.ui.bottomnav.starthiking.StartHikingScreen
-import com.ohanyan.xhike.android.ui.bottomnav.trails.singletrail.SingleTrailScreen
-import com.ohanyan.xhike.android.ui.bottomnav.trails.trails.TrailsScreen
-import com.ohanyan.xhike.android.ui.bottomnav.trails.trailsettings.TrailSettingScreen
-import com.ohanyan.xhike.android.ui.navigation.Screen
+import com.ohanyan.xhike.android.ui.main.starthiking.StartHikingScreen
+import com.ohanyan.xhike.android.ui.main.trails.singletrail.SingleTrailScreen
+import com.ohanyan.xhike.android.ui.main.trails.trails.TrailsScreen
+import com.ohanyan.xhike.android.ui.main.trails.trailsettings.TrailSettingScreen
 
 sealed class TrailsScreenRoute(val route: String) {
     data object TrailsScreen : TrailsScreenRoute("trailsScreen")

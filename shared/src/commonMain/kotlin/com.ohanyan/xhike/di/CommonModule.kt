@@ -7,6 +7,7 @@ import com.ohanyan.xhike.data.repository.DBRepositoryImpl
 import com.ohanyan.xhike.data.repository.NetworkRepositoryImpl
 import com.ohanyan.xhike.domain.repository.DBRepository
 import com.ohanyan.xhike.domain.repository.NetworkRepository
+import com.ohanyan.xhike.domain.usecases.DeleteHikeUseCase
 import com.ohanyan.xhike.domain.usecases.GetHikeByIdUseCase
 import com.ohanyan.xhike.domain.usecases.GetHikesUseCase
 import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase
@@ -21,12 +22,12 @@ val useCasesModule = module {
     factory { GetHikesUseCase() }
     factory { UpdateHikeUseCase() }
     factory { GetHikeByIdUseCase() }
+    factory { DeleteHikeUseCase() }
 }
 
 val repositoryModule = module {
     single<NetworkRepository> { NetworkRepositoryImpl(get()) }
     single { KtorExampleApi() }
-
     single<DBRepository> { DBRepositoryImpl(get()) }
     single { Database(get()) }
 }

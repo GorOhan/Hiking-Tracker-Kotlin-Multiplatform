@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav
+package com.ohanyan.xhike.android.ui.main
 
 import TrailsScreenNavMain
 import android.annotation.SuppressLint
@@ -26,8 +26,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ohanyan.xhike.android.ui.bottomnav.aboutus.AboutUsScreen
-import com.ohanyan.xhike.android.ui.bottomnav.starthiking.StartHikingScreen
+import com.ohanyan.xhike.android.ui.main.aboutus.AboutUsScreen
+import com.ohanyan.xhike.android.ui.main.starthiking.StartHikingScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

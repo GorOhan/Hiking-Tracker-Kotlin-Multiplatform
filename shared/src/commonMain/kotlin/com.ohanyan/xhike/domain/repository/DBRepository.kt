@@ -10,4 +10,6 @@ interface DBRepository {
     fun updateHike(hikeEntity: HikeEntity)
 
     fun getHikeById(hikeId: Long): HikeEntity
+
+    fun deleteHike(hikeId: Long)
 }

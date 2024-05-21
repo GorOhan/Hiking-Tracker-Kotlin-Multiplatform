@@ -1,9 +1,6 @@
-package com.ohanyan.xhike.android.ui.bottomnav.trails.trails
+package com.ohanyan.xhike.android.ui.main.trails.trails
 
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.ohanyan.xhike.data.db.HikeEntity
 import com.ohanyan.xhike.domain.usecases.GetHikesUseCase
 import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase

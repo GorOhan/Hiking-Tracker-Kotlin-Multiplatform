@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav.trails.singletrail
+package com.ohanyan.xhike.android.ui.main.trails.singletrail
 
 import android.graphics.Color
 import androidx.compose.foundation.background

@@ -33,3 +33,6 @@ UPDATE hikeTable SET hikeName = ?, hikeDescription = ?, hikeLengthInKm = ?, hike
 
 getHikeById:
 SELECT * FROM hikeTable WHERE hikeId = ?;
+
+deleteHike:
+DELETE FROM hikeTable WHERE hikeId = ?;

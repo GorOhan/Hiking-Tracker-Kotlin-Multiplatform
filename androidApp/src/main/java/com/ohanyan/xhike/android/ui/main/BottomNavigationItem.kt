@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav
+package com.ohanyan.xhike.android.ui.main
 
 import com.ohanyan.xhike.android.R
 

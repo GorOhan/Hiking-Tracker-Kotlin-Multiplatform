@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav.trails.component
+package com.ohanyan.xhike.android.ui.main.trails.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -95,7 +95,7 @@ fun HikeItem(
                     },
                     painter = painterResource(id = R.drawable.ic_settings),
                     contentDescription = " ",
-                    tint = MaterialTheme.colorScheme.secondary,
+                    tint = MaterialTheme.colorScheme.tertiary,
                 )
 
                 Icon(
@@ -117,7 +117,7 @@ fun HikeItem(
                 .background(color = MaterialTheme.colorScheme.primary)
                 .align(Alignment.BottomCenter),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp,Alignment.Start)
+            horizontalArrangement = Arrangement.spacedBy(20.dp,Alignment.Start)
         ) {
                 Column(
                     modifier = Modifier.fillMaxWidth(.3f)
@@ -143,7 +143,7 @@ fun HikeItem(
 
                         ) {
                         Text(
-                            text = "5.5 h",
+                            text = "${hikeEntity.hikeTime} h",
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.tertiary,
                         )

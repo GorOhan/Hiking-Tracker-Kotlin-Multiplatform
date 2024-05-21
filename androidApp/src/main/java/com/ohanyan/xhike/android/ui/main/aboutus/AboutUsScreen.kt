@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.bottomnav.aboutus
+package com.ohanyan.xhike.android.ui.main.aboutus
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.ohanyan.xhike.android.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel
 
 @Composable
