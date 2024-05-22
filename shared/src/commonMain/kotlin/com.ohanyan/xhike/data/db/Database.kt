@@ -72,7 +72,7 @@ class Database(sqlDriver: SqlDriver) {
         hikeDifficulty: HikeDifficulty,
         hikeRating: Double,
         hikeImage: String,
-        hikeTime: String,
+        hikeTime: Double,
         hikeLocationLot: Double,
         hikeLocationLat: Double,
         hikeIsFavourite: Boolean,

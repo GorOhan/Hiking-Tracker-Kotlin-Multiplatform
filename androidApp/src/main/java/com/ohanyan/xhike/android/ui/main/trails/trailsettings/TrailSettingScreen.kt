@@ -241,7 +241,7 @@ fun TrailSettingScreen(
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable {
-                            trailSettingViewModel.onUpdateHike(currentHike.copy(hikeTime = it.value.toString()))
+                            trailSettingViewModel.onUpdateHike(currentHike.copy(hikeTime = it.value))
                             showHikeTimePicker = false
                         }
                 )

@@ -11,7 +11,7 @@ CREATE TABLE hikeTable (
     hikeDifficulty TEXT AS HikeDifficulty NOT NULL,
     hikeRating REAL NOT NULL,
     hikeImage TEXT NOT NULL,
-    hikeTime TEXT NOT NULL,
+    hikeTime REAL NOT NULL,
     hikeLocationLot REAL NOT NULL,
     hikeLocationLat REAL NOT NULL,
     hikeIsFavourite INTEGER AS Boolean NOT NULL DEFAULT 0,

@@ -117,7 +117,7 @@ fun HikeItem(
                 .background(color = MaterialTheme.colorScheme.primary)
                 .align(Alignment.BottomCenter),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(20.dp,Alignment.Start)
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
                 Column(
                     modifier = Modifier.fillMaxWidth(.3f)
@@ -143,7 +143,7 @@ fun HikeItem(
 
                         ) {
                         Text(
-                            text = "${hikeEntity.hikeTime} h",
+                            text = "${if(hikeEntity.hikeTime > 0) hikeEntity.hikeTime else "-"} h",
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.tertiary,
                         )
@@ -162,7 +162,7 @@ fun HikeItem(
                         )
                     Row {
                         Text(
-                            text = "${hikeEntity.hikeLengthInKm} km",
+                            text = "${if (hikeEntity.hikeLengthInKm>0) hikeEntity.hikeLengthInKm else "-"} km",
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.tertiary,
                         )
@@ -175,10 +175,20 @@ fun HikeItem(
                     }
                 }
                 Row(
-                    modifier = Modifier.padding(4.dp)
+                    modifier = Modifier
+                        .padding(4.dp)
                 ) {
 
                     repeat(hikeEntity.hikeRating.toInt()) {
+                        Image(
+                            modifier = Modifier
+                                .size(16.dp),
+                            painter = painterResource(id = R.drawable.ic_star_fill),
+                            contentDescription = " ",
+                        )
+                    }
+
+                    repeat(5-hikeEntity.hikeRating.toInt()) {
                         Image(
                             modifier = Modifier
                                 .size(16.dp),
