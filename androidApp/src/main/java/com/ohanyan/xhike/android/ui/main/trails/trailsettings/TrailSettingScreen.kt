@@ -1,6 +1,10 @@
 package com.ohanyan.xhike.android.ui.main.trails.trailsettings
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,7 +12,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,6 +35,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,13 +45,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import com.ohanyan.xhike.android.MyApplicationTheme
 import com.ohanyan.xhike.android.R
+import com.ohanyan.xhike.android.copyUriToInternalStorage
+import com.ohanyan.xhike.android.ui.main.trails.component.SettingItem
 import com.ohanyan.xhike.data.db.HikeDifficulty
 import com.ohanyan.xhike.data.db.HikeRate
 import com.ohanyan.xhike.data.db.HikeTime
 import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.koinViewModel
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 
 @Composable
 fun TrailSettingScreen(
@@ -55,6 +71,27 @@ fun TrailSettingScreen(
     var showDiffPicker by remember { mutableStateOf(false) }
     var showRatePicker by remember { mutableStateOf(false) }
     var showHikeTimePicker by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    var imageUri by remember {
+        mutableStateOf<Uri>(Uri.EMPTY)
+    }
+    val pickPhotoLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        try {
+            if (uri != null) {
+                val path = copyUriToInternalStorage(context, uri)
+                imageUri = uri
+                trailSettingViewModel.onUpdateHike(
+                    currentHike.copy(hikeImage = path.toString())
+                )
+            }
+            //    imageUri = Uri.EMPTY
+        } catch (e: Exception) {
+
+        }
+    }
 
     LaunchedEffect(Unit) {
         trailSettingViewModel.getHikeById(hikeId)
@@ -110,84 +147,69 @@ fun TrailSettingScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Row(
-                modifier = Modifier
-                    .border(
-                        BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
-                        shape = RoundedCornerShape(3.dp)
-                    )
-                    .padding(8.dp)
-                    .clickable {
-                        showDiffPicker = true
-                    }
+            SettingItem(
+                painter = painterResource(id = R.drawable.ic_hard),
+                title = currentHike.hikeDifficulty.value,
             ) {
-
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_hard),
-                    contentDescription = "",
-                    tint = MaterialTheme.colorScheme.secondary,
-                )
-
-                Text(
-                    text = currentHike.hikeDifficulty.value,
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.padding(start = 6.dp)
-                )
-
+                showDiffPicker = true
             }
 
-            Row(
-                modifier = Modifier
-                    .border(
-                        BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
-                        shape = RoundedCornerShape(3.dp)
-                    )
-                    .padding(8.dp)
-                    .clickable {
-                        showRatePicker = true
-                    }
+            SettingItem(
+                painter = painterResource(id = R.drawable.ic_rate),
+                title = currentHike.hikeRating.toString(),
             ) {
-
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_rate),
-                    contentDescription = "",
-                    tint = MaterialTheme.colorScheme.secondary,
-                )
-
-                Text(
-                    text = currentHike.hikeRating.toString(),
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.padding(start = 6.dp)
-                )
-
+                showRatePicker = true
             }
 
-            Row(
-                modifier = Modifier
-                    .border(
-                        BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
-                        shape = RoundedCornerShape(3.dp)
-                    )
-                    .padding(8.dp)
-                    .clickable {
-                        showHikeTimePicker = true
-                    }
+            SettingItem(
+                painter = painterResource(id = R.drawable.ic_timer),
+                title = "${currentHike.hikeTime} h",
             ) {
-
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_timer),
-                    contentDescription = "",
-                    tint = MaterialTheme.colorScheme.secondary,
-                )
-
-                Text(
-                    text = "${currentHike.hikeTime} h",
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.padding(start = 6.dp)
-                )
-
+                showHikeTimePicker = true
             }
         }
+
+        Row(
+            modifier = Modifier
+                .clickable {
+                    pickPhotoLauncher.launch("image/*")
+                }
+                .border(
+                    BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
+                    shape = RoundedCornerShape(3.dp)
+                )
+                .padding(8.dp)
+        ) {
+
+            Icon(
+                painter = painterResource(id = R.drawable.ic_gallery),
+                contentDescription = "",
+                tint = MaterialTheme.colorScheme.secondary,
+            )
+
+            if (imageUri == Uri.EMPTY) {
+                Text(
+                    text = "upload photo",
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(start = 6.dp)
+                )
+            } else {
+                Image(
+                    painter = rememberAsyncImagePainter(imageUri),
+                    contentScale = ContentScale.FillBounds,
+                    contentDescription = null,
+                    alignment = Alignment.Center,
+
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .width(80.dp)
+                        .height(60.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                )
+            }
+
+        }
+
         DropdownMenu(
             expanded = showDiffPicker,
             onDismissRequest = { showDiffPicker = false },

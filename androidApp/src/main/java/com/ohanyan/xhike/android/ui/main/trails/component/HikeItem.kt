@@ -1,5 +1,7 @@
 package com.ohanyan.xhike.android.ui.main.trails.component
 
+import android.content.Context
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,6 +35,10 @@ import com.ohanyan.xhike.android.MyApplicationTheme
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.data.db.HikeDifficulty
 import com.ohanyan.xhike.data.db.HikeEntity
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 
 @Composable
 fun HikeItem(
@@ -41,8 +47,9 @@ fun HikeItem(
     onFavouriteClick: (HikeEntity) -> Unit,
     onSettingsClick: (HikeEntity) -> Unit
 ) {
+    val defaultImage = "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528"
     val painter =
-        rememberAsyncImagePainter(model = "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528")
+        rememberAsyncImagePainter(hikeEntity.hikeImage.ifEmpty { defaultImage })
 
     Box(
         modifier = Modifier

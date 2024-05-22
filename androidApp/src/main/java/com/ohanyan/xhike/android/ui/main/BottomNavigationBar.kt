@@ -36,8 +36,6 @@ fun BottomNavigationBar() {
 
     val navController = rememberNavController()
 
-
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
