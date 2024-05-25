@@ -27,20 +27,5 @@ internal fun NavMain() {
         composable(route = Screen.HomeScreen.route) {
             BottomNavigationBar()
         }
-
-//        composable(
-//            route = "${Screen.OtpVerificationCode.route}/{retrySeconds}/{phone}",
-//            arguments = listOf(
-//                navArgument("retrySeconds") { type = NavType.IntType },
-//                navArgument("phone") { type = NavType.StringType })
-//        ) { backStackEntry ->
-//
-//            OtpVerificationCode(
-//                navController = navController,
-//                phoneNumber = backStackEntry.arguments?.getString("phone") ?: "",
-//                retrySecondsArg = backStackEntry.arguments?.getInt("retrySeconds") ?: 10
-//            )
-//        }
-
     }
 }

@@ -27,16 +27,6 @@ fun StartHikingScreen(
 
     val isHikeStarted by startHikingViewModel.startHiking.collectAsState()
 
-//    val xOffset by rememberInfiniteTransition(label = "").animateFloat(
-//        initialValue = 0f,
-//        targetValue = 2f,
-//        animationSpec = infiniteRepeatable(
-//            animation = tween(durationMillis = 1200, easing = LinearEasing),
-//            repeatMode = RepeatMode.Restart
-//        ),
-//    )
-
-
     Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -46,17 +36,6 @@ fun StartHikingScreen(
         MapContainer(
             startHikingViewModel = startHikingViewModel,
         )
-//        Image(
-//            modifier = Modifier
-//                .align(Alignment.BottomCenter)
-//                .alpha(1f)
-//                .height(50.dp)
-//                .clickable {
-//                    startHikingViewModel.startHiking()
-//                },
-//            painter = painterResource(id = R.drawable.ic_compass),
-//            contentDescription = ""
-//        )
         Button(
             modifier = Modifier
                 .padding(bottom = 16.dp)
@@ -81,31 +60,6 @@ fun StartHikingScreen(
                 style = MaterialTheme.typography.titleMedium,
             )
         }
-
-//        Row(
-//            modifier = Modifier
-//                .padding(vertical = 24.dp, horizontal = 8.dp)
-//                .align(Alignment.BottomEnd),
-//        ) {
-//            Image(
-//                modifier = Modifier
-//                    .alpha(1f)
-//                    // .alpha(if (xOffset <= 1) 0.2f else 1f)
-//                    .offset(y = if (xOffset >= 1) 30.dp * (xOffset - 1) else 30.dp)
-//                    .height(50.dp),
-//                painter = painterResource(id = R.drawable.left_foot),
-//                contentDescription = ""
-//            )
-//            Image(
-//                modifier = Modifier
-//                    .alpha(1f)
-//                    //  .alpha(if (xOffset <= 1) 1f else 0.2f)
-//                    .offset(y = if (xOffset <= 1) 30.dp * (xOffset) else 30.dp)
-//                    .height(50.dp),
-//                painter = painterResource(id = R.drawable.right_foot),
-//                contentDescription = ""
-//            )
-//        }
     }
 
 }

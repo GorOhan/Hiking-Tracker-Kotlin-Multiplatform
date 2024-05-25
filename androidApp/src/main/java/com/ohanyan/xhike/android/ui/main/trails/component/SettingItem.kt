@@ -31,18 +31,15 @@ fun SettingItem(
             )
             .padding(8.dp)
     ) {
-
         Icon(
             painter = painter,
             contentDescription = "",
             tint = MaterialTheme.colorScheme.secondary,
         )
-
         Text(
             text = title,
             style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.padding(start = 6.dp)
         )
-
     }
 }

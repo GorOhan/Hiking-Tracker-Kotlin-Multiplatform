@@ -18,6 +18,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
@@ -34,7 +35,6 @@ import com.ohanyan.xhike.android.ui.main.starthiking.StartHikingViewModel
 
 lateinit var locationCallback: LocationCallback
 
-@SuppressLint("UseCompatLoadingForDrawables")
 @Composable
 fun MapContainer(
     startHikingViewModel: StartHikingViewModel,
@@ -46,12 +46,10 @@ fun MapContainer(
     val routePoints by startHikingViewModel.points.collectAsState()
     val startHiking by startHikingViewModel.startHiking.collectAsState()
 
-    val locationRequest = LocationRequest.create().apply {
-        interval = 3000 // Update interval in milliseconds
-        fastestInterval = 2000 // Fastest update interval in milliseconds
-        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-    }
-
+    val locationRequest = LocationRequest.Builder(100L)
+        .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+        .setMinUpdateIntervalMillis(1000L)
+        .build()
 
     LaunchedEffect(startHiking) {
         if (startHiking) {
@@ -69,10 +67,9 @@ fun MapContainer(
                     null /* Looper */
                 )
             }
-
         }
-
     }
+
     AndroidView(
         modifier = Modifier,
         factory = { context ->
@@ -100,8 +97,6 @@ fun MapContainer(
                         .addOnSuccessListener { location: Location? ->
 
                         }
-
-
 
                     locationCallback = object : LocationCallback(
                     ) {
@@ -164,13 +159,11 @@ fun MapContainer(
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
 
-
                 val symbol = SymbolLayer("symbol-layer-id", "source-id")
                 symbol.iconImage("ic_route-image-id")
 
                 val feature = Feature.fromGeometry(Point.fromLngLat(location?.longitude!!, location.latitude))
                 val featureCollection = FeatureCollection.fromFeature(feature)
-
 
                 mapView.mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
                     style.addLayer(symbol)
@@ -181,13 +174,8 @@ fun MapContainer(
                             )
                             .build()
                     )
-
-
                 }
-
             }}
-
-
         }
     )
 }

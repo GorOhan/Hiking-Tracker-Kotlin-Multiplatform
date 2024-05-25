@@ -54,6 +54,5 @@ internal fun TrailsScreenNavMain() {
                 hikeId = backStackEntry.arguments?.getInt("hikeId")?:0
             )
         }
-
     }
 }

@@ -20,14 +20,8 @@ class StartHikingViewModel(
     private val _startHiking: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val startHiking = _startHiking.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-
-        }
-    }
-
     fun addPoint(point: Point) {
-            _points.value = _points.value + point
+        _points.value += point
     }
 
     fun startHiking() {

@@ -1,7 +1,6 @@
 package com.ohanyan.xhike.android.ui.main
 
 import TrailsScreenNavMain
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,7 +28,6 @@ import androidx.navigation.compose.rememberNavController
 import com.ohanyan.xhike.android.ui.main.aboutus.AboutUsScreen
 import com.ohanyan.xhike.android.ui.main.starthiking.StartHikingScreen
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BottomNavigationBar() {
     var navigationSelectedItem by remember { mutableIntStateOf(0) }

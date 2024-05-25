@@ -24,15 +24,6 @@ class TrailSettingViewModel(
     private val _onSaveChanges = MutableSharedFlow<Boolean>()
     val onSaveChanges = _onSaveChanges.asSharedFlow()
 
-    init {
-
-    }
-
-    private fun updateHike(hikeEntity: HikeEntity) {
-        updateHikeUseCase.invoke(hikeEntity)
-        //  _hikes.value = getHikes()
-    }
-
     fun getHikeById(hikeId: Int) {
         viewModelScope.launch {
             _trail.value = getHikeByIdUseCase.invoke(hikeId)

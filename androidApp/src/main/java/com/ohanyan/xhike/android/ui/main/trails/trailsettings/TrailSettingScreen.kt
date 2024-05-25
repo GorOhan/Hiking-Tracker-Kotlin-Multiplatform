@@ -55,10 +55,6 @@ import com.ohanyan.xhike.data.db.HikeRate
 import com.ohanyan.xhike.data.db.HikeTime
 import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.koinViewModel
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 
 @Composable
 fun TrailSettingScreen(
@@ -73,9 +69,7 @@ fun TrailSettingScreen(
     var showHikeTimePicker by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    var imageUri by remember {
-        mutableStateOf<Uri>(Uri.EMPTY)
-    }
+    var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
     val pickPhotoLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->

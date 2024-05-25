@@ -13,7 +13,7 @@ class HikingApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        MapboxOptions.accessToken = "pk.eyJ1IjoiZ3JvYW4iLCJhIjoiY2x1dGdoa2ljMGx5ZDJyb2lheHptb243YyJ9.VFWaDAoyH7IgpIq0w1_12Q"
+        MapboxOptions.accessToken = applicationContext.getString(R.string.mapbox_key)
         startKoin {
             androidContext(this@HikingApp)
             modules(appModule, useCasesModule, repositoryModule, platformModule)

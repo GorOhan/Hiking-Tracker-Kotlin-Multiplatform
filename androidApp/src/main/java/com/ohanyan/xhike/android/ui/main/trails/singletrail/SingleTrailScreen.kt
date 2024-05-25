@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -18,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
@@ -49,9 +47,11 @@ fun SingleTrailScreen(
     val pagerState = rememberPagerState(pageCount = {
         4
     })
+
     LaunchedEffect(Unit) {
         singleTrailViewModel.getHikeById(hikeId)
     }
+
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -66,7 +66,6 @@ fun SingleTrailScreen(
 
                 MapView(context).apply {
 
-
                         mapboxMap.setCamera(
                             CameraOptions.Builder()
                                 .center(
@@ -77,7 +76,6 @@ fun SingleTrailScreen(
                                 .bearing(0.0)
                                 .build()
                         )
-
 
                         mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
                             style.addSource(

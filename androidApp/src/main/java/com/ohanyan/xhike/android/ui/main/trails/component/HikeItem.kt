@@ -1,7 +1,5 @@
 package com.ohanyan.xhike.android.ui.main.trails.component
 
-import android.content.Context
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,10 +33,6 @@ import com.ohanyan.xhike.android.MyApplicationTheme
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.data.db.HikeDifficulty
 import com.ohanyan.xhike.data.db.HikeEntity
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 
 @Composable
 fun HikeItem(
@@ -48,8 +42,7 @@ fun HikeItem(
     onSettingsClick: (HikeEntity) -> Unit
 ) {
     val defaultImage = "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528"
-    val painter =
-        rememberAsyncImagePainter(hikeEntity.hikeImage.ifEmpty { defaultImage })
+    val painter = rememberAsyncImagePainter(hikeEntity.hikeImage.ifEmpty { defaultImage })
 
     Box(
         modifier = Modifier
@@ -108,7 +101,6 @@ fun HikeItem(
                 Icon(
                     modifier = Modifier.clickable {
                         onFavouriteClick(hikeEntity)
-
                     },
                     imageVector = if (hikeEntity.hikeIsFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     contentDescription = " ",
@@ -144,11 +136,7 @@ fun HikeItem(
                 }
                 Row(
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(4.dp),
-
-                        ) {
+                    Row(modifier = Modifier.padding(4.dp)) {
                         Text(
                             text = "${if(hikeEntity.hikeTime > 0) hikeEntity.hikeTime else "-"} h",
                             style = MaterialTheme.typography.titleSmall,
@@ -165,7 +153,6 @@ fun HikeItem(
                         modifier = Modifier,
                         painter = painterResource(id = R.drawable.ic_slash),
                         contentDescription = " ",
-
                         )
                     Row {
                         Text(
@@ -185,7 +172,6 @@ fun HikeItem(
                     modifier = Modifier
                         .padding(4.dp)
                 ) {
-
                     repeat(hikeEntity.hikeRating.toInt()) {
                         Image(
                             modifier = Modifier

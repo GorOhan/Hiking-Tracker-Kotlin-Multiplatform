@@ -19,14 +19,8 @@ class SingleTrailViewModel(
     private val _points: MutableStateFlow<List<Point>?> = MutableStateFlow(null)
     val points = _points.asStateFlow()
 
-
-    init {
-
-    }
-
     fun getHikeById(hikeId: Int){
         viewModelScope.launch {
-        // _hike.value = getHikeByIdUseCase.invoke(hikeId)
             _points.value = getHikeByIdUseCase.invoke(hikeId).hikePoints.map {
                 Point.fromLngLat(it.pointLocationLot, it.pointLocationLat)
             }
