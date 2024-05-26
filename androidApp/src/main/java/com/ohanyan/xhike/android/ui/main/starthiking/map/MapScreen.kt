@@ -1,10 +1,14 @@
 package com.ohanyan.xhike.android.ui.main.starthiking.map
 
 import android.Manifest
-import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.location.Location
+import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,12 +29,13 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
+import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.ui.main.starthiking.StartHikingViewModel
 
 lateinit var locationCallback: LocationCallback
@@ -39,6 +44,7 @@ lateinit var locationCallback: LocationCallback
 fun MapContainer(
     startHikingViewModel: StartHikingViewModel,
 ) {
+
     val context = LocalContext.current
     val fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
@@ -119,31 +125,44 @@ fun MapContainer(
                                     locationResult.lastLocation?.latitude ?: 0.0
                                 )
                             )
-                            mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
-                                style.addSource(
-                                    GeoJsonSource.Builder("line-source")
-                                        .featureCollection(
-                                            FeatureCollection.fromFeatures(
-                                                arrayOf(
-                                                    Feature.fromGeometry(
-                                                        LineString.fromLngLats(
-                                                            routePoints
+
+                            if (routePoints.size == 1) {
+                                routePoints.last().let { location ->
+                                    mapboxMap.style?.addSource(
+                                        GeoJsonSource.Builder("user-location-source")
+                                            .geometry(location)
+                                            .build()
+                                    )
+                                    mapboxMap.style?.addSource(
+                                        GeoJsonSource.Builder("line-source")
+                                            .featureCollection(
+                                                FeatureCollection.fromFeatures(
+                                                    arrayOf(
+                                                        Feature.fromGeometry(
+                                                            LineString.fromLngLats(
+                                                                routePoints
+                                                            )
                                                         )
                                                     )
                                                 )
                                             )
-                                        )
-                                        .build()
-                                )
+                                            .build()
+                                    )
 
-                                val lineLayer = LineLayer("line-layer", "line-source")
-                                lineLayer.lineWidth(5.0)
-                                lineLayer.lineColor(Color.parseColor("#FF0000"))
 
-                                style.addLayer(lineLayer)
+                                    val symbolLayer =
+                                        SymbolLayer("user-location-layer", "user-location-source")
+                                    symbolLayer.iconImage("my.image")
+                                    symbolLayer.iconAnchor(IconAnchor.BOTTOM)
 
+
+                                    val lineLayer = LineLayer("line-layer", "line-source")
+                                    lineLayer.lineWidth(5.0)
+                                    lineLayer.lineColor(Color.parseColor("#FF0000"))
+                                    mapboxMap.style?.addLayer(symbolLayer)
+                                    mapboxMap.style?.addLayer(lineLayer)
+                                }
                             }
-
                         }
                     }
 
@@ -155,29 +174,8 @@ fun MapContainer(
 
         },
         update = { mapView ->
-            if (startHiking){
-                fusedLocationClient.lastLocation
-                    .addOnSuccessListener { location: Location? ->
 
-                val symbol = SymbolLayer("symbol-layer-id", "source-id")
-                symbol.iconImage("ic_route-image-id")
-
-                val feature = Feature.fromGeometry(Point.fromLngLat(location?.longitude!!, location.latitude))
-                val featureCollection = FeatureCollection.fromFeature(feature)
-
-                mapView.mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
-                    style.addLayer(symbol)
-                    style.addSource(
-                        GeoJsonSource.Builder("source-id")
-                            .featureCollection(
-                                featureCollection
-                            )
-                            .build()
-                    )
-                }
-            }}
         }
     )
 }
-
 
