@@ -2,14 +2,13 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-	//let greet = Greeting().greet()
+    
     @StateObject private var viewModel: TestViewModel
     @State private var shouldNavigate = false
 
 
     init() {
            self._viewModel = StateObject(wrappedValue: TestViewModel())
-        
         }
 
     var body: some View {

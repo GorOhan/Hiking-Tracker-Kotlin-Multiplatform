@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ohanyan.xhike.android.ui.main.starthiking.StartHikingScreen
+import com.ohanyan.xhike.android.ui.main.trails.followtrail.FollowTrailScreen
 import com.ohanyan.xhike.android.ui.main.trails.singletrail.SingleTrailScreen
 import com.ohanyan.xhike.android.ui.main.trails.trails.TrailsScreen
 import com.ohanyan.xhike.android.ui.main.trails.trailsettings.TrailSettingScreen
@@ -15,6 +16,7 @@ sealed class TrailsScreenRoute(val route: String) {
     data object SingleTrailScreen : TrailsScreenRoute("singleTrailScreen")
     data object MapScreen : TrailsScreenRoute("mapScreen")
     data object TrailSettingsScreen : TrailsScreenRoute("trailSettingsScreen")
+    data object FollowTrailScreen : TrailsScreenRoute("followTrailScreen")
 }
 
 @Composable
@@ -50,6 +52,17 @@ internal fun TrailsScreenNavMain() {
             )
         ) { backStackEntry ->
             TrailSettingScreen(
+                navController = navController,
+                hikeId = backStackEntry.arguments?.getInt("hikeId")?:0
+            )
+        }
+
+        composable(route = "${TrailsScreenRoute.FollowTrailScreen.route}/{hikeId}",
+            arguments = listOf(
+                navArgument("hikeId") { type = NavType.IntType },
+            )
+        ) { backStackEntry ->
+            FollowTrailScreen(
                 navController = navController,
                 hikeId = backStackEntry.arguments?.getInt("hikeId")?:0
             )

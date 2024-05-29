@@ -7,12 +7,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -32,6 +36,7 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
+import com.ohanyan.xhike.android.ui.main.MainScreens
 import org.koin.androidx.compose.getViewModel
 import kotlin.math.absoluteValue
 
@@ -66,43 +71,6 @@ fun SingleTrailScreen(
 
                 MapView(context).apply {
 
-                        mapboxMap.setCamera(
-                            CameraOptions.Builder()
-                                .center(
-                                   routePoints?.first()
-                                )
-                                .pitch(0.0)
-                                .zoom(7.0)
-                                .bearing(0.0)
-                                .build()
-                        )
-
-                        mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
-                            style.addSource(
-                                GeoJsonSource.Builder("line-source")
-                                    .featureCollection(
-                                        FeatureCollection.fromFeatures(
-                                            arrayOf(
-                                                Feature.fromGeometry(
-                                                    routePoints?.let {
-                                                        LineString.fromLngLats(
-                                                            it
-                                                        )
-                                                    }
-                                                )
-                                            )
-                                        )
-                                    )
-                                    .build()
-                            )
-
-                            val lineLayer = LineLayer("line-layer", "line-source")
-                            lineLayer.lineWidth(5.0)
-                            lineLayer.lineColor(Color.parseColor("#FF0000"))
-
-                            style.addLayer(lineLayer)
-
-                        }
                 }
 
             },
@@ -120,7 +88,7 @@ fun SingleTrailScreen(
                             .build()
                     )
 
-                    mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
+                    mapboxMap.loadStyle(Style.OUTDOORS ) { style ->
                         style.addSource(
                             GeoJsonSource.Builder("line-source")
                                 .featureCollection(
@@ -163,6 +131,24 @@ fun SingleTrailScreen(
             ) {
                 // Card content
             }
+        }
+
+        Button(
+            modifier = Modifier
+                .padding(bottom = 16.dp),
+            onClick = {
+                navController.navigate("${TrailsScreenRoute.FollowTrailScreen.route}/${hikeId}")
+
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.tertiary
+            )
+        ) {
+            Text(
+                text = "Follow",
+                style = MaterialTheme.typography.titleMedium,
+            )
         }
     }
 }
