@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main
+package com.ohanyan.xhike.android.ui.home
 
 import com.ohanyan.xhike.android.R
 

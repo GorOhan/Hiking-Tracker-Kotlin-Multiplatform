@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main
+package com.ohanyan.xhike.android.ui.home
 
 import TrailsScreenNavMain
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,8 +25,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ohanyan.xhike.android.ui.main.aboutus.AboutUsScreen
-import com.ohanyan.xhike.android.ui.main.starthiking.StartHikingScreen
+import com.ohanyan.xhike.android.ui.home.aboutus.AboutUsScreen
+import com.ohanyan.xhike.android.ui.home.starthiking.StartHikingScreen
 
 @Composable
 fun BottomNavigationBar() {

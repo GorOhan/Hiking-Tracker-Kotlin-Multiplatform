@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.aboutus
+package com.ohanyan.xhike.android.ui.home.aboutus
 
 import androidx.lifecycle.ViewModel
 

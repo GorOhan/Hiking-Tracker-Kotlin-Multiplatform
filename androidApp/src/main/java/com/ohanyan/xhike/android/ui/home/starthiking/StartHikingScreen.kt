@@ -1,11 +1,9 @@
-package com.ohanyan.xhike.android.ui.main.starthiking
+package com.ohanyan.xhike.android.ui.home.starthiking
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import androidx.annotation.IntegerRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,8 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.ohanyan.xhike.android.ui.main.MainScreens
-import com.ohanyan.xhike.android.ui.main.starthiking.map.MapContainer
+import com.ohanyan.xhike.android.ui.home.MainScreens
+import com.ohanyan.xhike.android.ui.home.starthiking.map.MapContainer
 import org.koin.androidx.compose.getViewModel
 
 @Composable

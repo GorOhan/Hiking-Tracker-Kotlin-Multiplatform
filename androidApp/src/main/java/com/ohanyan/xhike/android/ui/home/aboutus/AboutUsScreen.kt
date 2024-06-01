@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.aboutus
+package com.ohanyan.xhike.android.ui.home.aboutus
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

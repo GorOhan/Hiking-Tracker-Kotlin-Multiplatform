@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.trails.trailsettings
+package com.ohanyan.xhike.android.ui.home.trails.trailsettings
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -49,7 +49,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.ohanyan.xhike.android.MyApplicationTheme
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.copyUriToInternalStorage
-import com.ohanyan.xhike.android.ui.main.trails.component.SettingItem
+import com.ohanyan.xhike.android.ui.home.trails.component.SettingItem
 import com.ohanyan.xhike.data.db.HikeDifficulty
 import com.ohanyan.xhike.data.db.HikeRate
 import com.ohanyan.xhike.data.db.HikeTime

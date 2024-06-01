@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.trails.component
+package com.ohanyan.xhike.android.ui.home.trails.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

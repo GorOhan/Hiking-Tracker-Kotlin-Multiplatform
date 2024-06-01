@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.trails.singletrail
+package com.ohanyan.xhike.android.ui.home.trails.singletrail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,6 +24,7 @@ class SingleTrailViewModel(
             _points.value = getHikeByIdUseCase.invoke(hikeId).hikePoints.map {
                 Point.fromLngLat(it.pointLocationLot, it.pointLocationLat)
             }
+            _hike.value = getHikeByIdUseCase(hikeId)
         }
     }
 }

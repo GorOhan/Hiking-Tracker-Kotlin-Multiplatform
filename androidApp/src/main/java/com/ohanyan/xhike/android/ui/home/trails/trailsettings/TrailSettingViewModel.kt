@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.trails.trailsettings
+package com.ohanyan.xhike.android.ui.home.trails.trailsettings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

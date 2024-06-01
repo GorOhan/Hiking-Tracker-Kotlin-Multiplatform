@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.starthiking.map
+package com.ohanyan.xhike.android.ui.home.starthiking.map
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -27,7 +27,6 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
-import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.plugin.PuckBearing
@@ -35,8 +34,8 @@ import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.viewport
 import com.ohanyan.xhike.android.R
-import com.ohanyan.xhike.android.ui.main.starthiking.StartHikingViewModel
-import com.ohanyan.xhike.android.ui.main.starthiking.drawableIdToBitmap
+import com.ohanyan.xhike.android.ui.home.starthiking.StartHikingViewModel
+import com.ohanyan.xhike.android.ui.home.starthiking.drawableIdToBitmap
 
 private lateinit var locationCallback: LocationCallback
 

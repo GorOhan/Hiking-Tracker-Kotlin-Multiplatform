@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.trails.trails
+package com.ohanyan.xhike.android.ui.home.trails.trails
 
 import androidx.lifecycle.ViewModel
 import com.ohanyan.xhike.data.db.HikeEntity

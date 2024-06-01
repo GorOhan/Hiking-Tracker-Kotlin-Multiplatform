@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.trails.trails
+package com.ohanyan.xhike.android.ui.home.trails.trails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.navigation.NavController
 import com.ohanyan.xhike.android.R
-import com.ohanyan.xhike.android.ui.main.trails.component.AddHikeDialog
-import com.ohanyan.xhike.android.ui.main.trails.component.HikeItem
+import com.ohanyan.xhike.android.ui.home.trails.component.AddHikeDialog
+import com.ohanyan.xhike.android.ui.home.trails.component.HikeItem
 import org.koin.androidx.compose.getViewModel
 
 @Composable

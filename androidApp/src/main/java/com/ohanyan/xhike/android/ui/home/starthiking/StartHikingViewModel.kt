@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.starthiking
+package com.ohanyan.xhike.android.ui.home.starthiking
 
 import android.location.Location
 import androidx.lifecycle.ViewModel
@@ -7,15 +7,9 @@ import com.mapbox.geojson.Point
 import com.ohanyan.xhike.data.db.HikeEntity
 import com.ohanyan.xhike.data.db.PointEntity
 import com.ohanyan.xhike.domain.usecases.InsertHikeInDbUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
 
 class StartHikingViewModel(
     private val insertHikeInDbUseCase: InsertHikeInDbUseCase
@@ -65,7 +59,6 @@ class StartHikingViewModel(
             )
         }
     }
-
 }
 
 

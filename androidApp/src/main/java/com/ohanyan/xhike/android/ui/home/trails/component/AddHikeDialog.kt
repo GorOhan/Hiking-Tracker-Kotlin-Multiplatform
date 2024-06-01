@@ -1,4 +1,4 @@
-package com.ohanyan.xhike.android.ui.main.trails.component
+package com.ohanyan.xhike.android.ui.home.trails.component
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi

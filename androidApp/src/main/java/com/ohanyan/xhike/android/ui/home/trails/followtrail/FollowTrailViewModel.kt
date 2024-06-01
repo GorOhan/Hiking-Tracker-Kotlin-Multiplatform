@@ -1,9 +1,8 @@
-package com.ohanyan.xhike.android.ui.main.trails.followtrail
+package com.ohanyan.xhike.android.ui.home.trails.followtrail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mapbox.geojson.Point
-import com.ohanyan.xhike.data.db.HikeEntity
 import com.ohanyan.xhike.domain.usecases.GetHikeByIdUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
