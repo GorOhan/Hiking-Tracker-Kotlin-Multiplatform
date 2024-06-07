@@ -2,6 +2,7 @@ package com.ohanyan.xhike.android.ui.home.trails.singletrail
 
 import android.graphics.Color
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,15 +31,19 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
+import com.mapbox.maps.CameraBoundsOptions
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.addLayer
@@ -55,10 +60,12 @@ fun SingleTrailScreen(
     hikeId: Int,
     singleTrailViewModel: SingleTrailViewModel = getViewModel()
 ) {
+    val defaultImage = "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528"
 
     val currentHike by singleTrailViewModel.hike.collectAsState()
     val routePoints by singleTrailViewModel.points.collectAsState()
     val pagerState = rememberPagerState(pageCount = { 4 })
+    val painter = rememberAsyncImagePainter(currentHike?.hikeImage?.ifEmpty { defaultImage })
 
     LaunchedEffect(Unit) {
         singleTrailViewModel.getHikeById(hikeId)
@@ -93,41 +100,53 @@ fun SingleTrailScreen(
                     },
                     update = { mapView ->
                         mapView.apply {
-
-                            mapboxMap.setCamera(
-                                CameraOptions.Builder()
-                                    .center(
-                                        routePoints?.first()
-                                    )
-                                    .pitch(0.0)
-                                    .zoom(9.0)
-                                    .bearing(0.0)
-                                    .build()
-                            )
-
-                            mapboxMap.loadStyle(Style.OUTDOORS) { style ->
-                                style.addSource(
-                                    GeoJsonSource.Builder("line-source")
-                                        .featureCollection(
-                                            FeatureCollection.fromFeatures(
-                                                arrayOf(
-                                                    Feature.fromGeometry(
-                                                        routePoints?.let {
-                                                            LineString.fromLngLats(
-                                                                it
-                                                            )
-                                                        }
-                                                    )
-                                                )
+                            if (routePoints?.isNotEmpty() == true) {
+                                val ALMOST_WORLD_BOUNDS: CameraBoundsOptions =
+                                    CameraBoundsOptions.Builder()
+                                        .bounds(
+                                            CoordinateBounds(
+                                                routePoints?.first()!!,
+                                                routePoints?.last()!!,
+                                                false
                                             )
                                         )
                                         .build()
-                                )
 
-                                val lineLayer = LineLayer("line-layer", "line-source")
-                                lineLayer.lineWidth(5.0)
-                                lineLayer.lineColor(Color.parseColor("#175366"))
-                                style.addLayer(lineLayer)
+                                mapboxMap.setCamera(
+                                    CameraOptions.Builder()
+                                        .center(routePoints?.last())
+                                        .pitch(0.0)
+                                        .zoom(10.0)
+                                        .bearing(0.0)
+                                        .build()
+                                )
+                              //  mapboxMap.setBounds(ALMOST_WORLD_BOUNDS)
+
+
+                                mapboxMap.loadStyle(Style.OUTDOORS) { style ->
+                                    style.addSource(
+                                        GeoJsonSource.Builder("line-source")
+                                            .featureCollection(
+                                                FeatureCollection.fromFeatures(
+                                                    arrayOf(
+                                                        Feature.fromGeometry(
+                                                            routePoints?.let {
+                                                                LineString.fromLngLats(
+                                                                    it
+                                                                )
+                                                            }
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                            .build()
+                                    )
+
+                                    val lineLayer = LineLayer("line-layer", "line-source")
+                                    lineLayer.lineWidth(5.0)
+                                    lineLayer.lineColor(Color.parseColor("#175366"))
+                                    style.addLayer(lineLayer)
+                                }
                             }
                         }
                     }
@@ -163,7 +182,12 @@ fun SingleTrailScreen(
                                 ).absoluteValue
                     }
             ) {
-                // Card content
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter = painter,
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds
+                )
             }
         }
 

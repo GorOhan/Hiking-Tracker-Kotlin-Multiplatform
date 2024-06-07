@@ -97,10 +97,6 @@ fun MapContainer(
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    fusedLocationClient.lastLocation
-                        .addOnSuccessListener { location: Location? ->
-
-                        }
 
                     locationCallback = object : LocationCallback(
                     ) {

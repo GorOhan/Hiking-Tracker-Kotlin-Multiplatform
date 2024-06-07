@@ -42,6 +42,22 @@ fun SplashScreen(
 
     val context = LocalContext.current
 
+    val notificationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { result ->
+            val hasNotificationPermission =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    ActivityCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) == PackageManager.PERMISSION_GRANTED
+                } else {
+                    true
+                }
+
+        }
+    )
+
     val permissionsLauncherForBackgroundLocation = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
         onResult = {
@@ -56,8 +72,13 @@ fun SplashScreen(
 
 
             if (hasBackPermissionGranted) {
-               // isPermissionsGranted = true
-            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    notificationPermissionLauncher.launch(
+                        arrayOf(
+                            Manifest.permission.POST_NOTIFICATIONS,
+                        )
+                    )
+                }
             }
         }
     )

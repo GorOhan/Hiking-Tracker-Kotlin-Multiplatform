@@ -2,7 +2,7 @@ package com.ohanyan.xhike.di
 
 import com.ohanyan.xhike.data.db.Database
 import com.ohanyan.xhike.domain.TestUseCase
-import com.ohanyan.xhike.data.network.KtorExampleApi
+import com.ohanyan.xhike.data.network.KtorApiImpl
 import com.ohanyan.xhike.data.repository.DBRepositoryImpl
 import com.ohanyan.xhike.data.repository.NetworkRepositoryImpl
 import com.ohanyan.xhike.domain.repository.DBRepository
@@ -27,7 +27,7 @@ val useCasesModule = module {
 
 val repositoryModule = module {
     single<NetworkRepository> { NetworkRepositoryImpl(get()) }
-    single { KtorExampleApi() }
+    single { KtorApiImpl() }
     single<DBRepository> { DBRepositoryImpl(get()) }
     single { Database(get()) }
 }
@@ -41,4 +41,4 @@ fun initKoin(appDeclaration: KoinAppDeclaration) = startKoin {
     )
 }
 
-fun initKoin() = initKoin {}
+fun initKoinForIos() = initKoin {}

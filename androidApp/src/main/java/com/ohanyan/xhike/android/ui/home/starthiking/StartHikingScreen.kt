@@ -1,6 +1,7 @@
 package com.ohanyan.xhike.android.ui.home.starthiking
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
@@ -17,8 +18,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.mapbox.common.location.LocationService
+import com.ohanyan.xhike.android.service.GetLocationService
 import com.ohanyan.xhike.android.ui.home.MainScreens
 import com.ohanyan.xhike.android.ui.home.starthiking.map.MapContainer
 import org.koin.androidx.compose.getViewModel
@@ -28,7 +32,7 @@ fun StartHikingScreen(
     navController: NavController,
     startHikingViewModel: StartHikingViewModel = getViewModel()
 ) {
-
+    val context = LocalContext.current
     val isHikeStarted by startHikingViewModel.startHiking.collectAsState()
 
     Box(
@@ -50,6 +54,8 @@ fun StartHikingScreen(
                     navController.navigate(MainScreens.TrailsScreen.route)
                 } else {
                     startHikingViewModel.startHiking()
+                    val serviceIntent = Intent(context, GetLocationService::class.java)
+                    context.startForegroundService(serviceIntent)
                 }
             },
             colors = ButtonDefaults.buttonColors(

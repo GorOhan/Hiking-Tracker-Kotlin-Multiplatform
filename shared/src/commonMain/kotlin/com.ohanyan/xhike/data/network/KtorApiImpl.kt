@@ -13,8 +13,8 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
 
-class KtorExampleApi {
-    private val httpClient = HttpClient {
+class KtorApiImpl : KtorApi {
+    override val client: HttpClient = HttpClient {
         install(Logging) {
             logger = Logger.DEFAULT
             level = LogLevel.ALL
@@ -29,7 +29,8 @@ class KtorExampleApi {
 
     }
 
-    suspend fun getAllLaunches(): List<RocketLaunch> {
-        return httpClient.get("https://api.spacexdata.com/v5/launches").body()
+    override suspend fun getAllData(): List<RocketLaunch> {
+        return client.get("https://api.spacexdata.com/v5/launches").body()
     }
+
 }
