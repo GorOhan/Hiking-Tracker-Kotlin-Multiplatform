@@ -18,6 +18,13 @@ data class HikeEntity(
 )
 
 @Serializable
+data class CurrentHike(
+    val hikeId: Long = 1L,
+    val hikePoints: List<PointEntity> = emptyList()
+)
+
+
+@Serializable
 data class PointEntity(
     val pointLocationLot: Double = 0.0,
     val pointLocationLat: Double = 0.0,

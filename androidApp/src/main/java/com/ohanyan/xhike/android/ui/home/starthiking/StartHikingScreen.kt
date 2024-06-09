@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.mapbox.common.location.LocationService
 import com.ohanyan.xhike.android.service.GetLocationService
 import com.ohanyan.xhike.android.ui.home.MainScreens
 import com.ohanyan.xhike.android.ui.home.starthiking.map.MapContainer
@@ -41,9 +40,9 @@ fun StartHikingScreen(
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        MapContainer(
-            startHikingViewModel = startHikingViewModel,
-        )
+
+        MapContainer(startHikingViewModel = startHikingViewModel)
+
         Button(
             modifier = Modifier
                 .padding(bottom = 16.dp)
@@ -52,6 +51,8 @@ fun StartHikingScreen(
                 if (isHikeStarted) {
                     startHikingViewModel.finishHike()
                     navController.navigate(MainScreens.TrailsScreen.route)
+                    val serviceIntent = Intent(context, GetLocationService::class.java)
+                    context.stopService(serviceIntent)
                 } else {
                     startHikingViewModel.startHiking()
                     val serviceIntent = Intent(context, GetLocationService::class.java)
@@ -61,7 +62,7 @@ fun StartHikingScreen(
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (isHikeStarted)
                     MaterialTheme.colorScheme.error
-                    else MaterialTheme.colorScheme.primary,
+                else MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.tertiary
             )
         ) {
@@ -73,8 +74,10 @@ fun StartHikingScreen(
     }
 
 }
-fun drawableIdToBitmap(context: Context,  drawableId: Int): Bitmap {
-    val drawable = context.getDrawable(drawableId) ?: throw IllegalArgumentException("Invalid drawable ID")
+
+fun drawableIdToBitmap(context: Context, drawableId: Int): Bitmap {
+    val drawable =
+        context.getDrawable(drawableId) ?: throw IllegalArgumentException("Invalid drawable ID")
 
     if (drawable is BitmapDrawable) {
         return drawable.bitmap

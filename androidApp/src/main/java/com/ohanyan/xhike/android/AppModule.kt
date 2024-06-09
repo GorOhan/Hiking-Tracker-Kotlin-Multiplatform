@@ -11,9 +11,9 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { SplashViewModel(get()) }
+    viewModel { SplashViewModel(get(),get()) }
     viewModel { TrailsViewModel(get(), get(), get()) }
-    viewModel { StartHikingViewModel(get()) }
+    viewModel { StartHikingViewModel(get(),get(),get()) }
     viewModel { AboutUsViewModel() }
     viewModel { SingleTrailViewModel(get()) }
     viewModel { TrailSettingViewModel(get(), get(), get()) }

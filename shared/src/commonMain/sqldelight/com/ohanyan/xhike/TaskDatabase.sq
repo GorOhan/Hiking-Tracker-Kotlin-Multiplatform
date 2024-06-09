@@ -18,6 +18,7 @@ CREATE TABLE hikeTable (
     hikePoints TEXT AS List<PointEntity> NOT NULL
     );
 
+
 getAllHikes:
 SELECT * FROM hikeTable;
 
@@ -36,3 +37,24 @@ SELECT * FROM hikeTable WHERE hikeId = ?;
 
 deleteHike:
 DELETE FROM hikeTable WHERE hikeId = ?;
+
+
+CREATE TABLE currentHike (
+    hikeId INTEGER NOT NULL PRIMARY KEY,
+    hikePoints TEXT AS List<PointEntity> NOT NULL
+    );
+
+getCurrentHike:
+SELECT * FROM currentHike;
+
+removeCurrentHike:
+DELETE FROM currentHike;
+
+insertCurrentHike:
+INSERT OR REPLACE INTO currentHike(hikeId,hikePoints)
+VALUES( ?,?);
+
+
+
+
+

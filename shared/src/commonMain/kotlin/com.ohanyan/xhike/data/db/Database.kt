@@ -1,22 +1,36 @@
 package com.ohanyan.xhike.data.db
 
+import com.ohanyan.xhike.CurrentHike
 import com.ohanyan.xhike.HikeTable
 import com.ohanyan.xhike.TaskDatabase
 import com.squareup.sqldelight.ColumnAdapter
+import com.squareup.sqldelight.Query
 import com.squareup.sqldelight.db.SqlDriver
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 class Database(sqlDriver: SqlDriver) {
 
     private val database = TaskDatabase(
-        sqlDriver, hikeTableAdapter = HikeTable.Adapter(
+        driver = sqlDriver,
+        hikeTableAdapter = HikeTable.Adapter(
             hikePointsAdapter = pointsAdapter,
             hikeDifficultyAdapter = hikeDiffAdapter
+        ),
+        currentHikeAdapter = CurrentHike.Adapter(
+            hikePointsAdapter = pointsAdapter
         )
     )
-    private val dbQuery = database.taskDatabaseQueries
 
+    val dbQuery = database.taskDatabaseQueries
+
+    internal fun insertCurrentHike(currentHike: CurrentHike) {
+        dbQuery.insertCurrentHike(
+            currentHike.hikeId,
+            currentHike.hikePoints
+        )
+    }
 
     internal fun updateHikeById(hikeEntity: HikeEntity) {
         dbQuery.updateHikeById(
@@ -39,7 +53,6 @@ class Database(sqlDriver: SqlDriver) {
     }
 
     internal fun insertHike(hikeEntity: HikeEntity) {
-
         dbQuery.insertHike(
             hikeEntity.hikeId,
             hikeEntity.hikeName,
@@ -63,6 +76,28 @@ class Database(sqlDriver: SqlDriver) {
     internal fun deleteHike(hikeId: Long) {
         dbQuery.deleteHike(hikeId)
     }
+
+    internal fun removeCurrentHike(){
+        dbQuery.removeCurrentHike()
+    }
+    internal fun getCurrentHike(listener: (CurrentHike) -> Unit): Query.Listener {
+        val query = dbQuery.getCurrentHike()
+
+        val queryListener = object : Query.Listener {
+            override fun queryResultsChanged() {
+                listener(query.executeAsOne())
+            }
+        }
+
+        query.addListener(queryListener)
+
+        // Trigger initial load
+        listener(query.executeAsOne())
+
+        return queryListener
+    }
+
+
 
     private fun mapDbEntity(
         hikeId: Long,

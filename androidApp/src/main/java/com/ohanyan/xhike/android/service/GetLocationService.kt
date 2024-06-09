@@ -18,22 +18,30 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.ohanyan.xhike.CurrentHike
 import com.ohanyan.xhike.android.MainActivity
 import com.ohanyan.xhike.android.R
-
+import com.ohanyan.xhike.data.db.PointEntity
+import com.ohanyan.xhike.domain.usecases.InsertCurrentHikeUseCase
+import org.koin.android.ext.android.inject
 
 const val CHANNEL_ID = "CHANEL_ID_HIKING"
 
 class GetLocationService : Service() {
 
-    private var channel: NotificationChannel = NotificationChannel(CHANNEL_ID, "HikingChannel", NotificationManager.IMPORTANCE_HIGH)
+    private val insertCurrentHikeUseCase: InsertCurrentHikeUseCase by inject()
+    var currentPoints = mutableListOf<PointEntity>()
+
+
+    private var channel: NotificationChannel =
+        NotificationChannel(CHANNEL_ID, "HikingChannel", NotificationManager.IMPORTANCE_HIGH)
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val openActiveTabIntent = Intent(this, MainActivity::class.java)
-        openActiveTabIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        openActiveTabIntent.addFlags(Intent.FLAG_FROM_BACKGROUND)
         openActiveTabIntent.putExtra("action", "activeTab")
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -44,66 +52,73 @@ class GetLocationService : Service() {
 
         notificationManager.createNotificationChannel(channel)
 
-        getLocation(applicationContext)
+        getLocation()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(
                 101,
-                getNotification(applicationContext, pendingIntent),
+                getNotification(pendingIntent),
                 ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
             )
         } else {
-            startForeground(101, getNotification(applicationContext, pendingIntent))
+            startForeground(101, getNotification (pendingIntent))
         }
-        notificationManager.notify(101, getNotification(applicationContext, pendingIntent))
+        notificationManager.notify(101, getNotification(pendingIntent))
         return START_STICKY
     }
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
-}
 
+    private fun getLocation() {
+        val fusedLocationClient: FusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(applicationContext)
 
-private fun getLocation(context: Context) {
-    val fusedLocationClient: FusedLocationProviderClient =
-        LocationServices.getFusedLocationProviderClient(context)
+        val locationRequest = LocationRequest.Builder(2000L)
+            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+            .setMinUpdateIntervalMillis(2000L)
+            .build()
 
-    val locationRequest = LocationRequest.Builder(100L)
-        .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
-        .setMinUpdateIntervalMillis(1000L)
-        .build()
-
-    if (ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED
-    ) {
-
-        return
-
-    }
-    fusedLocationClient.requestLocationUpdates(
-        locationRequest,
-        object : LocationCallback(
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
-            override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
 
-            }
-        },
-        null /* Looper */
-    )
+            return
 
+        }
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            object : LocationCallback(
+            ) {
+                override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
+                    currentPoints.add(PointEntity(
+                        pointLocationLat = locationResult.lastLocation?.latitude?:0.0,
+                        pointLocationLot = locationResult.lastLocation?.longitude?:0.0
+                    ))
+                    insertCurrentHikeUseCase.invoke(
+                        CurrentHike(
+                            hikeId = 1,
+                            hikePoints = currentPoints,
+                        )
+                    )
+                }
+            },
+            null /* Looper */
+        )
+    }
+
+    private fun getNotification(intent: PendingIntent) = Notification
+        .Builder(applicationContext, CHANNEL_ID)
+        .setSmallIcon(R.drawable.ic_compass)
+        .setContentTitle("this is title")
+        .setContentText("this is context")
+        .setContentIntent(intent)
+        .setOngoing(true)
+        .build()
 }
-
-private fun getNotification(context: Context, intent: PendingIntent) = Notification
-    .Builder(context, CHANNEL_ID)
-    .setSmallIcon(R.drawable.ic_compass)
-    .setContentTitle("this is title")
-    .setContentText("this is context")
-    .setContentIntent(intent)
-    .setOngoing(true)
-    .build()
