@@ -6,7 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
-import com.ohanyan.xhike.android.ui.navigation.NavMain
+import com.ohanyan.xhike.android.screens.navigation.NavMain
+import com.ohanyan.xhike.android.util.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
 

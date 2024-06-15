@@ -2,6 +2,7 @@ package com.ohanyan.xhike.android
 
 import android.app.Application
 import com.mapbox.common.MapboxOptions
+import com.ohanyan.xhike.android.di.appModule
 import com.ohanyan.xhike.di.platformModule
 import com.ohanyan.xhike.di.repositoryModule
 import com.ohanyan.xhike.di.useCasesModule

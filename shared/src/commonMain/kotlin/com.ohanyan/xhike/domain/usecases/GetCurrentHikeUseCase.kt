@@ -20,5 +20,4 @@ class GetCurrentHikeUseCase : KoinComponent {
             dbRepository.removeCurrentHike()
         }
     }
-
 }

@@ -25,6 +25,7 @@ import com.ohanyan.xhike.data.db.PointEntity
 import com.ohanyan.xhike.domain.usecases.InsertCurrentHikeUseCase
 import org.koin.android.ext.android.inject
 
+
 const val CHANNEL_ID = "CHANEL_ID_HIKING"
 
 class GetLocationService : Service() {
@@ -61,7 +62,7 @@ class GetLocationService : Service() {
                 ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
             )
         } else {
-            startForeground(101, getNotification (pendingIntent))
+            startForeground(101, getNotification(pendingIntent))
         }
         notificationManager.notify(101, getNotification(pendingIntent))
         return START_STICKY
@@ -97,10 +98,12 @@ class GetLocationService : Service() {
             object : LocationCallback(
             ) {
                 override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
-                    currentPoints.add(PointEntity(
-                        pointLocationLat = locationResult.lastLocation?.latitude?:0.0,
-                        pointLocationLot = locationResult.lastLocation?.longitude?:0.0
-                    ))
+                    currentPoints.add(
+                        PointEntity(
+                            pointLocationLat = locationResult.lastLocation?.latitude ?: 0.0,
+                            pointLocationLot = locationResult.lastLocation?.longitude ?: 0.0
+                        )
+                    )
                     insertCurrentHikeUseCase.invoke(
                         CurrentHike(
                             hikeId = 1,
@@ -116,8 +119,8 @@ class GetLocationService : Service() {
     private fun getNotification(intent: PendingIntent) = Notification
         .Builder(applicationContext, CHANNEL_ID)
         .setSmallIcon(R.drawable.ic_compass)
-        .setContentTitle("this is title")
-        .setContentText("this is context")
+        .setContentTitle("Trail recording has started!")
+        .setContentText("The app will record your trail during the hike even when the app is in the background.")
         .setContentIntent(intent)
         .setOngoing(true)
         .build()

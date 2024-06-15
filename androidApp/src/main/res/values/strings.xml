@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="mapbox_key">pk.eyJ1IjoiZ3JvYW4iLCJhIjoiY2x1dGdoa2ljMGx5ZDJyb2lheHptb243YyJ9.VFWaDAoyH7IgpIq0w1_12Q</string>
+    <string name="app_name">Hiking</string>
+    <string name="about_us">About Us</string>
+    <string name="start_hiking">Start Hiking</string>
+    <string name="finish_hiking">Finish Hiking</string>
+    <string name="there_is_no_trails">There is no any trails yet.</string>
 </resources>
