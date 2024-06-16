@@ -5,5 +5,5 @@
     <string name="about_us">About Us</string>
     <string name="start_hiking">Start Hiking</string>
     <string name="finish_hiking">Finish Hiking</string>
-    <string name="there_is_no_trails">There is no any trails yet.</string>
+    <string name="there_are_no_trails">There are no trails yet.</string>
 </resources>

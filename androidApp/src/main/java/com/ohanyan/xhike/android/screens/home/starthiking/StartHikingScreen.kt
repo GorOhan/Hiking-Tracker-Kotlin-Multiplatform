@@ -55,6 +55,8 @@ fun StartHikingScreen(
                     navController.navigate(MainScreens.TrailsScreen.route)
                     val serviceIntent = Intent(context, GetLocationService::class.java)
                     context.stopService(serviceIntent)
+
+
                 } else {
                     startHikingViewModel.startHiking()
                     val serviceIntent = Intent(context, GetLocationService::class.java)

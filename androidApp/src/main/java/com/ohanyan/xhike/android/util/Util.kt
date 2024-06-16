@@ -1,7 +1,10 @@
 package com.ohanyan.xhike.android.util
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
+import androidx.core.app.ActivityCompat
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -26,3 +29,12 @@ fun copyUriToInternalStorage(context: Context, uri: Uri): String? {
 
     return file.absolutePath
 }
+
+fun Context.hasLocationPermission(): Boolean =
+    ActivityCompat.checkSelfPermission(
+        this, Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+        this,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
+

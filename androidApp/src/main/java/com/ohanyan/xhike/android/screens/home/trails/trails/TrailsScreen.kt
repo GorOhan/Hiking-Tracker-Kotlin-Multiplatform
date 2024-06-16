@@ -45,8 +45,8 @@ fun TrailsScreen(
                 modifier = Modifier.clickable {
                     navController.navigate(TrailsScreenRoute.MapScreen.route)
                 },
-                text = stringResource(id = R.string.there_is_no_trails),
-                color = MaterialTheme.colorScheme.onSecondary,
+                text = stringResource(id = R.string.there_are_no_trails),
+                color = MaterialTheme.colorScheme.tertiary,
                 style = MaterialTheme.typography.titleMedium
             )
         } else {

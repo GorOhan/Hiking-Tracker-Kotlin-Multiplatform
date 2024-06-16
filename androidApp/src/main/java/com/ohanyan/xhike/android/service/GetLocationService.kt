@@ -30,6 +30,9 @@ const val CHANNEL_ID = "CHANEL_ID_HIKING"
 
 class GetLocationService : Service() {
 
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
     private val insertCurrentHikeUseCase: InsertCurrentHikeUseCase by inject()
     var currentPoints = mutableListOf<PointEntity>()
 
@@ -38,6 +41,8 @@ class GetLocationService : Service() {
         NotificationChannel(CHANNEL_ID, "HikingChannel", NotificationManager.IMPORTANCE_HIGH)
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -72,9 +77,29 @@ class GetLocationService : Service() {
         return null
     }
 
+    override fun onDestroy() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+        super.onDestroy()
+    }
+
     private fun getLocation() {
-        val fusedLocationClient: FusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(applicationContext)
+        locationCallback = object : LocationCallback(
+        ) {
+            override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
+                currentPoints.add(
+                    PointEntity(
+                        pointLocationLat = locationResult.lastLocation?.latitude ?: 0.0,
+                        pointLocationLot = locationResult.lastLocation?.longitude ?: 0.0
+                    )
+                )
+                insertCurrentHikeUseCase.invoke(
+                    CurrentHike(
+                        hikeId = 1,
+                        hikePoints = currentPoints,
+                    )
+                )
+            }
+        }
 
         val locationRequest = LocationRequest.Builder(2000L)
             .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
@@ -93,25 +118,10 @@ class GetLocationService : Service() {
             return
 
         }
+
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
-            object : LocationCallback(
-            ) {
-                override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
-                    currentPoints.add(
-                        PointEntity(
-                            pointLocationLat = locationResult.lastLocation?.latitude ?: 0.0,
-                            pointLocationLot = locationResult.lastLocation?.longitude ?: 0.0
-                        )
-                    )
-                    insertCurrentHikeUseCase.invoke(
-                        CurrentHike(
-                            hikeId = 1,
-                            hikePoints = currentPoints,
-                        )
-                    )
-                }
-            },
+            locationCallback,
             null /* Looper */
         )
     }

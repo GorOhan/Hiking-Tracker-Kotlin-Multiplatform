@@ -5,7 +5,7 @@ import com.ohanyan.xhike.domain.repository.DBRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class  InsertCurrentHikeUseCase : KoinComponent {
+class InsertCurrentHikeUseCase : KoinComponent {
 
     private val dbRepository: DBRepository by inject()
 

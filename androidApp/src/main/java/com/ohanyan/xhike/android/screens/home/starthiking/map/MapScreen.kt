@@ -40,7 +40,45 @@ fun MapContainer(
 
     AndroidView(
         modifier = Modifier,
-        factory = { ctx -> MapView(ctx).apply {} },
+        factory = { ctx -> MapView(ctx).apply {
+
+                location.locationPuck = createDefault2DPuck(withBearing = false)
+                location.enabled = true
+                location.pulsingEnabled = true
+                location.puckBearing = PuckBearing.COURSE
+                viewport.transitionTo(
+                    targetState = viewport.makeFollowPuckViewportState(),
+                    transition = viewport.makeImmediateViewportTransition()
+                )
+
+                if (hasPointChange) {
+                    mapboxMap.loadStyle(Style.OUTDOORS) { style ->
+                        style.addSource(
+                            GeoJsonSource.Builder("line-source")
+                                .featureCollection(
+                                    FeatureCollection.fromFeatures(
+                                        arrayOf(
+                                            Feature.fromGeometry(
+                                                LineString.fromLngLats(
+                                                    startHikingViewModel.points.value
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                .build()
+                        )
+
+                        val arrowBitmap = drawableIdToBitmap(context, R.drawable.ic_compass)
+                        style.addImage("user-location-icon", arrowBitmap)
+
+                        val lineLayer = LineLayer("line-layer", "line-source")
+                        lineLayer.lineWidth(5.0)
+                        lineLayer.lineColor(Color.parseColor("#175366"))
+                        style.addLayer(lineLayer)
+                    }
+                }
+        } },
         update = { mapView ->
 
             mapView.apply {
