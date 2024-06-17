@@ -1,6 +1,5 @@
 package com.ohanyan.xhike.android.service
 
-import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -8,21 +7,21 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
-import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
 import com.ohanyan.xhike.CurrentHike
 import com.ohanyan.xhike.android.MainActivity
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.data.db.PointEntity
 import com.ohanyan.xhike.domain.usecases.InsertCurrentHikeUseCase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 
 
@@ -30,19 +29,39 @@ const val CHANNEL_ID = "CHANEL_ID_HIKING"
 
 class GetLocationService : Service() {
 
-
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationCallback: LocationCallback
     private val insertCurrentHikeUseCase: InsertCurrentHikeUseCase by inject()
-    var currentPoints = mutableListOf<PointEntity>()
+    private var currentPoints = mutableListOf<PointEntity>()
+    private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
 
     private var channel: NotificationChannel =
         NotificationChannel(CHANNEL_ID, "HikingChannel", NotificationManager.IMPORTANCE_HIGH)
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
+
+        val locationClient = BackgroundLocationClient(
+            applicationContext,
+            fusedLocationClient
+        )
+            locationClient.getLocationUpdates(200)
+                .onEach {
+                    currentPoints.add(
+                        PointEntity(
+                            pointLocationLat = it.latitude,
+                            pointLocationLot = it.longitude
+                        )
+                    )
+                    insertCurrentHikeUseCase.invoke(
+                        CurrentHike(
+                            hikeId = 1,
+                            hikePoints = currentPoints,
+                        )
+                    )
+                }.launchIn(serviceScope)
+
+
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -57,8 +76,6 @@ class GetLocationService : Service() {
         )
 
         notificationManager.createNotificationChannel(channel)
-
-        getLocation()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(
@@ -78,52 +95,8 @@ class GetLocationService : Service() {
     }
 
     override fun onDestroy() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+        serviceScope.cancel()
         super.onDestroy()
-    }
-
-    private fun getLocation() {
-        locationCallback = object : LocationCallback(
-        ) {
-            override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
-                currentPoints.add(
-                    PointEntity(
-                        pointLocationLat = locationResult.lastLocation?.latitude ?: 0.0,
-                        pointLocationLot = locationResult.lastLocation?.longitude ?: 0.0
-                    )
-                )
-                insertCurrentHikeUseCase.invoke(
-                    CurrentHike(
-                        hikeId = 1,
-                        hikePoints = currentPoints,
-                    )
-                )
-            }
-        }
-
-        val locationRequest = LocationRequest.Builder(2000L)
-            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
-            .setMinUpdateIntervalMillis(2000L)
-            .build()
-
-        if (ActivityCompat.checkSelfPermission(
-                applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                applicationContext,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            return
-
-        }
-
-        fusedLocationClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            null /* Looper */
-        )
     }
 
     private fun getNotification(intent: PendingIntent) = Notification
