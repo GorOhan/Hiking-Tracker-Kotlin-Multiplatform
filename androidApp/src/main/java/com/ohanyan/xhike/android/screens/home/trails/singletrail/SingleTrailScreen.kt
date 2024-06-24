@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
@@ -35,6 +36,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
+import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraBoundsOptions
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CoordinateBounds
@@ -45,26 +47,44 @@ import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.ohanyan.xhike.android.screens.home.trails.TrailsScreenRoute
+import com.ohanyan.xhike.android.util.MyApplicationTheme
+import com.ohanyan.xhike.data.db.HikeEntity
 import org.koin.androidx.compose.getViewModel
 import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SingleTrailScreen(
     navController: NavController,
     hikeId: Int,
     singleTrailViewModel: SingleTrailViewModel = getViewModel()
 ) {
-    val defaultImage = "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528"
-
     val currentHike by singleTrailViewModel.hike.collectAsState()
     val routePoints by singleTrailViewModel.points.collectAsState()
-    val pagerState = rememberPagerState(pageCount = { 4 })
-    val painter = rememberAsyncImagePainter(currentHike?.hikeImage?.ifEmpty { defaultImage })
 
     LaunchedEffect(Unit) {
         singleTrailViewModel.getHikeById(hikeId)
     }
+
+    SingleTrailScreenUI(
+        routePoints = routePoints,
+        currentHike = currentHike,
+        hikeId = hikeId,
+        onNavigateClick = { navController.navigate(it) }
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SingleTrailScreenUI(
+    routePoints: List<Point>? = emptyList(),
+    currentHike: HikeEntity? = null,
+    hikeId: Int,
+    onNavigateClick: (String) -> Unit = {}
+) {
+    val pagerState = rememberPagerState(pageCount = { 4 })
+    val defaultImage =
+        "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528"
+    val painter = rememberAsyncImagePainter(currentHike?.hikeImage?.ifEmpty { defaultImage })
 
     Column(
         modifier = Modifier
@@ -77,9 +97,10 @@ fun SingleTrailScreen(
         Box(
             modifier = Modifier
                 .padding(8.dp)
+                .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp))
                 .background(MaterialTheme.colorScheme.primary),
-            ) {
+        ) {
             Column {
                 AndroidView(
                     modifier = Modifier
@@ -107,8 +128,6 @@ fun SingleTrailScreen(
                                         .bearing(0.0)
                                         .build()
                                 )
-                              //  mapboxMap.setBounds(ALMOST_WORLD_BOUNDS)
-
 
                                 mapboxMap.loadStyle(Style.OUTDOORS) { style ->
                                     style.addSource(
@@ -144,11 +163,11 @@ fun SingleTrailScreen(
                         .height(80.dp)
                         .background(MaterialTheme.colorScheme.primary)
                 ) {
-                   Text(
-                       text = currentHike?.hikeName?:"",
-                       style = MaterialTheme.typography.titleMedium,
-                       color = MaterialTheme.colorScheme.background
-                       )
+                    Text(
+                        text = currentHike?.hikeName ?: "",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.background
+                    )
 
                 }
 
@@ -182,8 +201,7 @@ fun SingleTrailScreen(
             modifier = Modifier
                 .padding(bottom = 16.dp),
             onClick = {
-                navController.navigate("${TrailsScreenRoute.FollowTrailScreen.route}/${hikeId}")
-
+                onNavigateClick("${TrailsScreenRoute.FollowTrailScreen.route}/${hikeId}")
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
@@ -195,5 +213,16 @@ fun SingleTrailScreen(
                 style = MaterialTheme.typography.titleMedium,
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun SingleTrailScreenPreview() {
+    MyApplicationTheme {
+        SingleTrailScreenUI(
+            currentHike = HikeEntity(),
+            hikeId = 3,
+        )
     }
 }

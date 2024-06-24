@@ -1,10 +1,6 @@
 package com.ohanyan.xhike.android.screens.home.starthiking
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,12 +16,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.service.GetLocationService
 import com.ohanyan.xhike.android.screens.home.MainScreens
 import com.ohanyan.xhike.android.screens.home.starthiking.map.MapContainer
+import com.ohanyan.xhike.android.screens.home.trails.trailsettings.TrailSettingScreenUI
+import com.ohanyan.xhike.android.util.MyApplicationTheme
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -76,22 +75,12 @@ fun StartHikingScreen(
             )
         }
     }
-
 }
 
-fun drawableIdToBitmap(context: Context, drawableId: Int): Bitmap {
-    val drawable =
-        context.getDrawable(drawableId) ?: throw IllegalArgumentException("Invalid drawable ID")
-
-    if (drawable is BitmapDrawable) {
-        return drawable.bitmap
+@Preview
+@Composable
+fun StartHikingScreenPreview() {
+    MyApplicationTheme {
+        TrailSettingScreenUI()
     }
-
-    val width = if (drawable.intrinsicWidth > 0) drawable.intrinsicWidth else 1
-    val height = if (drawable.intrinsicHeight > 0) drawable.intrinsicHeight else 1
-    val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bitmap)
-    drawable.setBounds(0, 0, canvas.width, canvas.height)
-    drawable.draw(canvas)
-    return bitmap
 }

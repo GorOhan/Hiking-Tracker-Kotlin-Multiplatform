@@ -24,11 +24,13 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.screens.navigation.Screen
+import com.ohanyan.xhike.android.util.MyApplicationTheme
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -37,11 +39,7 @@ fun SplashScreen(
     splashViewModel: SplashViewModel = getViewModel()
 
 ) {
-    val footsRotate = 30f
-    val animatedFootValues = List(5) { remember { Pair(Animatable(0f), Animatable(0f)) } }
-
     val context = LocalContext.current
-
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
         onResult = { result ->
@@ -119,21 +117,35 @@ fun SplashScreen(
                 Manifest.permission.ACCESS_COARSE_LOCATION
             )
         )
+    }
+
+    SplashScreenUI(
+        onNavigateScreen = { navController.navigate(it) }
+    )
+}
+
+@Composable
+fun SplashScreenUI(
+    onNavigateScreen: (String) -> Unit = {},
+) {
+    val footsRotate = 30f
+    val animatedFootValues = List(5) { remember { Pair(Animatable(0f), Animatable(0f)) } }
+
+    LaunchedEffect(Unit) {
         animatedFootValues.forEachIndexed { index, animate ->
             animate.first.animateTo(
                 targetValue = 1f,
                 animationSpec = tween(durationMillis = 150, delayMillis = index * 100),
 
-            )
+                )
             animate.second.animateTo(
                 targetValue = 1f,
                 animationSpec = tween(durationMillis = 150, delayMillis = index * 100),
 
-            )
+                )
         }
-        navController.navigate(Screen.HomeScreen.route)
+        onNavigateScreen(Screen.HomeScreen.route)
     }
-
 
     Box(
         modifier = Modifier
@@ -153,7 +165,7 @@ fun SplashScreen(
                     .align(Alignment.BottomCenter)
                     .rotate(footsRotate)
                     .alpha(animatable.first.value)
-                    .offset(-100.dp, 60.dp - 150.dp * index)
+                    .offset((-100).dp, 60.dp - 150.dp * index)
                     .height(90.dp),
                 painter = painterResource(id = R.drawable.left_foot),
                 contentDescription = ""
@@ -164,11 +176,19 @@ fun SplashScreen(
                     .align(Alignment.BottomCenter)
                     .rotate(footsRotate)
                     .alpha(animatable.second.value)
-                    .offset(-40.dp, -40.dp - 150.dp * index)
+                    .offset((-40).dp, (-40).dp - 150.dp * index)
                     .height(90.dp),
                 painter = painterResource(id = R.drawable.right_foot),
                 contentDescription = ""
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun SplashScreenPreview() {
+    MyApplicationTheme {
+        SplashScreenUI()
     }
 }

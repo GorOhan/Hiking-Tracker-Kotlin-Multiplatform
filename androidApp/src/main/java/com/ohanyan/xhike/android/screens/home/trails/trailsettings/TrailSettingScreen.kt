@@ -5,6 +5,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -44,17 +45,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.ohanyan.xhike.android.util.MyApplicationTheme
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.util.copyUriToInternalStorage
 import com.ohanyan.xhike.android.screens.home.trails.component.SettingItem
 import com.ohanyan.xhike.data.db.HikeDifficulty
+import com.ohanyan.xhike.data.db.HikeEntity
 import com.ohanyan.xhike.data.db.HikeRate
 import com.ohanyan.xhike.data.db.HikeTime
 import org.koin.androidx.compose.getViewModel
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun TrailSettingScreen(
@@ -64,26 +64,6 @@ fun TrailSettingScreen(
 ) {
     val currentHike by trailSettingViewModel.trail.collectAsState()
     val onSaveChanges by trailSettingViewModel.onSaveChanges.collectAsState(initial = false)
-    var showDiffPicker by remember { mutableStateOf(false) }
-    var showRatePicker by remember { mutableStateOf(false) }
-    var showHikeTimePicker by remember { mutableStateOf(false) }
-    val context = LocalContext.current
-
-    var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
-    val pickPhotoLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        try {
-            if (uri != null) {
-                val path = copyUriToInternalStorage(context, uri)
-                imageUri = uri
-                trailSettingViewModel.onUpdateHike(
-                    currentHike.copy(hikeImage = path.toString())
-                )
-            }
-            //    imageUri = Uri.EMPTY
-        } catch (_: Exception) {}
-    }
 
     LaunchedEffect(Unit) {
         trailSettingViewModel.getHikeById(hikeId)
@@ -93,8 +73,47 @@ fun TrailSettingScreen(
         if (onSaveChanges) navController.popBackStack()
     }
 
+    TrailSettingScreenUI(
+        currentHike = currentHike,
+        onUpdateClick = { trailSettingViewModel.onUpdateHike(it) },
+        onDeleteClick = { trailSettingViewModel.deleteHike() },
+        onSaveClick = { trailSettingViewModel.saveChanges() },
+    )
+}
+
+@Composable
+fun TrailSettingScreenUI(
+    currentHike: HikeEntity = HikeEntity(),
+    onUpdateClick: (HikeEntity) -> Unit = { },
+    onDeleteClick: () -> Unit = {},
+    onSaveClick: () -> Unit = {},
+) {
+    val context = LocalContext.current
+
+    var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
+
+    val pickPhotoLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        try {
+            if (uri != null) {
+                val path = copyUriToInternalStorage(context, uri)
+                imageUri = uri
+                onUpdateClick(
+                    currentHike.copy(hikeImage = path.toString())
+                )
+            }
+        } catch (_: Exception) {
+        }
+    }
+
+    var showDiffPicker by remember { mutableStateOf(false) }
+    var showRatePicker by remember { mutableStateOf(false) }
+    var showHikeTimePicker by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp, vertical = 32.dp)
             .verticalScroll(rememberScrollState())
             .fillMaxSize(),
@@ -106,8 +125,7 @@ fun TrailSettingScreen(
             modifier = Modifier.fillMaxWidth(),
             value = currentHike.hikeName,
             onValueChange = {
-                trailSettingViewModel.onUpdateHike(currentHike.copy(hikeName = it))
-
+                onUpdateClick(currentHike.copy(hikeName = it))
             },
             label = { Text("Title") }
         )
@@ -116,7 +134,7 @@ fun TrailSettingScreen(
             modifier = Modifier.fillMaxWidth(),
             value = currentHike.hikeDescription,
             onValueChange = {
-                trailSettingViewModel.onUpdateHike(currentHike.copy(hikeDescription = it))
+                onUpdateClick(currentHike.copy(hikeDescription = it))
             },
             label = { Text("Description") },
             minLines = 4,
@@ -127,7 +145,7 @@ fun TrailSettingScreen(
             modifier = Modifier.fillMaxWidth(),
             value = if (currentHike.hikeLengthInKm > 0.0) currentHike.hikeLengthInKm.toString() else "",
             onValueChange = {
-                trailSettingViewModel.onUpdateHike(currentHike.copy(hikeLengthInKm = it.toDouble()))
+                onUpdateClick(currentHike.copy(hikeLengthInKm = it.toDouble()))
             },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Decimal
@@ -215,7 +233,7 @@ fun TrailSettingScreen(
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable {
-                            trailSettingViewModel.onUpdateHike(currentHike.copy(hikeDifficulty = it))
+                            onUpdateClick(currentHike.copy(hikeDifficulty = it))
                             showDiffPicker = false
                         }
                 )
@@ -235,7 +253,7 @@ fun TrailSettingScreen(
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable {
-                            trailSettingViewModel.onUpdateHike(currentHike.copy(hikeRating = it.value))
+                            onUpdateClick(currentHike.copy(hikeRating = it.value))
                             showRatePicker = false
                         }
                 )
@@ -255,7 +273,7 @@ fun TrailSettingScreen(
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable {
-                            trailSettingViewModel.onUpdateHike(currentHike.copy(hikeTime = it.value))
+                            onUpdateClick(currentHike.copy(hikeTime = it.value))
                             showHikeTimePicker = false
                         }
                 )
@@ -265,7 +283,7 @@ fun TrailSettingScreen(
         Button(
             modifier = Modifier.padding(16.dp),
             onClick = {
-                trailSettingViewModel.saveChanges()
+                onSaveClick()
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
@@ -280,7 +298,7 @@ fun TrailSettingScreen(
 
         Button(
             onClick = {
-                trailSettingViewModel.deleteHike()
+                onDeleteClick()
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.error,
@@ -299,10 +317,6 @@ fun TrailSettingScreen(
 @Composable
 fun TrailSettingsScreenPreview() {
     MyApplicationTheme {
-        TrailSettingScreen(
-            navController = rememberNavController(),
-            hikeId = 1,
-            trailSettingViewModel = koinViewModel()
-        )
+        TrailSettingScreenUI()
     }
 }

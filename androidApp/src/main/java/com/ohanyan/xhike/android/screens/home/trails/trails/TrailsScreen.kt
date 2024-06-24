@@ -14,12 +14,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.navigation.NavController
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.screens.home.trails.TrailsScreenRoute
 import com.ohanyan.xhike.android.screens.home.trails.component.HikeCard
+import com.ohanyan.xhike.android.util.MyApplicationTheme
+import com.ohanyan.xhike.data.db.HikeEntity
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -31,9 +34,21 @@ fun TrailsScreen(
 
     LifecycleStartEffect(trailsViewModel) {
         trailsViewModel.getHikes()
-        onStopOrDispose {  }
+        onStopOrDispose { }
     }
+    TrailsScreenUI(
+        hikes = hikes,
+        onNavigateClick = { navController.navigate(it) },
+        onFavouriteClick = { trailsViewModel.onFavouriteClick(it) },
+    )
+}
 
+@Composable
+fun TrailsScreenUI(
+    hikes: List<HikeEntity> = emptyList(),
+    onNavigateClick: (String) -> Unit = {},
+    onFavouriteClick: (HikeEntity) -> Unit = {},
+) {
     Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -43,7 +58,7 @@ fun TrailsScreen(
         if (hikes.isEmpty()) {
             Text(
                 modifier = Modifier.clickable {
-                    navController.navigate(TrailsScreenRoute.MapScreen.route)
+                    onNavigateClick(TrailsScreenRoute.MapScreen.route)
                 },
                 text = stringResource(id = R.string.there_are_no_trails),
                 color = MaterialTheme.colorScheme.tertiary,
@@ -59,16 +74,24 @@ fun TrailsScreen(
                     HikeCard(
                         hikeEntity = (hikes[index]),
                         onItemClick = {
-                            navController.navigate("${TrailsScreenRoute.SingleTrailScreen.route}/${hikes[index].hikeId}")
+                            onNavigateClick("${TrailsScreenRoute.SingleTrailScreen.route}/${hikes[index].hikeId}")
                         }, onFavouriteClick = {
-                            trailsViewModel.onFavouriteClick(hikes[index])
+                            onFavouriteClick(hikes[index])
                         },
                         onSettingsClick = {
-                            navController.navigate("${TrailsScreenRoute.TrailSettingsScreen.route}/${hikes[index].hikeId}")
+                            onNavigateClick("${TrailsScreenRoute.TrailSettingsScreen.route}/${hikes[index].hikeId}")
                         }
                     )
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun BaseDialogPreview() {
+    MyApplicationTheme {
+        TrailsScreenUI()
     }
 }

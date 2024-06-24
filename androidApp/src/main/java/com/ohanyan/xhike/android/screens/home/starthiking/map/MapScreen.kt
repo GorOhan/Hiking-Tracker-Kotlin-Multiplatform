@@ -24,7 +24,7 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.viewport
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.screens.home.starthiking.StartHikingViewModel
-import com.ohanyan.xhike.android.screens.home.starthiking.drawableIdToBitmap
+import com.ohanyan.xhike.android.util.drawableIdToBitmap
 
 @Composable
 fun MapContainer(
