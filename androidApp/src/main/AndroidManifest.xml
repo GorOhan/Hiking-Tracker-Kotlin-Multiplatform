@@ -17,6 +17,7 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:launchMode = "singleTop"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.mapbox.token"

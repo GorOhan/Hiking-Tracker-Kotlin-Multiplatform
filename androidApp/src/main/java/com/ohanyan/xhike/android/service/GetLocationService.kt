@@ -1,5 +1,6 @@
 package com.ohanyan.xhike.android.service
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -24,7 +25,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 
-
 const val CHANNEL_ID = "CHANEL_ID_HIKING"
 
 class GetLocationService : Service() {
@@ -38,6 +38,7 @@ class GetLocationService : Service() {
         NotificationChannel(CHANNEL_ID, "HikingChannel", NotificationManager.IMPORTANCE_HIGH)
 
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
 
@@ -66,13 +67,13 @@ class GetLocationService : Service() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val openActiveTabIntent = Intent(this, MainActivity::class.java)
-        openActiveTabIntent.addFlags(Intent.FLAG_FROM_BACKGROUND)
+        openActiveTabIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         openActiveTabIntent.putExtra("action", "activeTab")
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
             openActiveTabIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
         notificationManager.createNotificationChannel(channel)
