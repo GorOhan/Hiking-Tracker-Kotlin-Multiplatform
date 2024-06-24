@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import androidx.core.app.ActivityCompat
 import java.io.File
 import java.io.FileOutputStream
@@ -30,11 +31,22 @@ fun copyUriToInternalStorage(context: Context, uri: Uri): String? {
     return file.absolutePath
 }
 
-fun Context.hasLocationPermission(): Boolean =
-    ActivityCompat.checkSelfPermission(
+fun Context.hasAllPermission(): Boolean {
+    val hasNotification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        ActivityCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+    } else {
+        true
+    }
+
+    val hasLocation = ActivityCompat.checkSelfPermission(
         this, Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
         this,
         Manifest.permission.ACCESS_COARSE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
+
+    return hasLocation && hasNotification
+}
 

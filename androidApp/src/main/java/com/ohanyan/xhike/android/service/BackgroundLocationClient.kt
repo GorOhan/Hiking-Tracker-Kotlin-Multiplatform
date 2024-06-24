@@ -10,7 +10,7 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.Priority
-import com.ohanyan.xhike.android.util.hasLocationPermission
+import com.ohanyan.xhike.android.util.hasAllPermission
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -26,7 +26,7 @@ class BackgroundLocationClient(
     private val client: FusedLocationProviderClient,
 ) : LocationClient {
     override fun getLocationUpdates(interval: Long): Flow<Location> = callbackFlow {
-        if (!context.hasLocationPermission()) {
+        if (!context.hasAllPermission()) {
             throw LocationClient.LocationException("Missing Location Permission")
         }
 
