@@ -8,4 +8,5 @@
     <string name="there_are_no_trails">There are no trails yet.</string>
     <string name="permission_needed_text">We need access to your location and permission to send you notifications for proper functionality.</string>
     <string name="go_to_settings">Go To Settings</string>
+    <string name="about_us_body">Our mission is to enhance your hiking experience by providing a seamless way to track your journeys and revisit them anytime. We understand the joy of discovering new paths and the importance of preserving those memories.</string>
 </resources>
