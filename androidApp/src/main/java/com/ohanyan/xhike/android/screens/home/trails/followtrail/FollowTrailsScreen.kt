@@ -8,7 +8,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.mapbox.geojson.Feature
@@ -29,8 +28,6 @@ import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import com.mapbox.maps.plugin.viewport.viewport
-import com.mapbox.geojson.Point
-import com.ohanyan.xhike.android.util.MyApplicationTheme
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -40,23 +37,14 @@ fun FollowTrailScreen(
     followTrailViewModel: FollowTrailViewModel = getViewModel()
 ) {
     val routePoints by followTrailViewModel.points.collectAsState()
-
     LaunchedEffect(Unit) {
         followTrailViewModel.getHikeById(hikeId)
     }
 
-    FollowTrailsScreenUI(
-        routePoints = routePoints,
-    )
-}
-
-@Composable
-fun FollowTrailsScreenUI(
-    routePoints: List<Point>? = emptyList(),
-){
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
+
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
@@ -124,13 +112,5 @@ fun FollowTrailsScreenUI(
                 }
             }
         )
-    }
-}
-
-@Preview
-@Composable
-fun FollowTrailScreenPreview() {
-    MyApplicationTheme {
-        FollowTrailsScreenUI()
     }
 }
