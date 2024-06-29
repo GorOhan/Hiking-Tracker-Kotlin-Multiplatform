@@ -201,7 +201,8 @@ fun TrailSettingScreenUI(
                 Text(
                     text = "upload photo",
                     style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.padding(start = 6.dp)
+                    modifier = Modifier.padding(start = 6.dp),
+                    color = MaterialTheme.colorScheme.tertiary,
                 )
             } else {
                 Image(
