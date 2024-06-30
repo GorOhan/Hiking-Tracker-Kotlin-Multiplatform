@@ -93,6 +93,14 @@ fun SingleTrailScreenUI(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(220.dp),
+            painter = painter,
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds
+        )
 
         Box(
             modifier = Modifier
@@ -172,28 +180,6 @@ fun SingleTrailScreenUI(
                 }
 
 
-            }
-        }
-
-
-        HorizontalPager(state = pagerState) { page ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(220.dp)
-                    .graphicsLayer {
-                        val pageOffset = (
-                                (pagerState.currentPage - page) + pagerState
-                                    .currentPageOffsetFraction
-                                ).absoluteValue
-                    }
-            ) {
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = painter,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds
-                )
             }
         }
 
