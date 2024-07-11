@@ -6,7 +6,8 @@
     <string name="start_hiking">Start Hiking</string>
     <string name="finish_hiking">Finish Hiking</string>
     <string name="there_are_no_trails">There are no trails yet.</string>
-    <string name="permission_needed_text">We need access to your location and permission to send you notifications for proper functionality.</string>
+    <string name="location_attention_text">Attention: To record your hiking trail, this app needs to access your location while you are using it. This ensures accurate tracking and enhances your hiking experience.</string>
+    <string name="permission_needed_text">To record your hiking trail, we require access to your location while using the app and permission to send you notifications.</string>
     <string name="go_to_settings">Go To Settings</string>
     <string name="about_us_body">Our mission is to enhance your hiking experience by providing a seamless way to track your journeys and revisit them anytime. We understand the joy of discovering new paths and the importance of preserving those memories.</string>
 </resources>

@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.screens.navigation.Screen
 import com.ohanyan.xhike.android.util.MyApplicationTheme
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -56,31 +57,6 @@ fun SplashScreen(
         }
     )
 
-    val permissionsLauncherForBackgroundLocation = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions(),
-        onResult = {
-            val hasBackPermissionGranted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            } else {
-                true
-            }
-
-
-            if (hasBackPermissionGranted) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    notificationPermissionLauncher.launch(
-                        arrayOf(
-                            Manifest.permission.POST_NOTIFICATIONS,
-                        )
-                    )
-                }
-            }
-        }
-    )
-
     val permissionLauncherForLocation = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
         onResult = { result ->
@@ -95,14 +71,12 @@ fun SplashScreen(
 
 
             if (hasPermissionGranted) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    permissionsLauncherForBackgroundLocation.launch(
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    notificationPermissionLauncher.launch(
                         arrayOf(
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                            Manifest.permission.POST_NOTIFICATIONS,
                         )
                     )
-                } else {
-                    //isPermissionsGranted = true
                 }
             } else {
 
@@ -111,6 +85,8 @@ fun SplashScreen(
     )
 
     LaunchedEffect(Unit) {
+
+        delay(2000)
         permissionLauncherForLocation.launch(
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
