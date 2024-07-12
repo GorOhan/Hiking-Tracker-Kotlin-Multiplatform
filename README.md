@@ -3,8 +3,6 @@
 Welcome to the documentation for the Kotlin Multiplatform Hiking Application! 
 //todo about application and stack
 
-![kotlin-version](https://img.shields.io/badge/kotlin-2.0.0-blue?logo=kotlin)
-
 [<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
 alt="Get it on Google Play Store"
 height="80">](https://play.google.com/store/apps/details?id=com.ohanyan.xhike.android)
