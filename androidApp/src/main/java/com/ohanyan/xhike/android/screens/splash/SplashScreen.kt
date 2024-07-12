@@ -78,8 +78,6 @@ fun SplashScreen(
                         )
                     )
                 }
-            } else {
-
             }
         }
     )
@@ -95,9 +93,13 @@ fun SplashScreen(
         )
     }
 
-    SplashScreenUI(
-        onNavigateScreen = { navController.navigate(it) }
-    )
+    SplashScreenUI(onNavigateScreen = {
+        navController.navigate(it) {
+            popUpTo(navController.graph.id) {
+                inclusive = false
+            }
+        }
+    })
 }
 
 @Composable
