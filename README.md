@@ -14,13 +14,6 @@ height="80">]()
 
 
 
-https://github.com/razaghimahdi/Shopping-By-KMP/assets/61207818/a4702cbf-1449-48b0-88f1-bcb9c42d273e
-
-
-
-
-
-
 ## Give a Star! ⭐
 If you like or are using this project to learn or start your solution, please give it a star. Thanks!
 
@@ -28,41 +21,33 @@ If you like or are using this project to learn or start your solution, please gi
 | Feature                     | Status           |
 |-----------------------------|------------------|
 | Login, Sign Up              | ❌ Not Implemented   |
+| Splash                      | ✔️ Implemented   |
 | Home                        | ✔️ Implemented   |
-| Product Detail and Comments | ✔️ Implemented   |
-| Wishlist                    | ✔️ Implemented   |
-| Cart                        | ✔️ Implemented   |
-| Profile                     | ✔️ Implemented   |
-| Search                      | ✔️ Implemented   |
+| My Trails                   | ✔️ Implemented   |
+| Trails settings             | ✔️ Implemented   |
+| Record Trail                | ✔️ Implemented   |
+| About Us                    | ✔️ Implemented   |
 | Category                    | ✔️ Implemented   |
-| Edit Profile                | ✔️ Implemented   |
-| Manage Address              | ✔️ Implemented   |
-| Payment Method              | ✔️ Implemented   |
-| My Orders                   | ✔️ Implemented   |
-| My Coupons                  | ✔️ Implemented   |
 | Notifications               | ✔️ Implemented   |
-| Setting                     | ✔️ Implemented   |
+| Foreground Service          | ✔️ Implemented   |
 
 ## Next Features 🏄‍♂️
 Obviously it would be more updates, What we are working on these days?
-- **Notifications:** Getting Notifications when any updates come from app for both Android & IOS
+- **Login, Sign Up :** Getting Notifications when any updates come from app for both Android & IOS
 #### **Future Plans:**
-- **Web platfrom:** Soon we gonna have release for web
+
 
 ## Tech Stack 📚
 - Kotlin Multiplatform 
 - Kotlin Coroutines 
-- Compose Multiplatform 
+- SwiftUI
 - Material3 
 - Ktor 
 - Datastore 
 - Compose Navigation 
 - Koin
 - Coil
-- Kotest
-- Fake Data
-<!-- - Mockk -->
-<!-- - Turbine -->
+- SqlDelight
 
 ## Development 💻
 
