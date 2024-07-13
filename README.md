@@ -50,6 +50,9 @@ Obviously it would be more updates, What we are working on these days?
 ## Architecture 🏢
 The Kotlin Multiplatform Hiking Application is built using the Clean Architecture and the MVVM (Model-View-ViewModel) pattern. 
 
+![66168438372d285717bda069_611cfe7b9f616909aa8522a9_xG0Lx71kavzwPIV9sURUe8slTmT1Fz-r6TRW9bu_iWw_SE9qC8FudGhNFyTEDbOWSPIfMZMN4yXsoKV8QbnUOkgfaSEZVHoZaTqZmdDmuVySGGJHgkAAGm-AA053tSMTHsuxMRvd](https://github.com/user-attachments/assets/0949f523-42ae-4838-aacd-1090a5338c06)
+
+
 <!--
 ### Android 📱
 
