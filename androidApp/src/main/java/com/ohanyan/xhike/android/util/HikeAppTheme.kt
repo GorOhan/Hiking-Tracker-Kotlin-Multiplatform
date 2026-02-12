@@ -29,7 +29,8 @@ fun MyApplicationTheme(
             secondary = Color(0xFFFFC107),
             tertiary = Color(0xFFFFFFFF),
             background = Color(0xD7D6F1F7),
-            onSecondary = Color(0xFF8BC34A)
+            onSecondary = Color(0xFF8BC34A),
+            error = Color(0xFFC50909)
 
 
         )
@@ -39,7 +40,8 @@ fun MyApplicationTheme(
             secondary = Color(0xFFFFC107),
             tertiary = Color(0xFFFFFFFF),
             background = Color(0xD7D6F1F7),
-            onSecondary = Color(0xFF8BC34A)
+            onSecondary = Color(0xFF8BC34A),
+            error = Color(0xFFC50909)
         )
     }
 

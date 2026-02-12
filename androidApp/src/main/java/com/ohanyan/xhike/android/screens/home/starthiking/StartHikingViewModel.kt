@@ -48,7 +48,7 @@ class StartHikingViewModel(
                             .last()
                     viewModelScope.launch {
                         if (_points.value.isNotEmpty()) {
-                            if (distanceInMeter(_points.value.last(), lastPoint) > 15) {
+                            if (distanceInMeter(_points.value.last(), lastPoint) > 3) {
                                 _points.value = it.hikePoints.map {
                                     Point.fromLngLat(
                                         it.pointLocationLot,
