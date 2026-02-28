@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
+    alias(libs.plugins.firebaseCrashlytics)
 }
 
 android {
@@ -84,6 +86,8 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     implementation(libs.coil.compose)
     implementation("io.insert-koin:koin-android:3.2.0")

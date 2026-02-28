@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "681557906551",
+    "project_id": "hiking-a7c53",
+    "storage_bucket": "hiking-a7c53.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681557906551:android:8657ec281b52baecf5e272",
+        "android_client_info": {
+          "package_name": "com.ohanyan.xhike.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE1zxADWuDZyWYQf25GtDIGy2LOBaWCPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
