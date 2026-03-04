@@ -15,7 +15,7 @@ android {
         applicationId = "com.ohanyan.xhike.android"
         minSdk = 26
         targetSdk = 35
-        versionCode = 5
+        versionCode = 7
         versionName = "1.03"
     }
     buildFeatures {
@@ -96,7 +96,7 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-compose:3.2.0")
 
     //implementation ("com.mapbox.navigationcore:android:3.0.1")
-    implementation("com.mapbox.maps:android:11.4.0")
+    implementation("com.mapbox.maps:android-ndk27:11.7.0")
 
 }
 kapt {
