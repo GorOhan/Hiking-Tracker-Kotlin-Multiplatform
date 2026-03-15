@@ -31,6 +31,9 @@ android {
 
     }
     buildTypes {
+        getByName("debug") {
+            manifestPlaceholders["firebase_analytics_collection_deactivated"] = true
+        }
         getByName("release") {
             isMinifyEnabled = true
 
