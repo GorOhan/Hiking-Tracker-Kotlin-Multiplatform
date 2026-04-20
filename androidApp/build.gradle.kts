@@ -15,8 +15,8 @@ android {
         applicationId = "com.ohanyan.xhike.android"
         minSdk = 26
         targetSdk = 35
-        versionCode = 7
-        versionName = "1.03"
+        versionCode = 8
+        versionName = "1.04"
     }
     buildFeatures {
         compose = true

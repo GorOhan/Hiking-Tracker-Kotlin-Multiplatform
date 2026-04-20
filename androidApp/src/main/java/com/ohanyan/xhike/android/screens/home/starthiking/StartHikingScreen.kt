@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ohanyan.xhike.android.R
 import com.ohanyan.xhike.android.service.GetLocationService
-import com.ohanyan.xhike.android.screens.home.MainScreens
 import com.ohanyan.xhike.android.screens.home.starthiking.map.MapContainer
 import com.ohanyan.xhike.android.screens.home.trails.trailsettings.TrailSettingScreenUI
 import com.ohanyan.xhike.android.util.MyApplicationTheme
@@ -51,7 +50,7 @@ fun StartHikingScreen(
             onClick = {
                 if (isHikeStarted) {
                     startHikingViewModel.finishHike()
-                    navController.navigate(MainScreens.TrailsScreen.route)
+                    navController.navigateUp()
                     val serviceIntent = Intent(context, GetLocationService::class.java)
                     context.stopService(serviceIntent)
 

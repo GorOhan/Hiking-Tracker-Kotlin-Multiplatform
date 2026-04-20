@@ -145,7 +145,7 @@ fun TrailSettingScreenUI(
             modifier = Modifier.fillMaxWidth(),
             value = if (currentHike.hikeLengthInKm > 0.0) currentHike.hikeLengthInKm.toString() else "",
             onValueChange = {
-                onUpdateClick(currentHike.copy(hikeLengthInKm = it.toDouble()))
+                onUpdateClick(currentHike.copy(hikeLengthInKm = it.toDoubleOrNull() ?: 0.0))
             },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Decimal

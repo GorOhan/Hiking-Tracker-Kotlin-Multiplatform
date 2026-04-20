@@ -63,7 +63,6 @@ internal fun TrailsScreenNavMain() {
             )
         ) { backStackEntry ->
             FollowTrailScreen(
-                navController = navController,
                 hikeId = backStackEntry.arguments?.getInt("hikeId")?:0
             )
         }

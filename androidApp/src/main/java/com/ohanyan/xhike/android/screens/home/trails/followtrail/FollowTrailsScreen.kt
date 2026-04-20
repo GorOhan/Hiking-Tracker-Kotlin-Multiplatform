@@ -9,7 +9,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.navigation.NavController
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
@@ -32,7 +31,6 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun FollowTrailScreen(
-    navController: NavController,
     hikeId: Int,
     followTrailViewModel: FollowTrailViewModel = getViewModel()
 ) {

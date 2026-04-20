@@ -45,7 +45,7 @@ class StartHikingViewModel(
                                 it.pointLocationLat
                             )
                         }
-                            .last()
+                            .lastOrNull() ?: return@let
                     viewModelScope.launch {
                         if (_points.value.isNotEmpty()) {
                             if (distanceInMeter(_points.value.last(), lastPoint) > 3) {
